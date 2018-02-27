@@ -6,9 +6,11 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import db_connect
 
-
 app = Flask(__name__)
 app.config.from_object(config)
+
+with app.app_context():
+    db_connect.init_app(app)
 
 # dynamodb = boto3.resource(
 #     'dynamodb',
