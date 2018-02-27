@@ -18,6 +18,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.
 
 import main
 import unittest
+import db_connect
 
 class MainTest(unittest.TestCase):
     """This class uses the Flask tests app to run an integration test against a
@@ -33,6 +34,7 @@ class MainTest(unittest.TestCase):
 
     def test_configuration(self):
         assert(main.connect_db() == '(1, 1)')
+
 
 if __name__ == '__main__':
     unittest.main()
