@@ -31,5 +31,8 @@ class MainTest(unittest.TestCase):
         print(rv.data)
         assert("hello" in rv.data.lower())
 
+    def test_configuration(self):
+        assert(main.connect_db() == '(1, 1)')
+
 if __name__ == '__main__':
     unittest.main()
