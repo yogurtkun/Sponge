@@ -13,6 +13,7 @@
 # limitations under the License.
 import sys
 import os.path
+from flask import Flask
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, 'code')))
 
 
@@ -36,14 +37,17 @@ class MainTest(unittest.TestCase):
         assert(main.connect_db() == '(1, 1)')
 
     def test_registerUser(self):
-        user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
-        rv = self.app.post("/registerUser", form=user, follow_redirects=True)
-        assert b'User exists!' not in rv.data
-        assert db.searchUser("testUser")
-        rv = self.app.post("/registerUser", form=user, follow_redirects=True)
-        assert b'User exists!' in rv.data
-        db.deleteUser("testUser")
-
+        app = Flask(__name__)
+        app.config.from_pyfile('../code/config.py')
+        db.init_app(app)
+        with app.app_context():
+            user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
+            rv = self.app.post("/registerUser", data=user, follow_redirects=True)
+            assert b'User exists!' not in rv.data
+            assert db.searchUser("testUser")
+            rv = self.app.post("/registerUser", data=user, follow_redirects=True)
+            assert b'User exists!' in rv.data
+            db.deleteUser("testUser")
 
 
 if __name__ == '__main__':
