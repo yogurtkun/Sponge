@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import db
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
 
 with app.app_context():

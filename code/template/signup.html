@@ -1,0 +1,55 @@
+{# [START form] #}
+{% extends "header.html" %}
+
+{% block content %}
+<h2 style="margin: 20px 0 20px 0">Sign up</h2>
+<script src="{{ url_for('static', filename='signup.js')}}"></script>
+
+<form method="POST" class="needs-validation" novalidate style="width:40%; margin-bottom: 20px"  action="/registerUser">
+  <div class="form-group">
+    <label id="username">Username</label>
+    <input type="text" name="username" id="username-value" class="form-control" required/>
+    <div class="invalid-feedback">
+      Username should not be empty
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="email">Email</label>
+    <input type="email" name="email" id="email-value" class="form-control" required/>
+    <div class="invalid-feedback">
+      Invalid email address
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="password">Password</label>
+    <input type="password" name="password" id="password-value" class="form-control" required/>
+    <div class="invalid-feedback">
+      Password should not be empty
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="confirm-pwd">Confirm password</label>
+    <input type="password" name="confirm-pwd" id="confirm-pwd-value" class="form-control" required="" />
+    <div class="invalid-feedback">
+      Passwords do not match
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="zipcode">Zip code</label>
+    <input type="text" name="zipcode" id="zipcode-value"xs class="form-control" required/>
+    <div class="invalid-feedback">
+      Invalid zip code
+    </div>
+  </div>
+  <div style="text-align: center; margin-top:40px">
+    <button class="btn btn-primary" style="min-width:40%" type="submit">Sign up</button>
+  </div>
+</form>
+
+
+{% if error %}
+<div class="alert alert-danger" role="alert">{{error}}</div>
+{% endif %}
+
+{% endblock %}
+{# [END form] #}
