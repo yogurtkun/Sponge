@@ -18,7 +18,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.
 
 import main
 import unittest
-import db_connect
+import db
 
 class MainTest(unittest.TestCase):
     """This class uses the Flask tests app to run an integration test against a
@@ -34,6 +34,16 @@ class MainTest(unittest.TestCase):
 
     def test_configuration(self):
         assert(main.connect_db() == '(1, 1)')
+
+    def test_registerUser(self):
+        user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
+        rv = self.app.post("/registerUser", form=user, follow_redirects=True)
+        assert b'User exists!' not in rv.data
+        assert db.searchUser("testUser")
+        rv = self.app.post("/registerUser", form=user, follow_redirects=True)
+        assert b'User exists!' in rv.data
+        db.deleteUser("testUser")
+
 
 
 if __name__ == '__main__':

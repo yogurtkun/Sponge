@@ -4,13 +4,13 @@ vendor.add('lib')
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 import config
-import db_connect
+import db
 
 app = Flask(__name__)
 app.config.from_object(config)
 
 with app.app_context():
-    db_connect.init_app(app)
+    db.init_app(app)
 
 # dynamodb = boto3.resource(
 #     'dynamodb',
@@ -22,17 +22,19 @@ with app.app_context():
 
 def connect_db():
     with app.app_context():
-        db = SQLAlchemy()
+        conn = SQLAlchemy()
         app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
-        db.init_app(app)
-        result = db.session.execute("SELECT * From test").fetchone()
-        db.session.close()
+        conn.init_app(app)
+        result = conn.session.execute("SELECT * From test").fetchone()
+        conn.session.close()
         return str(result)
 
 
 @app.route('/')
 def index():
-    return "Hello, World (lets see how long a change takes III)!"
+	# print db.registerUser("yz3060", "yz3060@columbia.edu", "1234", "10025")
+	# print db.deleteUser("yz3060")
+	return "Hello, World (lets see how long a change takes III)!"
 
 
 '''
@@ -46,13 +48,13 @@ def signup():
 '''
 New user signup
 '''
-@app.route('/newUser', methods=['POST'])
+@app.route('/registerUser', methods=['POST'])
 def newUser():
 	username = str(request.form['username'])
 	email = str(request.form['email'])
 	password = str(request.form['password'])
 	zipcode = str(request.form['zipcode'])
-	res = db_connect.newUser(username, email, password, zipcode)
+	res = db.registerUser(username, email, password, zipcode)
 	if res: # signup successful
 		session['logged_in'] = True
 		session['username'] = username
@@ -67,24 +69,6 @@ The login page
 @app.route('/login')
 def login():
 	return render_template("login.html")
-
-
-'''
-User login
-'''
-@app.route('/userLogin', methods=['POST'])
-def userLogin():
-	username = str(request.form['username'])
-	password = str(request.form['password'])
-	table = db_connect.userTable()
-	usr = table.find(username, password)
-	if usr:
-		session['logged_in'] = True
-		session['username'] = username
-		return redirect('/')
-	else:
-		return render_template('login.html', error="Invalid username or password")
-
 
 
 if __name__ == '__main__':
