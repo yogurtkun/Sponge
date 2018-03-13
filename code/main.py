@@ -1,10 +1,11 @@
-from google.appengine.ext import vendor
-vendor.add('lib')
+# from google.appengine.ext import vendor
+# vendor.add('lib')
 
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 import config
 import db
+import json
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
@@ -43,6 +44,11 @@ The signup page
 @app.route('/signup')
 def signup():
     return render_template("signup.html")
+
+@app.route('/portal/<user_name>')
+def userPortal(user_name):
+	user = db.searchUser(user_name)
+	return render_template("portal.html", user = user)
 
 
 '''
