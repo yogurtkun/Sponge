@@ -47,7 +47,7 @@ def signup():
 
 @app.route('/portal/<user_name>')
 def userPortal(user_name):
-	if not session['logged_in'] or not session['username'] != user_name:
+	if not session['logged_in'] or not session['username'] == user_name:
 		return redirect('/login')
 	user = db.searchUser(user_name)
 	return render_template("portal.html", user = user)
