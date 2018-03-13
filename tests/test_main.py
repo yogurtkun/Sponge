@@ -42,6 +42,7 @@ class MainTest(unittest.TestCase):
     def test_registerUser(self):
         with main.app.app_context():
             db = main.db
+            db.deleteUser("testUser")
             user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
             rv = self.app.post("/registerUser", data=user, follow_redirects=True)
             assert b'User exists!' not in rv.data
@@ -50,6 +51,7 @@ class MainTest(unittest.TestCase):
             assert b'User exists!' in rv.data
             db.deleteUser("testUser")
             print 'user registration pass'
+
 
     def test_loginUser(self):
         with main.app.app_context():
@@ -68,6 +70,23 @@ class MainTest(unittest.TestCase):
             assert b'User doesn\'t exist!' not in rv.data
             print 'user login pass'
 
+
+
+    def test_userPortal(self):
+        with main.app.app_context():
+            db = main.db
+            db.deleteUser("testUser")
+            user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
+
+
+            self.app.post("/registerUser", data=user)
+
+            rv = self.app.get('/portal/'+user['username'])
+
+            assert b"testUser" in rv.data
+            assert b"test@domain.com" in rv.data
+            assert b"10026" in rv.data
+            db.deleteUser("testUser")
 
 
 if __name__ == '__main__':
