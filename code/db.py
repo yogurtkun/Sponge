@@ -44,6 +44,15 @@ def registerUser(username, email, password, zipcode):
         return False
 
 
+def loginUser(username, password):
+    res = User.query.get(username)
+    if res:
+        if from_sql(res).get('password') == password:
+            return 1
+        return -1 # wrong password
+    return 0 # user doesn't exist
+
+
 def searchUser(username):
     res = User.query.get(username)
     if res:

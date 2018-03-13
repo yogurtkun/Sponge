@@ -51,6 +51,24 @@ class MainTest(unittest.TestCase):
             db.deleteUser("testUser")
             print 'user registration pass'
 
+    def test_loginUser(self):
+        with main.app.app_context():
+            db = main.db
+            db.registerUser("testUser", "test@domain.com", "1234", "10025")
+            user = {"username":"testUser", "password":"1234"}
+            rv = self.app.post("/loginUser", data=user, follow_redirects=True)
+            assert b'Wrong password!' not in rv.data
+            assert b'User doesn\'t exist!' not in rv.data
+            user = {"username":"testUser", "password":"666"}
+            rv = self.app.post("/loginUser", data=user, follow_redirects=True)
+            assert b'Wrong password!' in rv.data
+            db.deleteUser("testUser")
+            user = {"username":"testUser", "password":"1234"}
+            rv = self.app.post("/loginUser", data=user, follow_redirects=True)
+            assert b'User doesn\'t exist!' not in rv.data
+            print 'user login pass'
+
+
 
 if __name__ == '__main__':
     unittest.main()
