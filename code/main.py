@@ -34,7 +34,7 @@ def connect_db():
 def index():
 	# print db.registerUser("yz3060", "yz3060@columbia.edu", "1234", "10025")
 	# print db.deleteUser("yz3060")
-	return "Hello, World (lets see how long a change takes III)!"
+	return render_template("index.html")
 
 
 '''
@@ -49,7 +49,7 @@ def signup():
 New user signup
 '''
 @app.route('/registerUser', methods=['POST'])
-def newUser():
+def registerUser():
 	username = str(request.form['username'])
 	email = str(request.form['email'])
 	password = str(request.form['password'])
@@ -69,6 +69,36 @@ The login page
 @app.route('/login')
 def login():
 	return render_template("login.html")
+
+
+'''
+User login
+'''
+@app.route('/loginUser', methods=['POST'])
+def loginUser():
+	username = str(request.form['username'])
+	password = str(request.form['password'])
+	res = db.loginUser(username, password)
+	if res == 1: # login succeed
+		session['logged_in'] = True
+		session['username'] = username
+		return redirect('/')
+	elif res == -1: # wrong password
+		return render_template("login.html", error="Wrong password!")
+	else: # user doesn't exist
+		return render_template("login.html", error="User doesn't exist!")
+
+
+'''
+User logout
+'''
+@app.route('/logout')
+def logoutUser():
+    session.pop('logged_in', None)
+    session.pop('username', None)
+    return redirect('/')
+
+
 
 
 if __name__ == '__main__':
