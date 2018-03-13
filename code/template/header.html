@@ -44,10 +44,17 @@
         <a href="#"><i class="fas fa-lg fa-search"></i></a>
       </form>
 
-      <div style="margin-left:10px">
-        <button class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign up</button>
-        <button class="btn btn-outline-primary my-2 my-sm-0" href="/signup">Log in</button>
+      {% if session.logged_in %}
+      <div>Welcome! {{session.username}} | 
+        <a class="btn btn-outline-primary my-2 my-sm-0" href="/logout">Log Out</a>
       </div>
+
+      {% else %}
+      <div style="margin-left:10px">
+        <a class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign up</a>
+        <a class="btn btn-outline-primary my-2 my-sm-0" href="/login">Log in</a>
+      </div>
+      {% endif %}
     </nav>
 
     <div class="container">

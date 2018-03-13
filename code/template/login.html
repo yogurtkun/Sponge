@@ -1,0 +1,40 @@
+{# [START form] #}
+{% extends "header.html"%}
+
+{% block content %}
+<script src="{{ url_for('static', filename='login.js')}}"></script>
+<link rel="stylesheet" href="static/account.css">
+
+<form id="form" method="POST" class="needs-validation container-fluid formObj" novalidate name="form1" action="/loginUser">
+<h2 class="header text-center">Log in to SPONGE</h2>
+  <div class="form-group">
+    <label id="username">Username</label>
+    <input type="text" name="username" id="username-value" class="form-control" placeholder="username" required/>
+    <div class="invalid-feedback">
+      Username should not be empty
+    </div>
+  </div>
+  <div class="form-group">
+    <label id="password">Password</label>
+    <input type="password" name="password" id="password-value" class="form-control" placeholder="password" required/>
+    <div class="invalid-feedback">
+      Password should not be empty
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-primary container-fluid loginBtn" type="submit" >Log in</button>
+  </div>
+  <div class="row justify-content-md-center custom_row">
+    <label class="col">
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+    <span class="forgetpasswd col"><a href="/forgetpassword">Forgot password?</a></span>
+  </div>
+</form>
+
+{% if error %}
+<div class="alert alert-danger" role="alert">{{error}}</div>
+{% endif %}
+
+{% endblock %}
+{# [END form] #}
