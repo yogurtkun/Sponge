@@ -19,7 +19,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.
 
 import main
 import unittest
-import db
 
 class MainTest(unittest.TestCase):
     """This class uses the Flask tests app to run an integration test against a
@@ -28,19 +27,21 @@ class MainTest(unittest.TestCase):
     def setUp(self):
         self.app = main.app.test_client()
 
-    def test_hello_world(self):
-        rv = self.app.get('/')
-        print(rv.data)
-        assert("hello" in rv.data.lower())
+    #def test_hello_world(self):
+    #    rv = self.app.get('/')
+    #    print(rv.data)
+    #    assert("hello" in rv.data.lower())
 
-    def test_configuration(self):
-        assert(main.connect_db() == '(1, 1)')
+    def test_database_connection(self):
+        with main.app.app_context():
+            db = main.db
+            res = str(db.db.session.execute("select * from test").first())
+            assert(res == '(1, 1)')
+            print 'database connection pass'
 
     def test_registerUser(self):
-        app = Flask(__name__)
-        app.config.from_pyfile('../code/config.py')
-        db.init_app(app)
-        with app.app_context():
+        with main.app.app_context():
+            db = main.db
             user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
             rv = self.app.post("/registerUser", data=user, follow_redirects=True)
             assert b'User exists!' not in rv.data
@@ -48,6 +49,7 @@ class MainTest(unittest.TestCase):
             rv = self.app.post("/registerUser", data=user, follow_redirects=True)
             assert b'User exists!' in rv.data
             db.deleteUser("testUser")
+            print 'user registration pass'
 
 
 if __name__ == '__main__':
