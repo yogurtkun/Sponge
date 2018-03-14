@@ -32,6 +32,11 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def checkPassword(self, pw):
+        if pw == self.password:
+            return True
+        return False
+
 
 def registerUser(username, email, password, zipcode):
     user = User(username, email, password, zipcode)
@@ -47,7 +52,7 @@ def registerUser(username, email, password, zipcode):
 def loginUser(username, password):
     res = User.query.get(username)
     if res:
-        if from_sql(res).get('password') == password:
+        if res.checkPassword(password):
             return 1
         return -1 # wrong password
     return 0 # user doesn't exist

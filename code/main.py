@@ -82,6 +82,7 @@ def loginUser():
 	if res == 1: # login succeed
 		session['logged_in'] = True
 		session['username'] = username
+		print "log in"
 		return redirect('/')
 	elif res == -1: # wrong password
 		return render_template("login.html", error="Wrong password!")
