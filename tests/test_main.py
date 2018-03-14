@@ -77,17 +77,19 @@ class MainTest(unittest.TestCase):
             db = main.db
             db.deleteUser("testUser")
             user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
-
-
-            self.app.post("/registerUser", data=user)
-            self.app.post("/loginUser", data = user)
-
             rv = self.app.get('/portal/'+user['username'])
-            
+            assert b"portal" not in rv.data
+            self.app.post("/registerUser", data=user)
+            self.app.get("/logout")
+            rv = self.app.get('/portal/'+user['username'])
+            assert b"portal" not in rv.data
+            self.app.post("/loginUser", data = user)
+            rv = self.app.get('/portal/'+user['username'])    
             assert b"testUser" in rv.data
             assert b"test@domain.com" in rv.data
             assert b"10026" in rv.data
             db.deleteUser("testUser")
+            print "user portal pass"
 
 
 if __name__ == '__main__':

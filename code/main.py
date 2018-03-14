@@ -13,22 +13,6 @@ app.config.from_object(config)
 with app.app_context():
     db.init_app(app)
 
-# dynamodb = boto3.resource(
-#     'dynamodb',
-#     endpoint_url='http://localhost:8000',
-#     region_name='dummy_region',
-#     aws_access_key_id='dummy_access_key',
-#     aws_secret_access_key='dummy_secret_key',
-#     verify=False)
-
-def connect_db():
-    with app.app_context():
-        conn = SQLAlchemy()
-        app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
-        conn.init_app(app)
-        result = conn.session.execute("SELECT * From test").fetchone()
-        conn.session.close()
-        return str(result)
 
 
 @app.route('/')
