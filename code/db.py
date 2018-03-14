@@ -101,7 +101,7 @@ class Message(db.Model):
 
 
 def registerUser(username, email, password, zipcode):
-    user = User(username, email, password, zipcode)
+    user = User(username=username, email=email, password=password, zipcode=zipcode)
     try:
         db.session.add(user)
         db.session.commit()
