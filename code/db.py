@@ -28,12 +28,6 @@ class User(db.Model):
     wantToSell = db.Column(db.String(128))
     wantToBuy = db.Column(db.String(128))
 
-    def __init__(self, username, email, password , zipcode):
-        self.username = username
-        self.email = email
-        self.password = password
-        self.zipcode = zipcode
-
     def __repr__(self):
         return '<User %r>' % self.username
 
