@@ -73,11 +73,11 @@ class SellerPost(db.Model):
 class Order(db.Model):
     orderId = db.Column(db.Integer, primary_key=True)
     postId = db.Column(db.Integer, db.ForeignKey('seller_post.postId'))
-    sellerPost = db.relationship("SellPost", lazy=True)
+    sellerPost = db.relationship("SellerPost", lazy=True)
     buyerName = db.Column(db.String(32), db.ForeignKey("user.username"))
-    buyer = db.relationship("User", lazy=True)
+    buyer = db.relationship("User", foreign_keys=[buyerName], lazy=True)
     sellerName = db.Column(db.String(32), db.ForeignKey("user.username"))
-    seller = db.relationship("User", lazy=True)
+    seller = db.relationship("User", foreign_keys=[sellerName], lazy=True)
     time = db.Column(db.DateTime)
     status = db.Column(db.String(32))
     transactionType = db.Column(db.String(32))
@@ -91,9 +91,9 @@ class Order(db.Model):
 class Message(db.Model):
     messageId = db.Column(db.Integer, primary_key=True)
     senderUsername = db.Column(db.String(32), db.ForeignKey("user.username"))
-    sender = db.relationship("User", lazy=True)
+    sender = db.relationship("User", foreign_keys=[senderUsername], lazy=True)
     receiverUsername = db.Column(db.String(32), db.ForeignKey("user.username"))
-    receiver = db.relationship("User", lazy=True)
+    receiver = db.relationship("User", foreign_keys=[receiverUsername], lazy=True)
     title = db.Column(db.String(64), nullable=False)
     content = db.Column(db.Text, nullable=False)
 
