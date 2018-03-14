@@ -22,6 +22,11 @@ class User(db.Model):
     email = db.Column(db.String(32), unique = True)
     password = db.Column(db.String(16),  nullable=False)
     zipcode = db.Column(db.String(16))
+    phoneNumber = db.Column(db.String(16))
+    address = db.Column(db.Text)
+    rating = db.Column(db.Integer)
+    wantToSell = db.Column(db.String(128))
+    wantToBuy = db.Column(db.String(128))
 
     def __init__(self, username, email, password , zipcode):
         self.username = username
@@ -31,6 +36,69 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+
+class BuyerPost(db.Model):
+    postId = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image = db.Column(db.LargeBinary)
+    category = db.Column(db.String(64))
+    price = db.Column(db.Integer)
+    time = db.Column(db.DateTime)
+    location = db.Column(db.String(32))
+    buyerName = db.Column(db.String(32), db.ForeignKey('user.username'))
+    user = db.relationship("User", lazy=True)
+
+    def __repr__(self):
+        return '<BuyerPost %r>' % self.postId
+
+
+class SellerPost(db.Model):
+    postId = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image = db.Column(db.LargeBinary)
+    category = db.Column(db.String(64))
+    price = db.Column(db.Integer)
+    time = db.Column(db.DateTime)
+    location = db.Column(db.String(32))
+    sellerName = db.Column(db.String(32), db.ForeignKey('user.username'))
+    user = db.relationship("User", lazy=True)
+
+    def __repr__(self):
+        return '<SellPost %r>' % self.postId
+
+
+class Order(db.Model):
+    orderId = db.Column(db.Integer, primary_key=True)
+    postId = db.Column(db.Integer, db.ForeignKey('seller_post.postId'))
+    sellerPost = db.relationship("SellPost", lazy=True)
+    buyerName = db.Column(db.String(32), db.ForeignKey("user.username"))
+    buyer = db.relationship("User", lazy=True)
+    sellerName = db.Column(db.String(32), db.ForeignKey("user.username"))
+    seller = db.relationship("User", lazy=True)
+    time = db.Column(db.DateTime)
+    status = db.Column(db.String(32))
+    transactionType = db.Column(db.String(32))
+    senderAddress = db.Column(db.Text)
+    receiverAddress = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Order %r>' % self.orderId
+
+
+class Message(db.Model):
+    messageId = db.Column(db.Integer, primary_key=True)
+    senderUsername = db.Column(db.String(32), db.ForeignKey("user.username"))
+    sender = db.relationship("User", lazy=True)
+    receiverUsername = db.Column(db.String(32), db.ForeignKey("user.username"))
+    receiver = db.relationship("User", lazy=True)
+    title = db.Column(db.String(64), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return '<Message %r>' % messageId
 
 
 def registerUser(username, email, password, zipcode):
@@ -79,6 +147,7 @@ def _create_database():
     app.config.from_pyfile('./config.py')
     init_app(app)
     with app.app_context():
+        db.drop_all()
         db.create_all()
     print("All tables created")
 
