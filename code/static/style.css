@@ -1,0 +1,122 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    width: 160px;
+    position: absolute;
+    z-index: 1;
+    top: 55px;
+    left: 0;
+    background-color: #DDDDDD;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.form-gap {
+    padding-top: 70px;
+}
+
+.header{
+    margin: 20px 0 20px 0;
+}
+
+.forgetpasswd{
+    text-align: right;
+}
+
+.loginBtn{
+    min-width:40% !important;
+}
+
+.signupBtn{
+    min-width:40% !important;
+}
+
+.resetBtn{
+    min-width:40% !important;
+}
+
+
+.formObj{
+    width:41%; margin-bottom: 20px !important;
+}
+
+.custom_row{
+    margin-top:20px;
+}
+
+.send-btn{
+    min-width:40% !important;
+}
+    
+.notification{
+    text-align: ;
+    width:80%; margin-bottom: 20px !important;
+}
+
+.Oops-containter{
+    width:100%; margin-bottom: 30px !important;
+    vertical-align: middle;
+}
+
+.formObj{
+    width:60%; margin-bottom: 20px !important;
+}
+
+.user-row {
+    margin-bottom: 14px;
+}
+
+.user-row:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-user {
+    margin: 13px 0;
+    padding: 5px;
+    height: 100%;
+}
+
+.dropdown-user:hover {
+    cursor: pointer;
+}
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.toppad
+{margin-top:20px;
+}

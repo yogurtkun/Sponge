@@ -1,0 +1,41 @@
+{% extends "header.html" %}
+{% block content %}
+
+<link rel="stylesheet" href="static/style.css">
+
+<body>
+<div id="category">
+  {% raw %}
+  <div class="sidenav">
+    <category
+      v-for="ca in category"
+      v-bind:category="ca.category"
+      :keys="ca"
+    ></category>
+  </div>
+  {% endraw %}
+</div>
+
+<div id="postitem">
+  {% raw %}
+  <ol>
+      <postitems
+      v-for="item in items"
+      v-bind:postid="item.postid"
+      v-bind:title="item.title"
+      v-bind:category="item.category"
+      v-bind:description="item.description"
+      v-bind:price="item.price"
+      v-bind:time="item.time"
+      v-bind:like="item.like"
+      v-bind:user="item.user"
+      v-bind:location="item.location"
+      v-bind:imageDir="item.imageDir"
+      :keys="item"></postitems>
+  </ol>
+  {% endraw %}
+</div>
+
+<script src="static/postlist.js"></script>
+</body>
+{% endblock %}

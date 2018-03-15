@@ -3,10 +3,10 @@
 
 {% block content %}
 <script src="{{ url_for('static', filename='login.js')}}"></script>
-<link rel="stylesheet" href="static/account.css">
+<link rel="stylesheet" href="static/style.css">
 
 <form id="form" method="POST" class="needs-validation container-fluid formObj" novalidate name="form1" action="/loginUser">
-<h2 class="header text-center">Log in to SPONGE</h2>
+<h2 class="header text-center">Log in</h2>
   <div class="form-group">
     <label id="username">Username</label>
     <input type="text" name="username" id="username-value" class="form-control" placeholder="username" required/>
@@ -30,11 +30,11 @@
     </label>
     <span class="forgetpasswd col"><a href="/forgetpassword">Forgot password?</a></span>
   </div>
+  {% if error %}
+  <div id="alertbar" class="alert alert-danger" role="alert">{{error}}</div>
+  {% endif %}
 </form>
 
-{% if error %}
-<div class="alert alert-danger" role="alert">{{error}}</div>
-{% endif %}
 
 {% endblock %}
 {# [END form] #}
