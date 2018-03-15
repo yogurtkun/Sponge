@@ -137,6 +137,38 @@ def deleteUser(username):
         return False
 
 
+def searchSellerPosts(postId=None):
+    try:
+        if postId is None:
+            #   return all the sell posts
+            #   not support paging
+            posts = []
+            for post in SellerPost.query.all():
+                posts.append(from_sql(post))
+            return posts
+        else:
+            post = SellerPost.query.get(postId)
+            return from_sql(post)
+    except:
+        return None
+
+
+def searchBuyerPosts(postId=None):
+    try:
+        if postId is None:
+            #   return all the sell posts
+            #   not support paging
+            posts = []
+            for post in BuyerPost.query.all():
+                posts.append(from_sql(post))
+            return posts
+        else:
+            post = BuyerPost.query.get(postId)
+            return from_sql(post)
+    except:
+        return None
+
+
 def _create_database():
     """
     If this script is run directly, create all the tables necessary to run the

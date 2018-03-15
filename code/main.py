@@ -103,5 +103,23 @@ def loggedIn():
 def page_not_found(e):
     return render_template('notFound.html'), 404
 
+'''
+Return seller post list
+'''
+@app.route('/SellerPosts')
+def SellerPosts():
+	posts = db.searchSellerPosts()
+	return render_template("sellerPosts.html", posts)
+
+
+'''
+Return seller post list
+'''
+@app.route('/BuyerPosts')
+def SellPosts():
+	posts = db.searchBuyerPosts()
+	return render_template("buyerPosts.html", posts)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
