@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import enum
 
 db = SQLAlchemy()
 
@@ -16,6 +17,18 @@ def from_sql(row):
     data.pop('_sa_instance_state')
     return data    
 
+class Category(enum.Enum):
+    Beauty = 'Beauty'
+    Books = 'Books'
+    Electronics = 'Electronics'
+    Clothing = 'Clothing'
+    Accessories = 'Accessories'
+    Health = 'Health'
+    Kitchen = 'Kitchen'
+    Music = 'Music'
+    Software = 'Software'
+    Outdoor = 'Outdoor'
+    Furniture = 'Furniture'
 
 class User(db.Model):
     username = db.Column(db.String(32), primary_key=True)
@@ -42,7 +55,7 @@ class BuyerPost(db.Model):
     title = db.Column(db.String(64), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.LargeBinary)
-    category = db.Column(db.String(64))
+    category = db.Column(db.Enum(Category))
     price = db.Column(db.Integer)
     time = db.Column(db.DateTime)
     location = db.Column(db.String(32))
@@ -58,7 +71,7 @@ class SellerPost(db.Model):
     title = db.Column(db.String(64), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.LargeBinary)
-    category = db.Column(db.String(64))
+    category = db.Column(db.Enum(Category))
     price = db.Column(db.Integer)
     time = db.Column(db.DateTime)
     location = db.Column(db.String(32))
