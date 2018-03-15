@@ -1,3 +1,10 @@
+$(document).ready(function(){
+setTimeout(function() {
+  $("#alertbar").fadeOut().empty();
+}, 5000);
+});
+
+
 (function() {
   'use strict';
   window.addEventListener('load', function() {

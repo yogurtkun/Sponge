@@ -11,11 +11,15 @@
 }
 
 .loginBtn{
-    style="min-width:40%" !important;
+    min-width:40% !important;
+}
+
+.signupBtn{
+    min-width:40% !important;
 }
 
 .resetBtn{
-    style="min-width:40%" !important;
+    min-width:40% !important;
 }
 
 

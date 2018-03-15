@@ -2,54 +2,53 @@
 {% extends "header.html" %}
 
 {% block content %}
-<h2 style="margin: 20px 0 20px 0">Sign up</h2>
 <script src="{{ url_for('static', filename='signup.js')}}"></script>
+<link rel="stylesheet" href="static/account.css">
 
-<form method="POST" class="needs-validation" novalidate style="width:40%; margin-bottom: 20px"  action="/registerUser">
+<form method="POST" class="needs-validation  container-fluid formObj" novalidate name="form1" action="/registerUser">
+<h2 class="header text-center">Sign up</h2>
   <div class="form-group">
     <label id="username">Username</label>
-    <input type="text" name="username" id="username-value" class="form-control" required/>
+    <input type="text" name="username" id="username-value" class="form-control" placeholder="username" required/>
     <div class="invalid-feedback">
       Username should not be empty
     </div>
   </div>
   <div class="form-group">
     <label id="email">Email</label>
-    <input type="email" name="email" id="email-value" class="form-control" required/>
+    <input type="email" name="email" id="email-value" class="form-control" placeholder="email" required/>
     <div class="invalid-feedback">
       Invalid email address
     </div>
   </div>
   <div class="form-group">
     <label id="password">Password</label>
-    <input type="password" name="password" id="password-value" class="form-control" required/>
+    <input type="password" name="password" id="password-value" class="form-control" placeholder="password" required/>
     <div class="invalid-feedback">
       Password should not be empty
     </div>
   </div>
   <div class="form-group">
     <label id="confirm-pwd">Confirm password</label>
-    <input type="password" name="confirm-pwd" id="confirm-pwd-value" class="form-control" required="" />
+    <input type="password" name="confirm-pwd" id="confirm-pwd-value" class="form-control" placeholder="confirm password" required="" />
     <div class="invalid-feedback">
       Passwords do not match
     </div>
   </div>
   <div class="form-group">
     <label id="zipcode">Zip code</label>
-    <input type="text" name="zipcode" id="zipcode-value"xs class="form-control" required/>
+    <input type="text" name="zipcode" id="zipcode-value"xs class="form-control" placeholder="zipcode"  required/>
     <div class="invalid-feedback">
       Invalid zip code
     </div>
   </div>
-  <div style="text-align: center; margin-top:40px">
-    <button class="btn btn-primary" style="min-width:40%" type="submit">Sign up</button>
+  <div style="text-align: center;">
+    <button class="btn btn-primary container-fluid signupBtn"" type="submit">Sign up</button>
   </div>
+  {% if error %}
+  <div id="alertbar" class="alert alert-danger mt-3" role="alert">{{error}}</div>
+  {% endif %}
 </form>
-
-
-{% if error %}
-<div class="alert alert-danger" role="alert">{{error}}</div>
-{% endif %}
 
 {% endblock %}
 {# [END form] #}
