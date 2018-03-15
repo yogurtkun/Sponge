@@ -1,5 +1,5 @@
-from google.appengine.ext import vendor
-vendor.add('lib')
+# from google.appengine.ext import vendor
+# vendor.add('lib')
 
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
@@ -45,8 +45,9 @@ The signup page
 def signup():
     return render_template("signup.html")
 
-@app.route('/portal/<user_name>')
-def userPortal(user_name):
+@app.route('/portal',methods = ['GET'])
+def userPortal():
+	user_name = request.args.get('name')
 	if not session['logged_in'] or not session['username'] == user_name:
 		return redirect('/login')
 	user = db.searchUser(user_name)

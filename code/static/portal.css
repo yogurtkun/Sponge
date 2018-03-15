@@ -1,3 +1,10 @@
+.div-center {
+    margin: auto;
+    width: 10%;
+    border: 3px solid green;
+    padding: 30px;
+}
+
 .user-row {
     margin-bottom: 14px;
 }

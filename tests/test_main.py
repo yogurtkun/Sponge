@@ -82,12 +82,13 @@ class MainTest(unittest.TestCase):
             self.app.post("/registerUser", data=user)
             self.app.post("/loginUser", data = user)
 
-            rv = self.app.get('/portal/'+user['username'])
+            rv = self.app.get('/portal?name='+user['username'])
             
             assert b"testUser" in rv.data
             assert b"test@domain.com" in rv.data
             assert b"10026" in rv.data
             db.deleteUser("testUser")
+            print 'user portal pass'
 
 
 if __name__ == '__main__':
