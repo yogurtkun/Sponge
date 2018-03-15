@@ -98,6 +98,10 @@ check if there is a logged_in user
 def loggedIn():
 	return 'logged_in' in session.keys() and session['logged_in']
 
+        
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('notFound.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
