@@ -1,5 +1,5 @@
-# from google.appengine.ext import vendor
-# vendor.add('lib')
+from google.appengine.ext import vendor
+vendor.add('lib')
 
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
@@ -13,22 +13,6 @@ app.config.from_object(config)
 with app.app_context():
     db.init_app(app)
 
-# dynamodb = boto3.resource(
-#     'dynamodb',
-#     endpoint_url='http://localhost:8000',
-#     region_name='dummy_region',
-#     aws_access_key_id='dummy_access_key',
-#     aws_secret_access_key='dummy_secret_key',
-#     verify=False)
-
-def connect_db():
-    with app.app_context():
-        conn = SQLAlchemy()
-        app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
-        conn.init_app(app)
-        result = conn.session.execute("SELECT * From test").fetchone()
-        conn.session.close()
-        return str(result)
 
 
 @app.route('/')
@@ -48,7 +32,7 @@ def signup():
 @app.route('/portal',methods = ['GET'])
 def userPortal():
 	user_name = request.args.get('name')
-	if not session['logged_in'] or not session['username'] == user_name:
+	if not loggedIn() or not session['username'] == user_name:
 		return redirect('/login')
 	user = db.searchUser(user_name)
 	return render_template("portal.html", user = user)
@@ -91,6 +75,7 @@ def loginUser():
 	if res == 1: # login succeed
 		session['logged_in'] = True
 		session['username'] = username
+		print "log in"
 		return redirect('/')
 	elif res == -1: # wrong password
 		return render_template("login.html", error="Wrong password!")
@@ -107,7 +92,11 @@ def logoutUser():
     session.pop('username', None)
     return redirect('/')
 
-
+'''
+check if there is a logged_in user
+'''
+def loggedIn():
+	return 'logged_in' in session.keys() and session['logged_in']
 
 
 if __name__ == '__main__':
