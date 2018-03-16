@@ -179,8 +179,6 @@ def createPost(request, ifSeller, ifBuyer):
 	if postId == None:
 		return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post failed!')
 	return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post successfully!', postId = postId)
-	location = str(request.form['location'])
-
 
 
 if __name__ == '__main__':
