@@ -31,6 +31,7 @@ class MainTest(unittest.TestCase):
             db = main.db
             db.deleteUser("testUser")
             db.deleteSellerPostByUser("testUser")
+            db.deleteBuyerPostByUser("testUser")
         
 
     #def test_hello_world(self):
@@ -43,7 +44,7 @@ class MainTest(unittest.TestCase):
             db = main.db
             res = str(db.db.session.execute("select * from test").first())
             assert(res == '(1, 1)')
-            print 'database connection pass'
+            print "database connection pass\n"
 
     def test_registerUser(self):
         with main.app.app_context():
@@ -54,7 +55,7 @@ class MainTest(unittest.TestCase):
             assert db.searchUser("testUser")
             rv = self.app.post("/registerUser", data=user, follow_redirects=True)
             assert b'User exists!' in rv.data
-            print 'user registration pass'
+            print "user registration pass\n"
 
 
     def test_loginUser(self):
@@ -72,13 +73,13 @@ class MainTest(unittest.TestCase):
             user = {"username":"testUser", "password":"1234"}
             rv = self.app.post("/loginUser", data=user, follow_redirects=True)
             assert b'User doesn\'t exist!' not in rv.data
-            print 'user login pass'
+            print "user login pass\n"
 
 
     def test_userPortal(self):
         with main.app.app_context():
             db = main.db
-            user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
+            user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10025"}
             rv = self.app.get('/portal')
             assert b"portal" not in rv.data
             self.app.post("/registerUser", data = user)
@@ -89,20 +90,23 @@ class MainTest(unittest.TestCase):
             rv = self.app.get('/portal')    
             assert b"testUser" in rv.data
             assert b"test@domain.com" in rv.data
-            assert b"10026" in rv.data
-            print "user portal pass"
+            assert b"10025" in rv.data
+            print "user portal pass\n"
 
 
-    def test_createSellerPost(self):
+    def test_createPost(self):
         with main.app.app_context():
             db = main.db
             db.registerUser("testUser", "test@domain.com", "1234", "10025")
             user = {"username":"testUser", "password":"1234"}
             self.app.post("/loginUser", data=user, follow_redirects=True)
-            postdata = {"title":"test", "description":"test", "category":"Books"}
+            postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
             rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
             assert b"Create post successfully!" in rv.data
-            print 'seller post creating pass'
+            postdata = {"title":"test", "description":"wanna buy test", "category":"Books"}
+            rv = self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
+            assert b"Create post successfully!" in rv.data
+            print "seller and buyer post creating pass\n"
 
 
 

@@ -122,13 +122,23 @@ def SellPosts():
 
 
 '''
-Website for seller post creating
+Page for seller post creating
 '''
 @app.route('/NewSellerPost')
-def createSellerPostWebsite():
+def createSellerPostPage():
 	if not loggedIn():
-		return redirect('/login', error='Please login first')
+		return render_template('login.html', error='Please login first')
 	return render_template('post.html', seller=True)
+
+
+'''
+Page for buyer post creating
+'''
+@app.route('/NewBuyerPost')
+def createBuyerPostPage():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	return render_template('post.html', buyer=True)
 
 
 '''
@@ -136,22 +146,36 @@ Create Seller Post
 '''
 @app.route('/NewSellerPost', methods=['POST'])
 def createSellerPost():
+	return createPost(request, True, False)
+
+
+'''
+Create Buyer Post
+'''
+@app.route('/NewBuyerPost', methods=['POST'])
+def createBuyerPost():
+	return createPost(request, False, True)
+
+
+'''
+Create A Post for Buyer or Seller
+'''
+def createPost(request, ifSeller, ifBuyer):
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
-	title = request.form.get('title')
-	description = request.form.get('description')
-	category = request.form.get('category')
-	price = request.form.get('price')
-	location = request.form.get('location')
-	image = request.files.get('image')
-	if price == '':
-		price = None
-	if image is None or image.filename == '':
+	title = str(request.form['title'])
+	description = str(request.form['description'])
+	category = str(request.form['category']) if 'category' in request.form.keys() else None
+	price = str(request.form['price']) if 'price' in request.form.keys() and len(request.form['price'])>0 else None
+	location = str(request.form['location']) if 'location' in request.form.keys() and len(request.form['location'])>0 else None
+	image = request.files.get('image') # None if no such file
+	if image == None or image.filename == '':
 		image = None
 	else:
-		image = image.read()
-	sellerName = session['username']
-	postId = db.createSellerPost(title, description, category, price, location, image, sellerName)
+		image = image.read() # to binary file
+	# time = current time, will be calculated in database
+	name = session['username']
+	postId = db.createPost(title, description, category, price, location, image, name, ifSeller, ifBuyer)
 	if postId == None:
 		return render_template('post.html', seller=True, error='Create post failed!')
 	return render_template('post.html', seller=True, error='Create post successfully!', postId = postId)

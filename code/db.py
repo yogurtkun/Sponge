@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import enum
 import datetime
 
 db = SQLAlchemy()
@@ -18,18 +17,6 @@ def from_sql(row):
     data.pop('_sa_instance_state')
     return data    
 
-class Category(enum.Enum):
-    Beauty = 'Beauty'
-    Books = 'Books'
-    Electronics = 'Electronics'
-    Clothing = 'Clothing'
-    Accessories = 'Accessories'
-    Health = 'Health'
-    Kitchen = 'Kitchen'
-    Music = 'Music'
-    Software = 'Software'
-    Outdoor = 'Outdoor'
-    Furniture = 'Furniture'
 
 class User(db.Model):
     username = db.Column(db.String(32), primary_key=True)
@@ -56,7 +43,7 @@ class BuyerPost(db.Model):
     title = db.Column(db.String(64), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.LargeBinary)
-    category = db.Column(db.Enum(Category))
+    category = db.Column(db.Enum('Beauty','Books','Electronics','Clothing','Accessories','Health','Kitchen','Music','Software','Outdoor','Furniture'))
     price = db.Column(db.Integer)
     time = db.Column(db.DateTime)
     location = db.Column(db.String(32))
@@ -72,7 +59,7 @@ class SellerPost(db.Model):
     title = db.Column(db.String(64), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.LargeBinary)
-    category = db.Column(db.Enum(Category))
+    category = db.Column(db.Enum('Beauty','Books','Electronics','Clothing','Accessories','Health','Kitchen','Music','Software','Outdoor','Furniture'))
     price = db.Column(db.Integer)
     time = db.Column(db.DateTime)
     location = db.Column(db.String(32))
@@ -161,6 +148,16 @@ def deleteSellerPostById(postId):
         return False
 
 
+def deleteBuyerPostById(postId):
+    try:
+        BuyerPost.query.filter_by(postId = postId).delete()
+        db.session.commit()
+        return True
+    except:
+        db.session.rollback()
+        return False
+
+
 def deleteSellerPostByUser(username):
     try:
         SellerPost.query.filter_by(sellerName = username).delete()
@@ -171,14 +168,28 @@ def deleteSellerPostByUser(username):
         return False
 
 
-def createSellerPost(title, description, category, price, location, image, sellerName):
+def deleteBuyerPostByUser(username):
+    try:
+        BuyerPost.query.filter_by(buyerName = username).delete()
+        db.session.commit()
+        return True
+    except:
+        db.session.rollback()
+        return False
+
+
+def createPost(title, description, category, price, location, image, username, seller, buyer):
     time = datetime.datetime.now()
-    post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=sellerName, time=time)
+    if seller:
+        post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=username, time=time)
+    if buyer:
+        post = BuyerPost(title=title, description=description, category=category, price=price, location=location, image=image, buyerName=username, time=time)      
     try:
         db.session.add(post)
         db.session.commit()
         return post.postId
-    except:
+    except Exception as e:
+        print e
         db.session.rollback()
         return None
 

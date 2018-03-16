@@ -8,10 +8,10 @@
 <section id="contact">
         <div class="section-content">
             {% if buyer %}
-            <h1 class="section-header">Post the information you want</h1>
+            <h1 class="section-header">Post the information you want to buy</h1>
             {% endif %}
             {% if seller %}
-            <h1 class="section-header">Post the information you sell</h1>
+            <h1 class="section-header">Post the information you want to sell</h1>
             {% endif %}
         </div>
         {% if error %}
@@ -20,7 +20,7 @@
         <div class="contact-section">
         <div class="container col-md-12">
             {% if buyer %}
-            <form method="POST" class="needs-validation container-fluid formObj" enctype="multipart/form-data" novalidate action="/NewSellerPost">
+            <form method="POST" class="needs-validation container-fluid formObj" enctype="multipart/form-data" novalidate action="/NewBuyerPost">
             {% endif %}
             {% if seller %}
             <form method="POST" class="needs-validation container-fluid formObj" enctype="multipart/form-data" novalidate action="/NewSellerPost">     
@@ -44,17 +44,23 @@
                           <label for="category">Category:</label>
                           <br>
                         <select name="category">
+                            <option>Beauty</option>
                             <option>Books</option>
+                            <option>Electronics</option>
+                            <option>Clothing</option>
+                            <option>Accessories</option>
+                            <option>Health</option>
+                            <option>Kitchen</option>
+                            <option>Music</option>
+                            <option>Software</option>
+                            <option>Outdoor</option>
+                            <option>Furniture</option>
                         </select>
                       </div>
                       <div class="form-group">
                         <label for="Price">Price</label>
                         <input class="form-control" placeholder="0$" name="price">
                       </div>	
-                      <div class="form-group">
-                        <label for="time">Time</label>
-                        <input class="form-control" placeholder="Prefer deal time">
-                      </div>
                       <div class="form-group">
                           <label for="location">Location</label>
                           <input type="location" class="form-control" id="location" placeholder="Prefer deal location" name="time">
@@ -63,7 +69,7 @@
 
                   <div class="col-md-6">
                       <div class="form-group">
-                          <label for ="description"> Message</label>
+                          <label for ="description"> Decription</label>
                            <textarea  class="form-control" id="description" placeholder="Enter Your Description" name="description" required></textarea>
                            <div class="invalid-feedback">
                                 Description should not be empty
