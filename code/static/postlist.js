@@ -50,9 +50,64 @@ Vue.component('postitems', {
       type: String,
     }
   },
-  //template: '<div>{{ postid }}{{ title }}{{ description }}{{ price }}{{ time }}{{ like }}</div>'
-  //template: '<div class="card container-fluid"><img  src="static/test.jpg" alt="image" height="100" width="100"><div class="card-body"><h5 class="card-title">Item:{{title}}</h5><p class="card-text">Description:{{description}}</p><p class="card-text">Category:{{category}}</p><p class="card-text">Location:{{location}}</p><p class="card-text">Poster:{{user}}</p><p class="card-text">Price:{{price}}</p><p class="card-text">{{time}}</p><p class="card-text">Like:{{like}}</p><a v-bind:href="postid" class="btn btn-primary">Detail</a></div></div>'
-  template: '<div class="card container-fluid"><img src="static/test.jpg" alt="image" height="100" width="100"><div class="card-body"><h5 class="card-title">Item:{{title}}</h5><p class="card-text">Description:{{description}}</p><p class="card-text">Category:{{category}}</p><p class="card-text">Location:{{location}}</p><p class="card-text">Poster:{{user}}</p><p class="card-text">Price:{{price}}</p><p class="card-text">{{time}}</p><p class="card-text">Like:{{like}}</p><a v-bind:href="postid" class="btn btn-primary">Detail</a></div></div>'
+  template: `<div class="card mt-2">
+              <div class="row">
+                <div class="col">
+                  <p class="card-text">
+                    <div class="product_image2">
+                      <a v-bind:href="postid"><img src="https://bit.ly/1myplK1" alt=""></a>
+                      <div class="product_buttons">
+                        <button class="product_heart"><i class="fa fa-heart"></i></button>
+                        <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
+                      </div>
+                    </div>
+                  </p>
+                </div>
+                <div class="col-8">
+                  <div>
+                    <h2>
+                      <a class="card-title" v-bind:href="postid">
+                        {{title}}
+                      </a>
+                    </h2>
+                    <p class="card-text">
+                      {{description}}
+                    </p>
+                  </div>
+                </div>
+                <div class="col">
+                  <h5 class="text-danger float-right">
+                    \${{price}}
+                  </h5>
+                </div>
+              </div>
+              <p class="card-footer text-muted text-center">
+                <span class="float-left">Category:{{category}}</span> 
+                <span class="text-center">Location:{{location}} </span> 
+                <span class="float-right">{{user}} posted on {{time}}</span>
+              </p>
+            </div>`
+  /*Template candiate
+    template:`<li class="product_item">
+              <div class="product_image">
+                <a v-bind:href="postid"><img src="https://bit.ly/1myplK1" alt=""></a>
+                  <div class="product_buttons">
+                    <button class="product_heart"><i class="fa fa-heart"></i></button>
+                    <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
+                  </div>
+              </div>
+              <div class="product_values">
+                <div class="product_title">
+                  <h3>{{title}}</h3>
+                </div>
+                <div class="product_price">
+                  <div href="#"><span class="price_old">old_price</span> <span class="price_new">{{price}}</span></div>
+                </div>
+                <div class="product_desc">
+                  <p class="truncate">{{description}}</p>
+                </div>
+              </div>
+            <li>`*/
 });
 
 Vue.component('category', {
@@ -117,4 +172,43 @@ var category = new Vue({
           console.log(data);
       });
   },
+});
+
+
+/*Move to Top Button*/
+Vue.component('backtotop', {
+  template: '#backtotop',
+  data: function() {
+    return {
+      isVisible: false
+    };
+  },
+  methods: {
+    initToTopButton: function() {
+      $(document).bind('scroll', function() {
+        var backToTopButton = $('.goTop');
+        if ($(document).scrollTop() > 250) {
+          backToTopButton.addClass('isVisible');
+          this.isVisible = true;
+        } else {
+          backToTopButton.removeClass('isVisible');
+          this.isVisible = false;
+        }
+      }.bind(this));
+    },
+    backToTop: function() {
+      $('html,body').stop().animate({
+        scrollTop: 0
+      }, 'slow', 'swing');
+    }
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      this.initToTopButton();
+    });
+  }
+});
+
+var app = new Vue({
+  el: '#toTop'
 });
