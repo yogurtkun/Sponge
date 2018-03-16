@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import enum
+import datetime
 
 db = SQLAlchemy()
 
@@ -148,6 +149,38 @@ def deleteUser(username):
     except:
         db.session.rollback()
         return False
+
+
+def deleteSellerPostById(postId):
+    try:
+        SellerPost.query.filter_by(postId = postId).delete()
+        db.session.commit()
+        return True
+    except:
+        db.session.rollback()
+        return False
+
+
+def deleteSellerPostByUser(username):
+    try:
+        SellerPost.query.filter_by(sellerName = username).delete()
+        db.session.commit()
+        return True
+    except:
+        db.session.rollback()
+        return False
+
+
+def createSellerPost(title, description, category, price, location, image, sellerName):
+    time = datetime.datetime.now()
+    post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=sellerName, time=time)
+    try:
+        db.session.add(post)
+        db.session.commit()
+        return post.postId
+    except:
+        db.session.rollback()
+        return None
 
 
 def searchSellerPosts(postId=None):

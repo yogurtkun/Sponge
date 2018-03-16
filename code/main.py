@@ -31,10 +31,10 @@ def signup():
 
 @app.route('/portal',methods = ['GET'])
 def userPortal():
-	user_name = request.args.get('name')
-	if not loggedIn() or not session['username'] == user_name:
+	if not loggedIn():
 		return redirect('/login')
-	user = db.searchUser(user_name)
+	username = session['username']
+	user = db.searchUser(username)
 	return render_template("portal.html", user = user)
 
 
@@ -75,7 +75,6 @@ def loginUser():
 	if res == 1: # login succeed
 		session['logged_in'] = True
 		session['username'] = username
-		print "log in"
 		return redirect('/')
 	elif res == -1: # wrong password
 		return render_template("login.html", error="Wrong password!")
@@ -119,6 +118,45 @@ Return seller post list
 def SellPosts():
 	posts = db.searchBuyerPosts()
 	return render_template("buyerPosts.html", posts)
+
+
+
+'''
+Website for seller post creating
+'''
+@app.route('/NewSellerPost')
+def createSellerPostWebsite():
+	if not loggedIn():
+		return redirect('/login', error='Please login first')
+	return render_template('post.html', seller=True)
+
+
+'''
+Create Seller Post
+'''
+@app.route('/NewSellerPost', methods=['POST'])
+def createSellerPost():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	title = request.form.get('title')
+	description = request.form.get('description')
+	category = request.form.get('category')
+	price = request.form.get('price')
+	location = request.form.get('location')
+	image = request.files.get('image')
+	if price == '':
+		price = None
+	if image is None or image.filename == '':
+		image = None
+	else:
+		image = image.read()
+	sellerName = session['username']
+	postId = db.createSellerPost(title, description, category, price, location, image, sellerName)
+	if postId == None:
+		return render_template('post.html', seller=True, error='Create post failed!')
+	return render_template('post.html', seller=True, error='Create post successfully!', postId = postId)
+	location = str(request.form['location'])
+
 
 
 if __name__ == '__main__':
