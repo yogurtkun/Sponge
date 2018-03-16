@@ -177,8 +177,8 @@ def createPost(request, ifSeller, ifBuyer):
 	name = session['username']
 	postId = db.createPost(title, description, category, price, location, image, name, ifSeller, ifBuyer)
 	if postId == None:
-		return render_template('post.html', seller=True, error='Create post failed!')
-	return render_template('post.html', seller=True, error='Create post successfully!', postId = postId)
+		return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post failed!')
+	return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post successfully!', postId = postId)
 	location = str(request.form['location'])
 
 
