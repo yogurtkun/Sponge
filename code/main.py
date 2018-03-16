@@ -178,6 +178,9 @@ def createPost(request, ifSeller, ifBuyer):
 		return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post failed!')
 	return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post successfully!', postId = postId)
 
+@app.route('/postlist')
+def postlist():
+	return render_template("postlist.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
