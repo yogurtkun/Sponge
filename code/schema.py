@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import datetime
+
 
 db = SQLAlchemy()
 
@@ -100,130 +100,6 @@ class Message(db.Model):
     def __repr__(self):
         return '<Message %r>' % messageId
 
-
-def registerUser(username, email, password, zipcode):
-    user = User(username=username, email=email, password=password, zipcode=zipcode)
-    try:
-        db.session.add(user)
-        db.session.commit()
-        return True
-    except:
-        db.session.rollback()
-        return False
-
-
-def loginUser(username, password):
-    res = User.query.get(username)
-    if res:
-        if res.checkPassword(password):
-            return 1
-        return -1 # wrong password
-    return 0 # user doesn't exist
-
-
-def searchUser(username):
-    res = User.query.get(username)
-    if res:
-        return from_sql(res)
-    return None
-
-
-def deleteUser(username):
-    try:
-        User.query.filter_by(username=username).delete()
-        db.session.commit()
-        return True
-    except:
-        db.session.rollback()
-        return False
-
-
-def deleteSellerPostById(postId):
-    try:
-        SellerPost.query.filter_by(postId = postId).delete()
-        db.session.commit()
-        return True
-    except:
-        db.session.rollback()
-        return False
-
-
-def deleteBuyerPostById(postId):
-    try:
-        BuyerPost.query.filter_by(postId = postId).delete()
-        db.session.commit()
-        return True
-    except:
-        db.session.rollback()
-        return False
-
-
-def deleteSellerPostByUser(username):
-    try:
-        SellerPost.query.filter_by(sellerName = username).delete()
-        db.session.commit()
-        return True
-    except:
-        db.session.rollback()
-        return False
-
-
-def deleteBuyerPostByUser(username):
-    try:
-        BuyerPost.query.filter_by(buyerName = username).delete()
-        db.session.commit()
-        return True
-    except:
-        db.session.rollback()
-        return False
-
-
-def createPost(title, description, category, price, location, image, username, seller, buyer):
-    time = datetime.datetime.now()
-    if seller:
-        post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=username, time=time)
-    if buyer:
-        post = BuyerPost(title=title, description=description, category=category, price=price, location=location, image=image, buyerName=username, time=time)      
-    try:
-        db.session.add(post)
-        db.session.commit()
-        return post.postId
-    except Exception as e:
-        print e
-        db.session.rollback()
-        return None
-
-
-def searchSellerPosts(postId=None):
-    try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            posts = []
-            for post in SellerPost.query.all():
-                posts.append(from_sql(post))
-            return posts
-        else:
-            post = SellerPost.query.get(postId)
-            return from_sql(post)
-    except:
-        return None
-
-
-def searchBuyerPosts(postId=None):
-    try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            posts = []
-            for post in BuyerPost.query.all():
-                posts.append(from_sql(post))
-            return posts
-        else:
-            post = BuyerPost.query.get(postId)
-            return from_sql(post)
-    except:
-        return None
 
 
 def _create_database():

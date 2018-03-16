@@ -4,21 +4,19 @@ vendor.add('lib')
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 import config
-import db
+import schema
 import json
+import account, post
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
 
 with app.app_context():
-    db.init_app(app)
-
+    schema.init_app(app)
 
 
 @app.route('/')
 def index():
-	# print db.registerUser("yz3060", "yz3060@columbia.edu", "1234", "10025")
-	# print db.deleteUser("yz3060")
 	return render_template("index.html")
 
 
@@ -34,7 +32,7 @@ def userPortal():
 	if not loggedIn():
 		return redirect('/login')
 	username = session['username']
-	user = db.searchUser(username)
+	user = account.searchUser(username)
 	return render_template("portal.html", user = user)
 
 
@@ -47,7 +45,7 @@ def registerUser():
 	email = str(request.form['email'])
 	password = str(request.form['password'])
 	zipcode = str(request.form['zipcode'])
-	res = db.registerUser(username, email, password, zipcode)
+	res = account.registerUser(username, email, password, zipcode)
 	if res: # signup successful
 		session['logged_in'] = True
 		session['username'] = username
@@ -71,7 +69,7 @@ User login
 def loginUser():
 	username = str(request.form['username'])
 	password = str(request.form['password'])
-	res = db.loginUser(username, password)
+	res = account.loginUser(username, password)
 	if res == 1: # login succeed
 		session['logged_in'] = True
 		session['username'] = username
@@ -107,7 +105,7 @@ Return seller post list
 '''
 @app.route('/SellerPosts')
 def SellerPosts():
-	posts = db.searchSellerPosts()
+	posts = post.searchSellerPosts()
 	return render_template("sellerPosts.html", posts)
 
 
@@ -116,7 +114,7 @@ Return seller post list
 '''
 @app.route('/BuyerPosts')
 def SellPosts():
-	posts = db.searchBuyerPosts()
+	posts = post.searchBuyerPosts()
 	return render_template("buyerPosts.html", posts)
 
 
@@ -175,7 +173,7 @@ def createPost(request, ifSeller, ifBuyer):
 		image = image.read() # to binary file
 	# time = current time, will be calculated in database
 	name = session['username']
-	postId = db.createPost(title, description, category, price, location, image, name, ifSeller, ifBuyer)
+	postId = post.createPost(title, description, category, price, location, image, name, ifSeller, ifBuyer)
 	if postId == None:
 		return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post failed!')
 	return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post successfully!', postId = postId)

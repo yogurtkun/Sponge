@@ -19,6 +19,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.
 
 import main
 import unittest
+import account, post
+import schema
 
 class MainTest(unittest.TestCase):
     """This class uses the Flask tests app to run an integration test against a
@@ -28,10 +30,9 @@ class MainTest(unittest.TestCase):
         self.app = main.app.test_client()
         self.app.get("/logout")
         with main.app.app_context():
-            db = main.db
-            db.deleteUser("testUser")
-            db.deleteSellerPostByUser("testUser")
-            db.deleteBuyerPostByUser("testUser")
+            account.deleteUser("testUser")
+            post.deleteSellerPostByUser("testUser")
+            post.deleteBuyerPostByUser("testUser")
         
 
     #def test_hello_world(self):
@@ -41,18 +42,17 @@ class MainTest(unittest.TestCase):
 
     def test_database_connection(self):
         with main.app.app_context():
-            db = main.db
-            res = str(db.db.session.execute("select * from test").first())
+            db = main.schema.db
+            res = str(db.session.execute("select * from test").first())
             assert(res == '(1, 1)')
             print "database connection pass\n"
 
     def test_registerUser(self):
         with main.app.app_context():
-            db = main.db
             user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10026"}
             rv = self.app.post("/registerUser", data=user, follow_redirects=True)
             assert b'User exists!' not in rv.data
-            assert db.searchUser("testUser")
+            assert account.searchUser("testUser")
             rv = self.app.post("/registerUser", data=user, follow_redirects=True)
             assert b'User exists!' in rv.data
             print "user registration pass\n"
@@ -60,8 +60,7 @@ class MainTest(unittest.TestCase):
 
     def test_loginUser(self):
         with main.app.app_context():
-            db = main.db
-            db.registerUser("testUser", "test@domain.com", "1234", "10025")
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
             user = {"username":"testUser", "password":"1234"}
             rv = self.app.post("/loginUser", data=user, follow_redirects=True)
             assert b'Wrong password!' not in rv.data
@@ -69,7 +68,7 @@ class MainTest(unittest.TestCase):
             user = {"username":"testUser", "password":"666"}
             rv = self.app.post("/loginUser", data=user, follow_redirects=True)
             assert b'Wrong password!' in rv.data
-            db.deleteUser("testUser")
+            account.deleteUser("testUser")
             user = {"username":"testUser", "password":"1234"}
             rv = self.app.post("/loginUser", data=user, follow_redirects=True)
             assert b'User doesn\'t exist!' not in rv.data
@@ -78,7 +77,6 @@ class MainTest(unittest.TestCase):
 
     def test_userPortal(self):
         with main.app.app_context():
-            db = main.db
             user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10025"}
             rv = self.app.get('/portal')
             assert b"portal" not in rv.data
@@ -96,8 +94,7 @@ class MainTest(unittest.TestCase):
 
     def test_createPost(self):
         with main.app.app_context():
-            db = main.db
-            db.registerUser("testUser", "test@domain.com", "1234", "10025")
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
             user = {"username":"testUser", "password":"1234"}
             self.app.post("/loginUser", data=user, follow_redirects=True)
             postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
