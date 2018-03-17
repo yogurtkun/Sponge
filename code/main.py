@@ -220,6 +220,11 @@ def getPost(postId, flag):
 	isSeller = flag == "Seller"
 	isBuyer = flag == "Buyer"
 	postData = post.getPost(postId, isSeller, isBuyer)
+	if postData == None:
+		if isSeller:
+			return redirect('/NewSellerPost')
+		if isBuyer:
+			return redirect('/NewBuyerPost')
 	#print postData
 	image = postData['image']
 	if image != None:
