@@ -1,5 +1,5 @@
 from main import schema
-from schema import SellerPost, BuyerPost
+from schema import SellerPost, BuyerPost, from_sql
 import datetime
 
 
@@ -19,6 +19,50 @@ def createPost(title, description, category, price, location, image, username, s
     except Exception as e:
         print e
         db.session.rollback()
+        return None
+
+
+def getPost(postId, seller, buyer):
+    if seller:
+        return searchSellerPosts(postId)
+    if buyer:
+        return searchBuyerPosts(postId)
+    return None
+
+
+def searchSellerPosts(postId=None):
+    print "get seller post ", postId
+    try:
+        if postId is None:
+            #   return all the sell posts
+            #   not support paging
+            posts = []
+            for post in SellerPost.query.all():
+                posts.append(from_sql(post))
+            return posts
+        else:
+            post = SellerPost.query.get(postId)
+            return from_sql(post)
+    except Exception as e:
+        print e
+        return None
+
+
+def searchBuyerPosts(postId=None):
+    print "get buyer post ", postId
+    try:
+        if postId is None:
+            #   return all the sell posts
+            #   not support paging
+            posts = []
+            for post in BuyerPost.query.all():
+                posts.append(from_sql(post))
+            return posts
+        else:
+            post = BuyerPost.query.get(postId)
+            return from_sql(post)
+    except Exception as e:
+        print e
         return None
 
 
