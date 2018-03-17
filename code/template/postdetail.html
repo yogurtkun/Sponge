@@ -1,0 +1,172 @@
+{% extends "header.html" %}
+{% block content %}
+
+{% raw %}
+<link rel="stylesheet" href="static/style.css">
+
+<body>
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+
+    <!-- Post Content Column -->
+    <div class="col-lg-8">
+
+      <div id="post-info">
+        <!-- Title -->
+        <h1 id="post-title" class="mt-4">{{post_title}}</h1>
+
+        <hr>
+        <!-- Date/Time -->
+        <p id="post-date">
+        <a id="poster" href="#">{{post_user}} </a> posted on {{post_time}}</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <div v-for="img in post_image_src">
+          <img class="img-fluid rounded mt-3" v-bind:src="img" alt="">
+        </div>
+        <hr>
+
+        <!-- Post Content -->
+        <p class="lead" style="overflow-wrap:break-word">{{post_description}}</p>
+
+        <hr>
+      </div>
+
+      <!-- Comments Form 
+      -->
+      <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+          <h5 class="mt-0">Commenter Name</h5>
+          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        </div>
+      </div>
+
+      <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+          <h5 class="mt-0">Commenter Name</h5>
+          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+          <div class="media mt-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+              <h5 class="mt-0">Commenter Name</h5>
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+          </div>
+
+          <div class="media mt-4">
+            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <div class="media-body">
+              <h5 class="mt-0">Commenter Name</h5>
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <div class="col-md-4">
+
+      <div id="sidebars">
+        <!-- Search Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Relative post</h5>
+          <div class="card-body">
+            <div class="row">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#">1</a>
+                </li>
+                <li>
+                  <a href="#">2</a>
+                </li>
+                <li>
+                  <a href="#">3</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Nearby</h5>
+          <div class="card-body">
+            <div class="row">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#">1</a>
+                </li>
+                <li>
+                  <a href="#">2</a>
+                </li>
+                <li>
+                  <a href="#">3</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Posted by <a id="poster" href="#">{{post_user}} </a></h5>
+          <div class="card-body">
+            <div class="row">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#">1</a>
+                </li>
+                <li>
+                  <a href="#">2</a>
+                </li>
+                <li>
+                  <a href="#">3</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.container -->
+
+
+<div id="toTop">
+  <backtotop></backtotop>
+  </div>
+</body>
+{% endraw %}
+
+<script type="text/x-template" id="backtotop">
+  <button class="goTop" v-if="isVisible" @click="backToTop">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+  </button>
+</script>
+
+<script src="static/postdetail.js"></script>
+{% endblock %}
