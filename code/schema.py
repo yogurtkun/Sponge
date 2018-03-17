@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+import base64
 
 db = SQLAlchemy()
 
@@ -15,8 +16,12 @@ def from_sql(row):
     """Translates a SQLAlchemy model instance into a dictionary"""
     data = row.__dict__.copy()
     data.pop('_sa_instance_state')
+
     if 'time' in data:
         data['time'] = str(data['time'])
+    if 'image' in data and data['image'] is not None:
+        image = data['image']
+        data['image'] = base64.b64encode(image).decode('ascii')
     return data    
 
 

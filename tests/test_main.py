@@ -30,9 +30,9 @@ class MainTest(unittest.TestCase):
         self.app = main.app.test_client()
         self.app.get("/logout")
         with main.app.app_context():
-            account.deleteUser("testUser")
             post.deleteSellerPostByUser("testUser")
             post.deleteBuyerPostByUser("testUser")
+            account.deleteUser("testUser")
         
 
     #def test_hello_world(self):
@@ -77,6 +77,7 @@ class MainTest(unittest.TestCase):
 
     def test_userPortal(self):
         with main.app.app_context():
+            # user portal display
             user = {"username":"testUser", "password":"1234", "email":"test@domain.com", "zipcode":"10025"}
             rv = self.app.get('/portal')
             assert b"portal" not in rv.data
@@ -89,10 +90,17 @@ class MainTest(unittest.TestCase):
             assert b"testUser" in rv.data
             assert b"test@domain.com" in rv.data
             assert b"10025" in rv.data
+
+            # user portal update
+            update = {"username":user['username'], "zipcode":"10027"}
+            rv = self.app.post('/updateUser', data=update)
+            assert(rv.data == 'Success')
+            rv = self.app.get('/portal')
+            assert b"10027" in rv.data
             print "user portal pass\n"
 
 
-    def test_createPost_and_getPost(self):
+    def test_createPost_getPost(self):
         with main.app.app_context():
             account.registerUser("testUser", "test@domain.com", "1234", "10025")
             user = {"username":"testUser", "password":"1234"}
@@ -106,6 +114,10 @@ class MainTest(unittest.TestCase):
             print "seller and buyer post creating and viewing details pass\n"
 
 
+    def test_postList(self):
+        pass
+
+            
 
 
 if __name__ == '__main__':
