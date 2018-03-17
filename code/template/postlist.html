@@ -5,15 +5,11 @@
 
 <body>
 <div id="category">
-  {% raw %}
   <div class="sidenav">
-    <category
-      v-for="ca in category"
-      v-bind:category="ca.category"
-      :keys="ca"
-    ></category>
+    {% for category in categories %}
+      <a href="/postlist/{{category}}"> {{category}} </a>
+    {% endfor %}
   </div>
-  {% endraw %}
 </div>
 
 <div class="container-fluid post-container" id="postlist">
@@ -126,23 +122,49 @@
     </div>
   </div>
 
+{% raw %}
   <div id="postitem" class="mt-3">
-    {% raw %}
-    <postitems
-    v-for="item in items"
-    v-bind:postid="item.postid"
-    v-bind:title="item.title"
-    v-bind:category="item.category"
-    v-bind:description="item.description"
-    v-bind:price="item.price"
-    v-bind:time="item.time"
-    v-bind:like="item.like"
-    v-bind:user="item.user"
-    v-bind:location="item.location"
-    v-bind:imageDir="item.imageDir"
-    :keys="item"></postitems>
-    {% endraw %}
+    <div v-for="item in items">
+      <div class="card mt-2">
+        <div class="row">
+          <div class="col">
+            <p class="card-text">
+              <div class="product_image2">
+                <a v-bind:href="item.postid"><img v-bind:src="item.imageDir" alt=""></a>
+                <div class="product_buttons">
+                  <button class="product_heart"><i class="fa fa-heart"></i></button>
+                  <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
+                </div>
+              </div>
+            </p>
+          </div>
+          <div class="col-8">
+            <div>
+              <h2>
+                <a class="card-title" v-bind:href="item.postid">
+                  {{item.title}}
+                </a>
+              </h2>
+              <p class="card-text">
+                {{item.description}}
+              </p>
+            </div>
+          </div>
+          <div class="col">
+            <h5 class="text-danger float-right">
+              ${{item.price}}
+            </h5>
+          </div>
+        </div>
+        <p class="card-footer text-muted text-center">
+          <span class="float-left">Category:{{item.category}}</span> 
+          <span class="text-center">Location:{{item.location}} </span> 
+          <span class="float-right">{{item.user}} posted on {{item.time}}</span>
+        </p>
+      </div>
+    </div>
   </div>
+{%endraw%}
 </div>
 
 
@@ -153,6 +175,7 @@
 </body>
 
 <script type="text/x-template" id="backtotop">
+  var categories = "{{categories}}"
   <button class="goTop" v-if="isVisible" @click="backToTop">
         <i class="fa fa-angle-up" aria-hidden="true"></i>
     </button>

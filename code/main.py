@@ -191,15 +191,13 @@ def createPost(request, flag):
 '''
 Post List Page
 '''
-@app.route('/postList')
+@app.route('/postlist')
 def postList():
 	posts = {}
 	posts['SellerPosts'] = post.searchSellerPosts()
 	posts['BuyerPosts'] = post.searchBuyerPosts()
-	return render_template("postlist.html", posts=posts)
-
-
-
+	categories = ['Beauty','Books','Electronics','Clothing','Accessories','Health','Kitchen','Music','Software','Outdoor','Furniture']
+	return render_template("postlist.html", posts=[posts], categories=categories)
 
 '''
 Post Detail Page

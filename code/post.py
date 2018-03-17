@@ -105,35 +105,36 @@ def deleteBuyerPostByUser(username):
         db.session.rollback()
         return False
         
-
-def searchSellerPosts(postId=None):
+        
+def searchSellerPosts(postId=None, category=None):
     try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            print 'here'
-            posts = []
-            for post in SellerPost.query.all():
-                posts.append(schema.from_sql(post))
-            return posts
-        else:
+        if postId is not None and category is None:
             post = SellerPost.query.get(postId)
             return schema.from_sql(post)
+        else:
+            query = SellerPost.query
+            if category is not None:
+                query = query.filter_by(category=category)
+            posts = []
+            for post in query.all():
+                posts.append(schema.from_sql(post))
+            return posts
     except:
         return None
 
 
-def searchBuyerPosts(postId=None):
+def searchBuyerPosts(postId=None, category=None):
     try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            posts = []
-            for post in BuyerPost.query.all():
-                posts.append(schema.from_sql(post))
-            return posts
-        else:
+        if postId is not None and category is None:
             post = BuyerPost.query.get(postId)
             return schema.from_sql(post)
+        else:
+            query = BuyerPost.query
+            if category is not None:
+                query = query.filter_by(category=category)
+            posts = []
+            for post in BuyerPost.query.filter_by(category=category).all():
+                posts.append(schema.from_sql(post))
+            return posts
     except:
         return None
