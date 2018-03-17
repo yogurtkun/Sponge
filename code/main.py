@@ -144,7 +144,7 @@ Create Seller Post
 '''
 @app.route('/NewSellerPost', methods=['POST'])
 def createSellerPost():
-	return createPost(request, True, False)
+	return createPost(request, "Seller")
 
 
 '''
@@ -152,15 +152,17 @@ Create Buyer Post
 '''
 @app.route('/NewBuyerPost', methods=['POST'])
 def createBuyerPost():
-	return createPost(request, False, True)
+	return createPost(request, "Buyer")
 
 
 '''
 Create A Post for Buyer or Seller
 '''
-def createPost(request, ifSeller, ifBuyer):
+def createPost(request, flag):
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
+	isSeller = flag == "Seller"
+	isBuyer = flag == "Buyer"
 	title = str(request.form['title'])
 	description = str(request.form['description'])
 	category = str(request.form['category']) if 'category' in request.form.keys() else None
@@ -173,10 +175,10 @@ def createPost(request, ifSeller, ifBuyer):
 		image = image.read() # to binary file
 	# time = current time, will be calculated in database
 	name = session['username']
-	postId = post.createPost(title, description, category, price, location, image, name, ifSeller, ifBuyer)
+	postId = post.createPost(title, description, category, price, location, image, name, isSeller, isBuyer)
 	if postId == None:
-		return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post failed!')
-	return render_template('post.html', seller=ifSeller, buyer=ifBuyer, error='Create post successfully!', postId = postId)
+		return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post failed!')
+	return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post successfully!', postId = postId)
 
 @app.route('/postlist')
 def postlist():
