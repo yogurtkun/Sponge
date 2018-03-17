@@ -180,9 +180,17 @@ def createPost(request, flag):
 		return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post failed!')
 	return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post successfully!', postId = postId)
 
-@app.route('/postlist')
-def postlist():
-	return render_template("postlist.html")
+
+'''
+Post List Page
+'''
+@app.route('/postList')
+def postList():
+	posts = {}
+	posts['SellerPosts'] = post.searchSellerPosts()
+	posts['BuyerPosts'] = post.searchBuyerPosts()
+	return render_template("postlist.html", posts=posts)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
