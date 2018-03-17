@@ -1,6 +1,8 @@
 from google.appengine.ext import vendor
 vendor.add('lib')
 
+import base64
+
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 import config
@@ -178,7 +180,12 @@ def createPost(request, flag):
 	postId = post.createPost(title, description, category, price, location, image, name, isSeller, isBuyer)
 	if postId == None:
 		return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post failed!')
-	return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post successfully!', postId = postId)
+	#return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post successfully!', postId = postId)
+	if isSeller:
+		return redirect('/SellerPost?postId=' + str(postId))
+	if isBuyer:
+		return redirect('/BuyerPost?postId=' + str(postId))
+
 
 
 '''
@@ -190,6 +197,36 @@ def postList():
 	posts['SellerPosts'] = post.searchSellerPosts()
 	posts['BuyerPosts'] = post.searchBuyerPosts()
 	return render_template("postlist.html", posts=posts)
+
+
+
+
+'''
+Post Detail Page
+'''
+@app.route('/SellerPost', methods=['GET'])
+def getSellerPost():
+	postId = int(request.args['postId'])
+	return getPost(postId, "Seller")
+
+
+@app.route('/BuyerPost', methods=['GET'])
+def getBuyerPost():
+	postId = int(request.args['postId'])
+	return getPost(postId, "Buyer")
+
+
+def getPost(postId, flag):
+	isSeller = flag == "Seller"
+	isBuyer = flag == "Buyer"
+	postData = post.getPost(postId, isSeller, isBuyer)
+	#print postData
+	image = postData['image']
+	if image != None:
+		newImage = base64.b64encode(image).decode('ascii')
+		postData['image'] = newImage
+	return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData)
+
 
 
 if __name__ == '__main__':

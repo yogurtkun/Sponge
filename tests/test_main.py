@@ -92,18 +92,19 @@ class MainTest(unittest.TestCase):
             print "user portal pass\n"
 
 
-    def test_createPost(self):
+    def test_createPost_and_getPost(self):
         with main.app.app_context():
             account.registerUser("testUser", "test@domain.com", "1234", "10025")
             user = {"username":"testUser", "password":"1234"}
             self.app.post("/loginUser", data=user, follow_redirects=True)
             postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
             rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
-            assert b"Create post successfully!" in rv.data
+            assert b"Post Details" in rv.data
             postdata = {"title":"test", "description":"wanna buy test", "category":"Books"}
             rv = self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
-            assert b"Create post successfully!" in rv.data
+            assert b"Post Details" in rv.data
             print "seller and buyer post creating pass\n"
+
 
 
 
