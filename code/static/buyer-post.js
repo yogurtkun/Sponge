@@ -12,7 +12,7 @@ function isNormalInteger(str) {
         var validation = Array.prototype.filter.call(forms, function (form) {
             form.addEventListener('submit', function (event) {
                 let price = $('input[name=price]')[0].value;
-                if( !isNormalInteger(price) ){
+                if( !isNormalInteger(price) && price !== ""){
                     alert("Price incorrect");
                     event.preventDefault();
                     event.stopPropagation();
