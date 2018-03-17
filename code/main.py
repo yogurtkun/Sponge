@@ -187,9 +187,17 @@ def createPost(request, flag):
 		return redirect('/BuyerPost?postId=' + str(postId))
 
 
-@app.route('/postlist')
-def postlist():
-	return render_template("postlist.html")
+
+'''
+Post List Page
+'''
+@app.route('/postList')
+def postList():
+	posts = {}
+	posts['SellerPosts'] = post.searchSellerPosts()
+	posts['BuyerPosts'] = post.searchBuyerPosts()
+	return render_template("postlist.html", posts=posts)
+
 
 
 

@@ -15,6 +15,8 @@ def from_sql(row):
     """Translates a SQLAlchemy model instance into a dictionary"""
     data = row.__dict__.copy()
     data.pop('_sa_instance_state')
+    if 'time' in data:
+        data['time'] = str(data['time'])
     return data    
 
 

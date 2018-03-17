@@ -1,9 +1,10 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
+<script src="static/portal.js"></script>
 <br>
 <div style="border: 1px solid #e1e2e5;min-height:75vh">
-  <div class="col-md-2" style="float:left;border: 1px solid #e1e2e5;min-height:75vh">
-    <ul class="nav flex-column nav-pills">
-      <li class="nav-item">
+  <div>
+    <ul class="nav flex-column nav-pills col-md-2" style="float:left;border: 1px solid #e1e2e5;min-height:75vh">
+      <li class="nav-item" style="margin-top: 5px">
         <a class="nav-link active" href="#info-tab" data-toggle="tab">Information</a>
       </li>
       <li class="nav-item">
@@ -15,40 +16,46 @@
     <div id="myTabContent" class="tab-content">
       <div id="info-tab" class="tab-pane in active">
 
-        <div class="col-md-10" style="float:right">
-          <table class="table">
-            <tbody id="info-table">
+        <form class="col-md-10" style="float:right">
 
-              <tr>
-                <td style="text-align:center">User Name</td>
-                <td style="text-align:center">{{user.username}}</td>
-              </tr>
+          <div class="form-group row">
+            <label for="staticUserName" class="col-sm-4 col-form-label">User Name</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="staticUserName" value="{{user.username}}">
+            </div>
+          </div>
 
-              <tr>
-                <td style="text-align:center">Email</td>
-                <td style="text-align:center">{{user.email}}</td>
-              </tr>
+          <div class="form-group row">
+            <label for="staticEmail" class="col-sm-4 col-form-label">Email</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{user.email}}">
+            </div>
+          </div>
 
-              <tr>
-                <td style="text-align:center">Zipcode</td>
-                <td style="text-align:center"> {{user.zipcode}}</td>
-              </tr>
+          <div class="form-group row">
+            <label for="staticzipcode" class="col-sm-4 col-form-label">Zipcode</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="staticzipcode" value="{{user.zipcode}}">
+            </div>
+          </div>
 
-              <tr>
-                <td style="text-align:center">Phone Number</td>
-                <td style="text-align:center">{{user.phoneNumber}}</td>
-              </tr>
+          <div class="form-group row">
+            <label for="staticphone" class="col-sm-4 col-form-label">Phone Number</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="staticphone" value="{{user.phonenumber}}">
+            </div>
+          </div>
 
-              <tr>
-                <td style="text-align:center">Address</td>
-                <td style="text-align:center">{{user.address}}</td>
-              </tr>
+          <div class="form-group row">
+            <label for="staticaddress" class="col-sm-4 col-form-label">Address</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" id="staticaddress" value="{{user.address}}">
+            </div>
+          </div>
 
-            </tbody>
-          </table>
           <br>
-          <a class="btn btn-primary col-xs-2 col-sm-2 col-md-2 col-lg-2" style="float:right">Edit</a>
-        </div>
+          <a class="btn btn-primary mb-2" style="float:right">Edit</a>
+        </form>
 
       </div>
       <div id="message-tab" class="tab-pane fade">
