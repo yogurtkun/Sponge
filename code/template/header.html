@@ -33,6 +33,24 @@
       /* Vertically center the text there */
       background-color: #f5f5f5;
     }
+
+    .dropdown-submenu {
+      position: relative;
+    }
+
+    .dropdown-submenu a::after {
+      transform: rotate(-90deg);
+      position: absolute;
+      right: 6px;
+      top: .8em;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+      top: 0;
+      left: 100%;
+      margin-left: .1rem;
+      margin-right: .1rem;
+    }
   </style>
 </head>
 
@@ -44,15 +62,48 @@
     <a class="navbar-brand" href="/">Sponge</a>
 
     <div class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Post
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <li class="dropdown-submenu">
+          <a class="dropdown-item dropdown-toggle" href="#">Create</a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="/NewSellerPost">Sell</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/NewBuyerPost">Buy</a>
+            </li>
+
+          </ul>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">View</a>
+        </li>
+      </ul>
+    </div>
+    <!-- <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#dropdown-menu" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
         Post
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/NewSellerPost">Sell Post</a>
-        <a class="dropdown-item" href="/NewBuyerPost">Buy Post</a>
+      <div id="dropdown-menu" class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+        <div class="dropright">
+          <div class="dropdown-toggle" data-toggle="dropdown" href="#dropright-menu" role="button" aria-haspopup="true"
+          aria-expanded="false">
+            Dropright
+            </button>
+            <div id="dropright-menu" class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/NewSellerPost">Sell Post</a>
+              <a class="dropdown-item" href="/NewBuyerPost">Buy Post</a>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </div> -->
 
 
 
@@ -88,6 +139,24 @@
       <a class="navbar-brand" href="/">Sponge</a>
     </div>
   </footer>
+
+  <script>
+    $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
+      if (!$(this).next().hasClass('show')) {
+        $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+      }
+      var $subMenu = $(this).next(".dropdown-menu");
+      $subMenu.toggleClass('show');
+
+
+      $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
+        $('.dropdown-submenu .show').removeClass("show");
+      });
+
+
+      return false;
+    });
+  </script>
 
 </body>
 <html>

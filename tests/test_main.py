@@ -103,7 +103,7 @@ class MainTest(unittest.TestCase):
             postdata = {"title":"test", "description":"wanna buy test", "category":"Books"}
             rv = self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
             assert b"Post Details" in rv.data
-            print "seller and buyer post creating pass\n"
+            print "seller and buyer post creating and viewing details pass\n"
 
 
 
