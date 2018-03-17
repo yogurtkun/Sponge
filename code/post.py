@@ -67,13 +67,14 @@ def searchSellerPosts(postId=None):
         if postId is None:
             #   return all the sell posts
             #   not support paging
+            print 'here'
             posts = []
             for post in SellerPost.query.all():
-                posts.append(from_sql(post))
+                posts.append(schema.from_sql(post))
             return posts
         else:
             post = SellerPost.query.get(postId)
-            return from_sql(post)
+            return schema.from_sql(post)
     except:
         return None
 
@@ -85,10 +86,10 @@ def searchBuyerPosts(postId=None):
             #   not support paging
             posts = []
             for post in BuyerPost.query.all():
-                posts.append(from_sql(post))
+                posts.append(schema.from_sql(post))
             return posts
         else:
             post = BuyerPost.query.get(postId)
-            return from_sql(post)
+            return schema.from_sql(post)
     except:
         return None
