@@ -3,6 +3,23 @@ function isNormalInteger(str) {
     return n !== Infinity && String(n) === str && n >= 0;
 }
 
+$(document).ready(function(){
+    var image = new Vue({
+        el: '#uploadImage',
+        data: {
+            imageName:"Select file..."
+        },
+        methods:{
+            updateFile: function(event){
+                let imageinput =  $('#InputImage').prop('files')
+
+                if(imageinput.length !== 0)
+                    this.imageName = imageinput[0].name;
+            }
+        }
+    });
+});
+
 (function () {
     'use strict';
     window.addEventListener('load', function () {

@@ -542,3 +542,7 @@ ul.product_list {
     display: none;
   }
 }
+
+.custom-file-input ~ .custom-file-label::after {
+  content: "Button Text";
+}
