@@ -161,19 +161,18 @@
       </div>
     </div>
   </div>
-{%endraw%}
-</div>
 
 <div id="toTop">
   <backtotop></backtotop>
 </div>
+</div>
+{%endraw%}
 </body>
 
-<script src="static/postlist.js"></script>
 <script type="text/x-template" id="backtotop">
-  var categories = "{{categories}}"
   <button class="goTop" v-if="isVisible" @click="backToTop">
-        <i class="fa fa-angle-up" aria-hidden="true"></i>
-    </button>
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+  </button>
 </script>
+<script src="static/postlist.js"></script>
 {% endblock %} {# [END form] #}
