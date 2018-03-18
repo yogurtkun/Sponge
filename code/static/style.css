@@ -3,12 +3,11 @@ body {
 }
 
 .sidenav {
-    width: 120px;
+    width: 150px;
     position: absolute;
     z-index: 1;
-    top: 55px;
-    left: 0;
-    background-color: #DDDDDD;
+    top: 80px;
+    left: 50px;
     overflow-x: hidden;
     padding-top: 20px;
 }
@@ -128,7 +127,12 @@ body {
   
 }
 
-/*========== Home Page Method  ==========*/
+/*========== Postlist Method  ==========*/
+.hide_overflow{
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .post-container
 {
