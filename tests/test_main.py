@@ -97,6 +97,12 @@ class MainTest(unittest.TestCase):
             assert(rv.data == 'Success')
             rv = self.app.get('/portal')
             assert b"10027" in rv.data
+
+            #self.app.post("/loginUser", data=user, follow_redirects=True)
+            #postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
+            #self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
+            #rv = self.app.post("/getPostsByUser/" + user["username"])
+            #print rv.data
             print "user portal pass\n"
 
 

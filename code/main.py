@@ -53,6 +53,16 @@ def updateUser():
 
 
 '''
+Retrival posts related to the user
+'''
+@app.route('/getPostsByUser/<username>', methods=['POST'])
+def getPostsByUser(username):
+    posts = {}
+    posts['SellerPosts'] = post.searchSellerPosts(username=username)
+    posts['BuyerPosts'] = post.searchBuyerPosts(username=username)
+    return json.dumps(posts)
+
+'''
 New user signup
 '''
 @app.route('/registerUser', methods=['POST'])
@@ -189,23 +199,24 @@ Post List Page
 '''
 @app.route('/postlist')
 def postList():
-    posts = {}
-    posts['SellerPosts'] = post.searchSellerPosts()
-    posts['BuyerPosts'] = post.searchBuyerPosts()
+    #posts = {}
+    #posts['SellerPosts'] = post.searchSellerPosts()
+    #posts['BuyerPosts'] = post.searchBuyerPosts()
     categories = ['Beauty','Books','Electronics','Clothing','Accessories','Health','Kitchen','Music','Software','Outdoor','Furniture']
-    return render_template("postlist.html", posts=[posts], categories=categories)
+    return render_template("postlist.html", categories=categories)
 
 
 
 '''
 Return posts data
 '''
-@app.route('/postlist', methods=['POST'])
-def postListContent():
-    posts = {}
-    posts['SellerPosts'] = post.searchSellerPosts()
-    posts['BuyerPosts'] = post.searchBuyerPosts()
-    return json.dumps(posts)
+@app.route('/postlist/<role>', methods=['POST'])
+def postListContent(role):
+    if role == 'seller':
+        return json.dumps(posts.searchSellerPosts())
+    elif role == 'buyer':
+        return json.dumps(posts.searchBuyerPosts())
+    return ''
 
 
 '''
