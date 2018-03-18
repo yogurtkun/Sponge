@@ -2,37 +2,29 @@
 
 <body>
 <div id="category">
-  <div class="sidenav">
+  <div class="sidenav bg-light">
     {% for category in categories %}
       <a href="/postlist/{{category}}"> {{category}} </a>
     {% endfor %}
   </div>
 </div>
 
-<div class="container-fluid post-container" id="postlist">
-  <div id="filter-bar" class="sticky-top  bg-light mt-2">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">
-          <div class="row">
-            <div class="col col-lg-4">
-                <button type="button" class="btn btn-light">Price</button>
-                <span class="fa fa-sort-amount-down"></span>
-            </div>
-            <div class="col col-lg-4">
-              <input type="text" class="form-control" aria-label="Default" placeholder="from">
-            </div>
-            <div class="col col-lg-4">
-              <input type="text" class="form-control" aria-label="Default" placeholder="to">
-            </div>
-          </div>
-        </div>
-      <div class="col-sm">
-        <div class="form-group">
-          <label for="state" class="col-sm-2 control-label">State</label>
-          <div class="col-sm-10">
-            <select class="form-control" id="state" name="state">
-              <option value="">N/A</option>
+{% raw %}
+<div id="postlist" class="container-fluid post-container">
+  <div id="filter-bar" class="table sticky-top  bg-light mt-2">
+    <div class="row">
+      <div class="col-sm-7">
+        <form class="form-inline my-2">
+          <label>Price : </label>
+          <select v-model="filter_price_sorting" id="filter-price-sort" class="form-control mx-2" id="state" name="price_sort" style="width: 100px;">
+            <option value="0">N/A</option>
+            <option value="1">low &nbsp;to high</option>
+            <option value="2">high to low</option>
+          </select>
+
+          <label class="control-label mx-2">State : </label>
+            <select v-model="filter_location" id="filter-location" class="form-control" id="state" name="state" style="width: 100px;">
+              <option value="0">N/A</option>
               <option value="AK">Alaska</option>
               <option value="AL">Alabama</option>
               <option value="AR">Arkansas</option>
@@ -86,88 +78,98 @@
               <option value="WV">West Virginia</option>
               <option value="WY">Wyoming</option>
             </select>
-          </div>
-        </div>
+
+          <label class="control-label mx-2">Posted : </label>
+            <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 100px;">
+              <option value="0">N/A</option>
+              <option value="1">24 hours</option>
+              <option value="2">7 days</option>
+              <option value="3">1 month</option>
+              <option value="4">3 months</option>
+            </select>
+          </form>
       </div>
-      <div class="col-sm">
-        <div class="row">
-          Posted
-          <div class="col col-lg-4">   
-            <button type="button" class="btn btn-primary">24 hours</button>
-          </div>
-          <div class="col col-lg-4">   
-            <button type="button" class="btn btn-primary">7 days</button>
-          </div>
-          <div class="col col-lg-4">   
-            <button type="button" class="btn btn-primary">1 months</button>
-          </div>
-        </div>
+
+      <div class="col-sm-2">
+        <form class="form-inline my-2">
+          <input v-model="filter_search" id="filter-search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+          <!--<a href="#"><i class="fas fa-lg fa-search"></i></a>-->
+        </form>
       </div>
-      <div class="col-sm">
-        <div class="row">
-          <div class="col col-lg-4">   
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            </form>
-          </div>
-          <div class="col col-lg-4">   
-            <a href="#"><i class="fas fa-lg fa-search"></i></a>
-          </div>
-        </div>
+
+      <div class="col-lg-3 my-2">
+          <button v-on:click="apply_filter" v-bind:class="filter_btn_color + ' float-right'" id="filter-apply" class="btn btn-primary container-fluid loginBtn" type="submit" style="width: 30px;">{{filter_btn_context}}</button>
       </div>
-    </div>
     </div>
   </div>
 
-{% raw %}
   <div id="postitem" class="mt-3">
-    <div v-for="item in items">
+    <div v-for="item in filter_items">
       <div class="card mt-2">
         <div class="row">
-          <div class="col">
-            <p class="card-text">
-              <div class="product_image2">
-                <a v-bind:href="item.postid"><img v-bind:src="item.imageDir" alt=""></a>
-                <div class="product_buttons">
-                  <button class="product_heart"><i class="fa fa-heart"></i></button>
-                  <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
-                </div>
-              </div>
-            </p>
-          </div>
-          <div class="col-8">
+          <div class="col-7">
             <div>
               <h2>
-                <a class="card-title" v-bind:href="item.postid">
+                <a class="card-title hide_overflow" v-bind:href="item.postId">
                   {{item.title}}
                 </a>
               </h2>
-              <p class="card-text">
+              <p class="card-text hide_overflow">
                 {{item.description}}
               </p>
             </div>
           </div>
-          <div class="col">
-            <h5 class="text-danger float-right">
-              ${{item.price}}
-            </h5>
+          <div class="col-3">
+            <p class="row text-left">Category : &nbsp
+              <a v-bind:href="'/postlist/' + item.category"> {{item.category}}</a>
+            </p> 
+            <p v-if="item.location" class="row text-left">Location : {{item.location}} </p> 
+            <p class="row text-left">{{item.time}}</p>
+          </div>
+          <div class="col-2">
+            <h4 class="text-danger">
+              <p v-if="item.price" class="text-right">
+                ${{item.price}}
+              </p>
+              <p v-else class="text-right">
+                Not Specify
+              </p>
+            </h4>
+            <p v-if="item.buyerName" class="text-right">
+              <i class="fas fa-user"></i>
+              <a v-bind:href="'/postlist/' + item.buyerName"> {{item.buyerName}}</a>
+            </p>
+            <p v-else-if="item.sellerName" class="text-right">
+              <i class="fas fa-user"></i>
+              <a v-bind:href="'/postlist/' + item.sellerName"> {{item.sellerName}}</a>
+            </p>
           </div>
         </div>
-        <p class="card-footer text-muted text-center">
-          <span class="float-left">Category:{{item.category}}</span> 
-          <span class="text-center">Location:{{item.location}} </span> 
-          <span class="float-right">{{item.user}} posted on {{item.time}}</span>
-        </p>
+      <div class="row">
+        <div class="col">
+          <p class="card-text">
+            <div v-if="item.image" class="product_image2">
+              <a v-bind:href="item.postId">
+                <img v-bind:src="'data:image/jpeg;base64,'+item.image" />
+              </a>
+              <div class="product_buttons">
+                <button class="product_heart"><i class="fa fa-heart"></i></button>
+                <button class="add_to_cart"><i class="fa fa-shopping-cart"></i></button>
+              </div>
+            </div>
+          </p>
+        </div>
+      </div>
       </div>
     </div>
   </div>
 
-<div id="toTop">
-  <backtotop></backtotop>
+  <div id="toTop">
+    <backtotop></backtotop>
+  </div>
 </div>
-</div>
-{%endraw%}
 </body>
+{%endraw%}  
 
 <script type="text/x-template" id="backtotop">
   <button class="goTop" v-if="isVisible" @click="backToTop">

@@ -1,7 +1,7 @@
 from google.appengine.ext import vendor
 vendor.add('lib')
 
-from flask import Flask, session, request, render_template, redirect
+from flask import Flask, session, request, render_template, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
@@ -213,9 +213,9 @@ Return posts data
 @app.route('/postlist/<role>', methods=['POST'])
 def postListContent(role):
     if role == 'seller':
-        return json.dumps(posts.searchSellerPosts())
+        return jsonify(post.searchSellerPosts())
     elif role == 'buyer':
-        return json.dumps(posts.searchBuyerPosts())
+        return jsonify(post.searchBuyerPosts())
     return ''
 
 
