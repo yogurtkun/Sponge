@@ -39,3 +39,19 @@ def deleteUser(username):
     except:
         db.session.rollback()
         return False
+
+
+'''
+data: {attribute => value} for update
+e.g. {'zipcode': '10027'}
+'''
+def updateUser(data, username):
+    try:
+        user = User.query.get(username)
+        for k, v in data.items():
+            setattr(user, k, v)
+        return schema.from_sql(user)
+    except Exception as e:
+        print e
+        db.session.rollback()
+        return None
