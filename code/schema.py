@@ -32,7 +32,8 @@ class User(db.Model):
     zipcode = db.Column(db.String(16))
     phoneNumber = db.Column(db.String(16))
     address = db.Column(db.Text)
-    rating = db.Column(db.Integer)
+    rating = db.Column(db.Float) # average rating
+    ratingCount = db.Column(db.Integer) # number of rating
     wantToSell = db.Column(db.String(128))
     wantToBuy = db.Column(db.String(128))
 
