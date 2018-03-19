@@ -12,8 +12,6 @@ var postlist = new Vue({
     filter_post_time: 0,
     filter_search: "",
     filter_is_apply: false,
-    filter_btn_color: "btn btn-info",
-    filter_btn_context: "Apply",
   },
   created(){
     $.ajax({
@@ -31,51 +29,33 @@ var postlist = new Vue({
           console.log(data);
       });
   },
+  watch: {
+    filter_price_sorting: function(){
+      this.filter_center()
+    },
+    filter_loc: function(){
+      this.filter_center()
+    },
+    filter_post_time: function(){
+      this.filter_center()
+    },
+    filter_search: function(){
+      this.filter_center()
+    },
+  },
   methods:{
-    apply_filter: function(event){
-      if(this.filter_is_apply === false && this.filter_price_sorting === 0 && this.filter_location === "0" &&
-         this.filter_post_time === 0 && this.filter_search === ""){
-        console.log("nothing needs to filter \n")
-        return 0
-      }
-      else{
-        this.filter_is_apply = !this.filter_is_apply
-        if(this.filter_is_apply === true){
-          this.filter_btn_color = "btn btn-primary"
-          this.filter_btn_context = "Reset"
-        }
-        else{
-          this.filter_btn_color = "btn btn-info"
-          this.filter_btn_context = "Apply"
-
-          this.filter_price_sorting = 0
-          this.filter_loc = "0"
-          this.filter_post_time = 0
-          this.filter_search = ""
-        }
-      }
-
-      // Seach filter
-      filter_items = []
-      filter_items.push(this.filter_posts())
-      this.filter_items = filter_items[0]
-
-      // Price filter
-      if(this.filter_price_sorting == 1){
-        this.filter_price("ASC")
-      }
-      else if(this.filter_price_sorting == 2){
-        this.filter_price("DESC")
-      }
-
-      //this.filter_location(this.filter_loc)
-      this.filter_time(this.filter_post_time)
+    reset_filter: function(event){
+      console.log("-filter_search")
+      this.filter_price_sorting = 0
+      this.filter_loc = "0"
+      this.filter_post_time = 0
+      this.filter_search = ""
     },
 
-    filter_posts: function(){
-      return this.items.filter((item) => {
-        var matched = item.title.match(this.filter_search)
-        items = this.items
+    filter_posts: function(filter_items, filter_search){
+      return filter_items.filter((item) => {
+        var matched = item.title.match(filter_search)
+        items = filter_items
         for (var i = 0; i < items.length; i++){
           if(matched !== null){
             if(items[i].title == matched.input){
@@ -86,45 +66,81 @@ var postlist = new Vue({
       })
     },
 
-    filter_price: function(order){
-      var items = this.filter_items
+    filter_price: function(filter_items, filter_price_sorting){
+      var items = filter_items
       var filter_items = []
       var new_index = []
       var price = []
       var price_with_index = []
+
+      if(items === null || items === undefined){
+        return items
+      }
+
       for (var i = 0; i < items.length; i++){
         price_with_index.push((items[i].price))
       }
 
-      price_with_index = this.sortWithIndeces(price_with_index, order)
+      if(filter_price_sorting == 0){
+        return items
+      }
+      else if(filter_price_sorting == 1){
+        price_with_index = this.sortWithIndeces(price_with_index, "ASC")
+      }
+      else if(filter_price_sorting == 2){
+        price_with_index = this.sortWithIndeces(price_with_index, "DESC")
+      }
+      else{
+        return items
+      }
+
       new_index = price_with_index.sortIndices
 
       for (var i = 0; i < new_index.length; i++){
         filter_items.push((items[new_index[i]]))
       }
 
-      this.filter_items = filter_items
+      return filter_items
     },
 
-    filter_location: function(location){
-      var items = this.filter_items
+    filter_location: function(filter_items, location){
+      var items = filter_items
       var filter_items = []
+
+      if(location == "0")
+      {
+        return items
+      }
+
+      if(items === null || items === undefined){
+        return items
+      }
 
       // Only select the city.
       for (var i = 0; i < items.length; i++){
-        if(items[i].location === location){
+        if(items[i].location == location){
           filter_items.push(items[i])
         }
       }
 
-      this.filter_items = filter_items
+      return filter_items
     },
 
-    filter_time: function(time){
-      var items = this.filter_items
+    filter_time: function(filter_items, time){
+      var items = filter_items
       var filter_items = []
       var post_dt = []
       var need_dt = 0
+
+      if(location == "0")
+      {
+        return items
+      }
+
+      if(items === null || items === undefined){
+        return items
+      }
+
 
       var nowDate= new Date();
       if(time == 1){
@@ -162,9 +178,9 @@ var postlist = new Vue({
         if(new Date(items[i].time) >= need_dt){
           filter_items.push(items[i])
         }
-      }
+      } 
 
-      this.filter_items = filter_items
+      return filter_items
     },
 
     sortWithIndeces: function(toSort, order) {
@@ -188,8 +204,25 @@ var postlist = new Vue({
         toSort.sortIndices.push(toSort[j][1]);
         toSort[j] = toSort[j][0];
       }
+
       return toSort;
     },
+
+    filter_center: function(){
+      var filter_items = this.items
+      var filter_price_sorting = this.filter_price_sorting
+      var filter_loc = this.filter_loc
+      var filter_post_time = this.filter_post_time
+      var filter_search = this.filter_search
+      var filter_search_items = []
+
+      filter_items = this.filter_price(filter_items, filter_price_sorting)
+      filter_items = this.filter_location(filter_items, filter_loc)
+      filter_items = this.filter_time(filter_items, filter_post_time)
+      filter_search_items.push(this.filter_posts(filter_items, filter_search))
+
+      this.filter_items = filter_search_items[0]
+    }
   }
 });
 
