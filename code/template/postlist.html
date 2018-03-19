@@ -23,7 +23,7 @@
           </select>
 
           <label class="control-label mx-2">State : </label>
-            <select v-model="filter_location" id="filter-location" class="form-control" id="state" name="state" style="width: 100px;">
+            <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 100px;">
               <option value="0">N/A</option>
               <option value="AK">Alaska</option>
               <option value="AL">Alabama</option>
@@ -82,10 +82,11 @@
           <label class="control-label mx-2">Posted : </label>
             <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 100px;">
               <option value="0">N/A</option>
-              <option value="1">24 hours</option>
-              <option value="2">7 days</option>
-              <option value="3">1 month</option>
-              <option value="4">3 months</option>
+              <option value="1">6 hours</option>
+              <option value="2">24 hours</option>
+              <option value="3">7 days</option>
+              <option value="4">1 month</option>
+              <option value="5">3 months</option>
             </select>
           </form>
       </div>

@@ -3,12 +3,12 @@ var postlist = new Vue({
   data: {
     items: [
     {"postid": "1111", "category": "category1", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
-    {"postid": "2222", "category": "category2", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
+    {"postid": "2222", "category": "category2", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NJ", "imageDir":"http://placehold.it/500x300"},
     {"postid": "3333", "category": "category3", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
     ],
     filter_items: 0,
     filter_price_sorting: 0,
-    filter_location: "0",
+    filter_loc: "0",
     filter_post_time: 0,
     filter_search: "",
     filter_is_apply: false,
@@ -33,24 +33,26 @@ var postlist = new Vue({
   },
   methods:{
     apply_filter: function(event){
-      this.filter_is_apply = !this.filter_is_apply
-      if(this.filter_is_apply === true){
-        this.filter_btn_color = "btn btn-primary"
-        this.filter_btn_context = "Reset"
-      }
-      else{
-        this.filter_btn_color = "btn btn-info"
-        this.filter_btn_context = "Apply"
-      }
-
-      console.log(this.filter_price_sorting)
-      console.log(this.filter_location)
-      console.log(this.filter_post_time)
-      console.log(this.filter_search)
-      if(this.filter_price_sorting === 0 && this.filter_location === "0" &&
+      if(this.filter_is_apply === false && this.filter_price_sorting === 0 && this.filter_location === "0" &&
          this.filter_post_time === 0 && this.filter_search === ""){
         console.log("nothing needs to filter \n")
         return 0
+      }
+      else{
+        this.filter_is_apply = !this.filter_is_apply
+        if(this.filter_is_apply === true){
+          this.filter_btn_color = "btn btn-primary"
+          this.filter_btn_context = "Reset"
+        }
+        else{
+          this.filter_btn_color = "btn btn-info"
+          this.filter_btn_context = "Apply"
+
+          this.filter_price_sorting = 0
+          this.filter_loc = "0"
+          this.filter_post_time = 0
+          this.filter_search = ""
+        }
       }
 
       // Seach filter
@@ -65,6 +67,9 @@ var postlist = new Vue({
       else if(this.filter_price_sorting == 2){
         this.filter_price("DESC")
       }
+
+      //this.filter_location(this.filter_loc)
+      this.filter_time(this.filter_post_time)
     },
 
     filter_posts: function(){
@@ -80,6 +85,7 @@ var postlist = new Vue({
         }
       })
     },
+
     filter_price: function(order){
       var items = this.filter_items
       var filter_items = []
@@ -95,6 +101,67 @@ var postlist = new Vue({
 
       for (var i = 0; i < new_index.length; i++){
         filter_items.push((items[new_index[i]]))
+      }
+
+      this.filter_items = filter_items
+    },
+
+    filter_location: function(location){
+      var items = this.filter_items
+      var filter_items = []
+
+      // Only select the city.
+      for (var i = 0; i < items.length; i++){
+        if(items[i].location === location){
+          filter_items.push(items[i])
+        }
+      }
+
+      this.filter_items = filter_items
+    },
+
+    filter_time: function(time){
+      var items = this.filter_items
+      var filter_items = []
+      var post_dt = []
+      var need_dt = 0
+
+      var nowDate= new Date();
+      if(time == 1){
+        // Last 6 hours
+        need_dt = new Date(nowDate.getFullYear(), nowDate.getMonth(),
+                           nowDate.getDate(),nowDate.getHours() - 6,
+                           nowDate.getMinutes(), nowDate.getSeconds());
+      }
+      else if(time == 2){
+        // Last 24 hours
+        need_dt = new Date(nowDate.getFullYear(), nowDate.getMonth(),
+                           nowDate.getDate(),nowDate.getHours() - 24,
+                           nowDate.getMinutes(), nowDate.getSeconds());
+      }
+      else if(time == 3){
+        // Last 7 days
+        need_dt = new Date(nowDate.getFullYear(), nowDate.getMonth(),
+                           nowDate.getDate() - 7,nowDate.getHours(),
+                           nowDate.getMinutes(), nowDate.getSeconds());
+      }
+      else if(time == 4){
+        // Last 1 month
+        need_dt = new Date(nowDate.getFullYear(), nowDate.getMonth() - 1,
+                           nowDate.getDate(),nowDate.getHours(),
+                           nowDate.getMinutes(), nowDate.getSeconds());
+      }
+      else if(time == 5){
+        // Last 3 months
+        need_dt = new Date(nowDate.getFullYear(), nowDate.getMonth() - 3,
+                           nowDate.getDate(),nowDate.getHours(),
+                           nowDate.getMinutes(), nowDate.getSeconds());
+      }
+
+      for (var i = 0; i < items.length; i++){
+        if(new Date(items[i].time) >= need_dt){
+          filter_items.push(items[i])
+        }
       }
 
       this.filter_items = filter_items
