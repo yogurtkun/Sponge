@@ -118,7 +118,8 @@
     </form>
 
     {% if session.logged_in %}
-    <div>Welcome! {{session.username}} |
+    <div>
+      <a href="/portal">{{session.username}}</a>
       <a class="btn btn-outline-primary my-2 my-sm-0" href="/logout">Log Out</a>
     </div>
 
@@ -157,6 +158,7 @@
 
       return false;
     });
+
   </script>
 
 </body>

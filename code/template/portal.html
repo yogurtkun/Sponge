@@ -1,9 +1,18 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
 <script src="static/portal.js"></script>
 <br>
-<div style="border: 1px solid #e1e2e5;min-height:75vh">
-  <div>
-    <ul class="nav flex-column nav-pills col-md-2" style="float:left;border: 1px solid #e1e2e5;min-height:75vh">
+<div class="modal-body" style="min-height:75vh">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3"  style="border: 1px solid #e1e2e5;min-height:75vh">
+      </div>
+      
+      <div class="col-md-9"  style="border: 1px solid #e1e2e5;min-height:75vh">
+      </div>
+    </div>
+  </div>
+  <!-- <div>
+    <ul class="nav flex-column nav-pills col-md-2" style="float:left;min-height:75vh">
       <li class="nav-item" style="margin-top: 5px">
         <a class="nav-link active" href="#info-tab" data-toggle="tab">Information</a>
       </li>
@@ -62,6 +71,6 @@
         Coming soon...
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 {% endblock %} {# [END form] #}
