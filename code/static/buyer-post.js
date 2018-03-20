@@ -37,7 +37,7 @@ $(document).ready(function(){
                 }
 
                 if (imageinput.length !== 0 &&imageinput[0].type !== 'image/jpeg' && imageinput[0].type !== 'image/png' && imageinput[0].type !== 'image/gif') {
-                    alert('不是有效的图片文件!');
+                    alert('The type of file is incorrect!');
                     event.preventDefault();
                     event.stopPropagation();
                 }
