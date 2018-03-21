@@ -102,16 +102,16 @@
               </form>
           </div>
 
-          <div class="col-sm-3">
-            <form class="form-inline my-2">
+          <div class="col-sm-4">
+            <form class="form-inline my-2 float-right">
               <input v-model="filter_search" id="filter-search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 120px;">
               <span class="badge badge-pill badge-info"> {{filter_len}} items </span>
               <!--<a href="#"><i class="fas fa-lg fa-search"></i></a>-->
             </form>
           </div>
 
-          <div class="col-sm-2">
-              <button v-on:click="reset_filter" id="filter-reset" class="btn btn-primary container-fluid loginBtn float-right  my-3" type="submit" style="width: 15px;">Reset</button>
+          <div class="col-sm-   my-2">
+              <button v-on:click="reset_filter" id="filter-reset" class="btn btn-primary container-fluid loginBtn float-right" type="submit">Reset</button>
           </div>
         </div>
       </div>
