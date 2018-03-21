@@ -254,6 +254,16 @@ def getPost(postId, flag):
             return redirect('/NewBuyerPost')
     return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData)
 
+@app.route('/buypostlist',methods=["POST"])
+def buypostlist():
+    posts = post.searchBuyerPosts(username=session['username'])
+    return json.dumps(posts)
+
+@app.route('/sellpostlist',methods=["POST"])
+def sellpostlist():
+    posts = post.searchSellerPosts(username=session['username'])
+    return json.dumps(posts)
+
 
 '''
 Place order page
