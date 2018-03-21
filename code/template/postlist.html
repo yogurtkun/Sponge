@@ -177,10 +177,20 @@
                   <a v-else-if="item.sellerName" v-bind:href="'SellerPost\?postId=' + item.postId">
                     <img v-bind:src="'data:image/jpeg;base64,'+item.image" />
                   </a>
-                  <div class="product_buttons text-center">
-                    <button class="product_heart"><i class="fa fa-heart"></i></button>
+                  <div v-if="item.favorite === true">
+                    <div class="product_buttons_favorite text-center">
+                      <button v-if="item.buyerName" v-on:click="addFavorite('Buyer', item.postId)" class="product_heart_favorite"><i class="fa fa-heart"></i></button>
+                      <button v-else-if="item.sellerName" v-on:click="addFavorite('Seller', item.postId)" class="product_heart_favorite"><i class="fa fa-heart"></i></button>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <div class="product_buttons text-center">
+                      <button v-if="item.buyerName" v-on:click="addFavorite('Buyer', item.postId)" class="product_heart"><i class="fa fa-heart"></i></button>
+                      <button v-else-if="item.sellerName" v-on:click="addFavorite('Seller', item.postId)" class="product_heart"><i class="fa fa-heart"></i></button>
+                    </div>
                   </div>
                 </div>
+              </div>
               </p>
             </div>
           </div>
