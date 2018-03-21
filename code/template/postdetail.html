@@ -1,4 +1,5 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
+<script src="static/postdetail.js"></script>
 <body>
 <!-- Page Content -->
 <div class="container">
@@ -36,9 +37,12 @@
         <img src="data:;base64,{{ post.image }}"/>
         <hr>
         {% endif %}
+        
 
         <!-- Post Content -->
         <p class="lead" style="overflow-wrap:break-word">{{post.description}}</p>
+
+        <a class="btn btn-primary mb-2" id="checkbutton" style="float:right" v-on:click="checkout">Checkout</a>
 
         <hr>
       </div>

@@ -71,6 +71,7 @@ def getPostsByUser(username):
     posts['BuyerPosts'] = post.searchBuyerPosts(username=username)
     return json.dumps(posts)
 
+
 '''
 New user signup
 '''
