@@ -37,7 +37,6 @@ var postlist = new Vue({
           var data = $xhr.responseJSON;
           console.log(data);
       });
-
     $.ajax({
       url: '/postlist/seller',
       dataType: 'json',
@@ -48,7 +47,6 @@ var postlist = new Vue({
 
           this.filter_seller_items = json;
           this.filter_seller_len = json.length
-
 
           /*The following code should be moved to form a independent function*/
           var filter_items = [];
@@ -296,6 +294,21 @@ var postlist = new Vue({
 
       this.filter_items = filter_search_items[0]
       this.filter_len = filter_search_items[0].length
+    },
+
+    addFavorite: function(postType, postId){
+
+
+      tdata = {"postTtype": postType, 'postId': postId}
+      console.log(tdata);
+      $.ajax({
+          url: '/favorite',
+          type: 'POST',
+          data: tdata,
+          success: (data) => {
+              console.log("success!")
+          }
+      })
     }
   }
 });

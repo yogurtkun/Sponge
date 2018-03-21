@@ -3,6 +3,7 @@ from schema import User, from_sql
 
 db = schema.db
 
+DELIMITER = ';'
 
 def registerUser(username, email, password, zipcode):
     user = User(username=username, email=email, password=password, zipcode=zipcode)
@@ -48,7 +49,7 @@ def addPost(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
-            tmp = tmp + ";" + str(postId)
+            tmp = tmp + DELIMITER + str(postId)
         try:
             user.sellerPosts = tmp
             db.session.commit()
@@ -62,7 +63,7 @@ def addPost(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
-            tmp = tmp + ";" + str(postId)
+            tmp = tmp + DELIMITER + str(postId)
         try:
             user.buyerPosts = tmp
             db.session.commit()
@@ -80,7 +81,7 @@ def addFavorite(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
-            tmp = tmp + ";" + str(postId)
+            tmp = tmp + DELIMITER + str(postId)
         try:
             user.favoriteSellerPosts = tmp
             db.session.commit()
@@ -94,7 +95,7 @@ def addFavorite(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
-            tmp = tmp + ";" + str(postId)
+            tmp = tmp + DELIMITER + str(postId)
         try:
             user.favoriteBuyerPosts = tmp
             db.session.commit()
@@ -103,6 +104,14 @@ def addFavorite(username, postId, postType):
             print e
             db.session.rollback()
             return False
+
+
+def getFavorite(username):
+    user = User.query.get(username)
+    if user:
+        user = from_sql(user)
+        return user['favoriteSellerPosts'].split(DELIMITER), user['favoriteBuyerPosts'].split(DELIMITER)
+    return [], []
 
 
 '''

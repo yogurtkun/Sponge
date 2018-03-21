@@ -34,10 +34,10 @@ class User(db.Model):
     address = db.Column(db.Text)
     rating = db.Column(db.Float) # average rating
     ratingCount = db.Column(db.Integer) # number of rating
-    sellerPosts = db.Column(db.String(128)) # seller post list
-    buyerPosts = db.Column(db.String(128)) # buyer post list
-    favoriteSellerPosts = db.Column(db.String(128))
-    favoriteBuyerPosts = db.Column(db.String(128))
+    sellerPosts = db.Column(db.String(128), server_default='') # seller post list
+    buyerPosts = db.Column(db.String(128), server_default='') # buyer post list
+    favoriteSellerPosts = db.Column(db.String(128), server_default='')
+    favoriteBuyerPosts = db.Column(db.String(128), server_default='')
 
     def __repr__(self):
         return '<User %r>' % self.username
