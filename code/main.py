@@ -1,7 +1,7 @@
 from google.appengine.ext import vendor
 vendor.add('lib')
 
-from flask import Flask, session, request, render_template, redirect, jsonify
+from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
@@ -38,6 +38,7 @@ def userPortal():
     return render_template("portal.html")
 
 
+<<<<<<< HEAD
 '''
 Get user info
 '''
@@ -59,6 +60,8 @@ def updateUser():
     if user is None:
         return 'Fail'
     return 'Success'
+=======
+>>>>>>> 75eea484aed16adc863addb183a8e4ae0df734ba
 
 '''
 Retrival posts related to the user
@@ -221,9 +224,9 @@ Return posts data
 @app.route('/postlist/<role>', methods=['POST'])
 def postListContent(role):
     if role == 'seller':
-        return jsonify(post.searchSellerPosts())
+        return json.dumps(post.searchSellerPosts())
     elif role == 'buyer':
-        return jsonify(post.searchBuyerPosts())
+        return json.dumps(post.searchBuyerPosts())
     return ''
 
 
