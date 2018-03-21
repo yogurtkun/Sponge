@@ -44,9 +44,33 @@ def deleteUser(username):
 def addFavorite(username, postId, postType):
     user = User.query.get(username)
     if (postType == "Seller"):
-        return user.addWTS(postId)
+        tmp = self.favoriteSellerPosts
+        if tmp==None or len(tmp)==0:
+            tmp = str(postId)
+        else:
+            tmp = tmp + ";" + str(postId)
+        try:
+            self.favoriteSellerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
     if (postType == "Buyer"):
-        return user.addWTB(postId)
+        tmp = self.favoriteBuyerPosts
+        if tmp==None or len(tmp)==0:
+            tmp = str(postId)
+        else:
+            tmp = tmp + ";" + str(postId)
+        try:
+            self.favoriteSellerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
 
 
 '''

@@ -196,7 +196,6 @@ def createPost(request, flag):
     postId = post.createPost(title, description, category, price, location, image, name, isSeller, isBuyer)
     if postId == None:
         return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post failed!')
-    #return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post successfully!', postId = postId)
     if isSeller:
         return redirect('/SellerPost?postId=' + str(postId))
     if isBuyer:

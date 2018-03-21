@@ -34,8 +34,10 @@ class User(db.Model):
     address = db.Column(db.Text)
     rating = db.Column(db.Float) # average rating
     ratingCount = db.Column(db.Integer) # number of rating
-    wantToSell = db.Column(db.String(128))
-    wantToBuy = db.Column(db.String(128))
+    wantToSell = db.Column(db.String(128)) # seller post list
+    wantToBuy = db.Column(db.String(128)) # buyer post list
+    favoriteSellerPosts = db.Column(db.String(128))
+    favoriteBuyerPosts = db.Column(db.String(128))
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -44,36 +46,6 @@ class User(db.Model):
         if pw == self.password:
             return True
         return False
-
-    def addWTS(postId):
-        tmp = self.wantToSell
-        if tmp==None or len(tmp)==0:
-            tmp = str(postId)
-        else:
-            tmp = tmp + ";" + str(postId)
-        try:
-            self.wantToSell = tmp
-            db.session.commit()
-            return True
-        except Exception as e:
-            print e
-            db.session.rollback()
-            return False
-
-    def addWTB(postId):
-        tmp = self.wantToBuy
-        if tmp==None or len(tmp)==0:
-            tmp = str(postId)
-        else:
-            tmp = tmp + ";" + str(postId)
-        try:
-            self.wantToBuy = tmp
-            db.session.commit()
-            return True
-        except Exception as e:
-            print e
-            db.session.rollback()
-            return False
 
 
 class BuyerPost(db.Model):
