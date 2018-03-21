@@ -1,31 +1,14 @@
-var postdetail = new Vue({
-  el: '#post-info',
-  data: {
-    post_title: "title",
-    post_user: "anonymous",
-    post_time: "2018-01-01",
-    post_image_src: ["http://placehold.it/900x300", "http://placehold.it/900x300"],
-    post_description: "Add post description",
-  },
-  created(){
-    $.ajax({
-      url: '/testPostDetail',
-      dataType: 'json',
-      type: "POST",
-
-      success: (json)=>{
-          console.log(json);
-          this.post_title = json.data.title;
-          this.post_user = json.data.user;
-          this.post_time = json.data.time;
-          this.post_image_src = json.data.imageDir;
-          this.post_description = json.data.description;
-      },
-      }).fail(function($xhr) {
-          var data = $xhr.responseJSON;
-          console.log(data);
-      });
-  },
+$(document).ready(function(){
+  var checkVue = new Vue({
+    el:"#checkbutton",
+    methods: {
+      checkout: function(){
+        var urlParams =new URLSearchParams(window.location.search);
+        var postId = urlParams.get("postId");
+        window.location.href = "/buyorder?postId="+postId;
+      }
+    }
+  });
 });
 
 /*Move to Top Button*/

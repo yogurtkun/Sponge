@@ -38,7 +38,6 @@ def userPortal():
     return render_template("portal.html")
 
 
-<<<<<<< HEAD
 '''
 Get user info
 '''
@@ -60,8 +59,6 @@ def updateUser():
     if user is None:
         return 'Fail'
     return 'Success'
-=======
->>>>>>> 75eea484aed16adc863addb183a8e4ae0df734ba
 
 '''
 Retrival posts related to the user
@@ -72,6 +69,7 @@ def getPostsByUser(username):
     posts['SellerPosts'] = post.searchSellerPosts(username=username)
     posts['BuyerPosts'] = post.searchBuyerPosts(username=username)
     return json.dumps(posts)
+
 
 '''
 New user signup
