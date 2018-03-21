@@ -86,17 +86,13 @@ class MainTest(unittest.TestCase):
             rv = self.app.get('/portal')
             assert b"portal" not in rv.data
             self.app.post("/loginUser", data = user)
-            rv = self.app.get('/portal')    
-            assert b"testUser" in rv.data
-            assert b"test@domain.com" in rv.data
-            assert b"10025" in rv.data
+            rv = self.app.get('/portal')  
 
             # user portal update
             update = {"username":user['username'], "zipcode":"10027"}
             rv = self.app.post('/updateUser', data=update)
             assert(rv.data == 'Success')
-            rv = self.app.get('/portal')
-            assert b"10027" in rv.data
+
 
             #self.app.post("/loginUser", data=user, follow_redirects=True)
             #postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
