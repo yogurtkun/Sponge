@@ -1,7 +1,7 @@
 from main import schema
 from schema import Order, from_sql
 from post import searchSellerPosts
-from account import searchUser
+import account
 import datetime
 
 db = schema.db
@@ -12,7 +12,7 @@ def createOrder(postId, buyerName, transactionType, rcvAddress):
 	if post == None:
 		return None
 	sellerName = post['sellerName']
-	seller = searchUser(sellerName)
+	seller = account.searchUser(sellerName)
 	if seller == None:
 		return None
 	sndAddress = seller['address']

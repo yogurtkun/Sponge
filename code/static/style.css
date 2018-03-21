@@ -554,7 +554,7 @@ ul.product_list {
 /*CSS for portal */
 .writeable-text{
   font-style:italic;
-  text-align: center;
+  text-align: left;
   border : 1px;
   border-color: #bfcbd9;
   border-style: solid;
@@ -564,7 +564,7 @@ ul.product_list {
 
 .unwriteable-text{
   font-style:italic;
-  text-align: center
+  text-align: left
 }
 
 .auto-center{
@@ -580,4 +580,8 @@ ul.product_list {
   border-style: solid;
   border-radius: 4px;
   margin-top: 5vh
+}
+
+.alertdiv{
+  color: #DF0404 
 }

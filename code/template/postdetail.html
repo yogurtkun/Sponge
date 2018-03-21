@@ -42,8 +42,9 @@
         <!-- Post Content -->
         <p class="lead" style="overflow-wrap:break-word">{{post.description}}</p>
 
+        {% if seller %}
         <a class="btn btn-primary mb-2" id="checkbutton" style="float:right" v-on:click="checkout">Checkout</a>
-
+        {% endif %}
         <hr>
       </div>
 
