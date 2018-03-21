@@ -45,6 +45,36 @@ class User(db.Model):
             return True
         return False
 
+    def addWTS(postId):
+        tmp = self.wantToSell
+        if tmp==None or len(tmp)==0:
+            tmp = str(postId)
+        else:
+            tmp = tmp + ";" + str(postId)
+        try:
+            self.wantToSell = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+
+    def addWTB(postId):
+        tmp = self.wantToBuy
+        if tmp==None or len(tmp)==0:
+            tmp = str(postId)
+        else:
+            tmp = tmp + ";" + str(postId)
+        try:
+            self.wantToBuy = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+
 
 class BuyerPost(db.Model):
     postId = db.Column(db.Integer, primary_key=True)

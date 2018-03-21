@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
 import json
-import account, post
+import account, post, order
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
@@ -59,6 +59,7 @@ def updateUser():
     if user is None:
         return 'Fail'
     return 'Success'
+
 
 '''
 Retrival posts related to the user
@@ -263,6 +264,57 @@ def buypostlist():
 def sellpostlist():
     posts = post.searchSellerPosts(username=session['username'])
     return json.dumps(posts)
+
+
+'''
+Place order page
+'''
+@app.route('/buyorder', methods=['GET'])
+def buyOrder():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	postId = int(request.args['postId'])
+	isSeller = True
+	isBuyer = False
+	postData = post.getPost(postId, isSeller, isBuyer)
+	if postData == None:
+		return render_template('notFound.html'), 404
+	return render_template("order.html", item=postData)
+
+
+'''
+Place order
+'''
+@app.route('/checkout', methods=['POST'])
+def checkout():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	postId = int(request.form['postId'])
+	buyerName = session['username']
+	transactionType = str(request.form['transactionType'])
+	rcvAddress = str(request.form['rcvAddress']) if transactionType == "Online" else None
+	orderId = order.createOrder(postId, buyerName, transactionType, rcvAddress)
+	print "order id: ", orderId
+	if orderId == None:
+		return "Placing order failed!"
+	return "Placeing order succeeded!"
+
+
+'''
+Favorite
+'''
+@app.route('/favorite', methods=['POST'])
+def addFavorite():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	postType = str(request.form['postTtype'])
+	postId = int(request.form['postId'])
+	username = session['username']
+	if account.addFavorite(username, postId, postType):
+		return "Adding to favorites succeeded!"
+	return "Adding to favorites failed!"
+
+
 
 
 
