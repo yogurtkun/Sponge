@@ -38,7 +38,6 @@ def userPortal():
     return render_template("portal.html")
 
 
-<<<<<<< HEAD
 '''
 Get user info
 '''
@@ -60,8 +59,7 @@ def updateUser():
     if user is None:
         return 'Fail'
     return 'Success'
-=======
->>>>>>> 75eea484aed16adc863addb183a8e4ae0df734ba
+
 
 '''
 Retrival posts related to the user
@@ -260,8 +258,8 @@ def getPost(postId, flag):
 '''
 Place order page
 '''
-@app.route('/Checkout', methods=['GET'])
-def order():
+@app.route('/buyorder', methods=['GET'])
+def buyOrder():
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
 	postId = int(request.args['postId'])
@@ -270,25 +268,22 @@ def order():
 	postData = post.getPost(postId, isSeller, isBuyer)
 	if postData == None:
 		return render_template('notFound.html'), 404
-	image = postData['image']
-	if image != None:
-		newImage = base64.b64encode(image).decode('ascii')
-		postData['image'] = newImage
-	return render_template("checkout.html", seller=isSeller, buyer=isBuyer, post=postData)
+	return render_template("order.html", item=postData)
 
 
 '''
 Place order
 '''
-@qpp.route('/placeOrder', methods=['POST'])
-def placeOrder():
+@app.route('/checkout', methods=['POST'])
+def checkout():
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
 	postId = int(request.form['postId'])
 	buyerName = session['username']
-	transType = str(request.form['transType'])
-	rcvAddress = str(request.form['rcvAddress']) if transType == "Online" else None
-	orderId = order.createOrder(postId, buyerName, transType, rcvAddress)
+	transactionType = str(request.form['transactionType'])
+	rcvAddress = str(request.form['rcvAddress']) if transactionType == "Online" else None
+	orderId = order.createOrder(postId, buyerName, transactionType, rcvAddress)
+	print "order id: ", orderId
 	if orderId == None:
 		return "Placing order failed!"
 	return "Placeing order succeeded!"
@@ -297,8 +292,8 @@ def placeOrder():
 '''
 Favorite
 '''
-@app.route('/likes', methods=['POST'])
-def likes():
+@app.route('/favorite', methods=['POST'])
+def addFavorite():
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
 	postType = str(request.form['postTtype'])

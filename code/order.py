@@ -6,7 +6,7 @@ import datetime
 
 db = schema.db
 
-def createOrder(postId, buyerName, transType, rcvAddress):
+def createOrder(postId, buyerName, transactionType, rcvAddress):
 	time = datetime.datetime.now()
 	post = searchSellerPosts(postId)
 	if post == None:
@@ -16,7 +16,7 @@ def createOrder(postId, buyerName, transType, rcvAddress):
 	if seller == None:
 		return None
 	sndAddress = seller['address']
-	order = Order(postId=postId, buyerName=buyerName, sellerName=sellerName, time=time, status="In progress", transactionType=transType, senderAddress=sndAddress, receiverAddress=rcvAddress)
+	order = Order(postId=postId, buyerName=buyerName, sellerName=sellerName, time=time, status="In progress", transactionType=transactionType, senderAddress=sndAddress, receiverAddress=rcvAddress)
 	try:
 		db.session.add(order)
 		db.session.commit()

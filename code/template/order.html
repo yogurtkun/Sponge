@@ -9,7 +9,9 @@
                 <h4 style="margin-top:2vh">Check the details</h4>
                 <div class="row">
                     <div class="media col-md-3">
-                        <img src="data:image/jpeg;base64,{{item.image}}"/>
+                        {% if item.image %}
+                        <img src="data:;base64,{{ item.image }}"/>
+                        {% endif %}
                     </div>
 
                     <div class="col-md-9">
