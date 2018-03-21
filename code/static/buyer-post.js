@@ -28,6 +28,20 @@ $(document).ready(function(){
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function (form) {
             form.addEventListener('submit', function (event) {
+                let imageinput =  $('#InputImage').prop('files')
+
+                if(imageinput.length !== 0 && imageinput[0].size >= 51200){
+                    alert("Image too large");
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                if (imageinput.length !== 0 &&imageinput[0].type !== 'image/jpeg' && imageinput[0].type !== 'image/png' && imageinput[0].type !== 'image/gif') {
+                    alert('The type of file is incorrect!');
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
                 let price = $('input[name=price]')[0].value;
                 if( !isNormalInteger(price) && price !== ""){
                     alert("Price incorrect");

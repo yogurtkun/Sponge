@@ -1,9 +1,5 @@
-{# [START form] #}
-{% extends "header.html"%}
-
-{% block content %}
+{# [START form] #} {% extends "header.html"%} {% block content %}
 <script src="{{ url_for('static', filename='login.js')}}"></script>
-<link rel="stylesheet" href="static/style.css">
 
 <form id="form" method="POST" class="needs-validation container-fluid formObj" novalidate name="form1" action="/loginUser">
 <h2 class="header text-center">Log in</h2>
@@ -35,6 +31,4 @@
   {% endif %}
 </form>
 
-
-{% endblock %}
-{# [END form] #}
+{% endblock %} {# [END form] #}

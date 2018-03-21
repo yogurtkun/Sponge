@@ -8,9 +8,9 @@
   <script src="static/vue.js"></script>
   <script src="static/jquery-3.3.1.js"></script>
   <script src="static/bootstrap.min-4.0.0.js"></script>
-  <script src="static/bootstrap.min-4.0.0.js"></script>
   <script src="static/font-awesome-5.0.7.js"></script>
   <link rel="stylesheet" href="static/bootstrap.min-4.0.0.css">
+  <link rel="stylesheet" href="static/style.css">
 
   <style>
     html {
@@ -117,7 +117,8 @@
     </form>
 
     {% if session.logged_in %}
-    <div>Welcome! {{session.username}} |
+    <div>
+      <a href="/portal">{{session.username}}</a>
       <a class="btn btn-outline-primary my-2 my-sm-0" href="/logout">Log Out</a>
     </div>
 
@@ -156,6 +157,7 @@
 
       return false;
     });
+
   </script>
 
 </body>

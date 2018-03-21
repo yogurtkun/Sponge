@@ -22,46 +22,12 @@ def createPost(title, description, category, price, location, image, username, s
         return None
 
 
-def getPost(postId, seller, buyer):
+def getPost(postId, seller, buyer):#
     if seller:
         return searchSellerPosts(postId)
     if buyer:
         return searchBuyerPosts(postId)
     return None
-
-
-def searchSellerPosts(postId=None):
-    try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            posts = []
-            for post in SellerPost.query.all():
-                posts.append(from_sql(post))
-            return posts
-        else:
-            post = SellerPost.query.get(postId)
-            return from_sql(post)
-    except Exception as e:
-        print e
-        return None
-
-
-def searchBuyerPosts(postId=None):
-    try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            posts = []
-            for post in BuyerPost.query.all():
-                posts.append(from_sql(post))
-            return posts
-        else:
-            post = BuyerPost.query.get(postId)
-            return from_sql(post)
-    except Exception as e:
-        print e
-        return None
 
 
 def deleteSellerPostById(postId):
@@ -103,35 +69,40 @@ def deleteBuyerPostByUser(username):
         db.session.rollback()
         return False
         
-
-def searchSellerPosts(postId=None):
+        
+def searchSellerPosts(postId=None, category=None, username=None):
     try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            print 'here'
-            posts = []
-            for post in SellerPost.query.all():
-                posts.append(schema.from_sql(post))
-            return posts
-        else:
+        if postId is not None and category is None:
             post = SellerPost.query.get(postId)
             return schema.from_sql(post)
+        else:
+            query = SellerPost.query
+            if category is not None:
+                query = query.filter_by(category=category)
+            if username is not None:
+                query = query.filter_by(sellerName=username)
+            posts = []
+            for post in query.all():
+                posts.append(schema.from_sql(post))
+            return posts
     except:
         return None
 
 
-def searchBuyerPosts(postId=None):
+def searchBuyerPosts(postId=None, category=None, username=None):
     try:
-        if postId is None:
-            #   return all the sell posts
-            #   not support paging
-            posts = []
-            for post in BuyerPost.query.all():
-                posts.append(schema.from_sql(post))
-            return posts
-        else:
+        if postId is not None and category is None:
             post = BuyerPost.query.get(postId)
             return schema.from_sql(post)
+        else:
+            query = BuyerPost.query
+            if category is not None:
+                query = query.filter_by(category=category)
+            if username is not None:
+                query = query.filter_by(buyerName=username)
+            posts = []
+            for post in query.all():
+                posts.append(schema.from_sql(post))
+            return posts
     except:
         return None
