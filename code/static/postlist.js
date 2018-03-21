@@ -7,13 +7,37 @@ var postlist = new Vue({
     {"postid": "3333", "category": "category3", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
     ],
     filter_items: 0,
+    filter_buyer_items: 0,
+    filter_seller_items: 0,
+    filter_len : 0,
+    filter_buyer_len : 0,
+    filter_seller_len : 0,
     filter_price_sorting: 0,
     filter_loc: "0",
     filter_post_time: 0,
     filter_search: "",
     filter_is_apply: false,
+    filter_offset : 0,
+    _ITEMS_PER_PAGE : 10,
   },
-  created(){
+  mounted(){
+    console.log(this.filter_items)
+    $.ajax({
+      url: '/postlist/buyer',
+      dataType: 'json',
+      type: "POST",
+
+      success: (json)=>{
+          console.log(json);
+
+          this.filter_buyer_items = json;
+          this.filter_buyer_len = json.length
+      },
+      }).fail(function($xhr) {
+          var data = $xhr.responseJSON;
+          console.log(data);
+      });
+
     $.ajax({
       url: '/postlist/seller',
       dataType: 'json',
@@ -21,8 +45,27 @@ var postlist = new Vue({
 
       success: (json)=>{
           console.log(json);
-          this.items = json;
-          this.filter_items = json;
+
+          this.filter_seller_items = json;
+          this.filter_seller_len = json.length
+
+
+          /*The following code should be moved to form a independent function*/
+          var filter_items = [];
+          for(var i = 0; i < this.filter_buyer_len; i++){
+            filter_items.push(this.filter_buyer_items[i])
+          }
+
+          for(var i = 0; i < this.filter_seller_len; i++){
+            filter_items.push(this.filter_seller_items[i])
+          }
+
+          // Default sort the items with latest post.
+          filter_items = this.sortWithTime(filter_items, filter_items.length)
+          this.items = filter_items
+          this.filter_items = filter_items
+          this.filter_len = filter_items.length
+
       },
       }).fail(function($xhr) {
           var data = $xhr.responseJSON;
@@ -45,7 +88,6 @@ var postlist = new Vue({
   },
   methods:{
     reset_filter: function(event){
-      console.log("-filter_search")
       this.filter_price_sorting = 0
       this.filter_loc = "0"
       this.filter_post_time = 0
@@ -208,6 +250,31 @@ var postlist = new Vue({
       return toSort;
     },
 
+    sortWithTime: function(filter_items, filter_len){
+      var items = filter_items
+      var filter_items = []
+      var time_with_index = []
+      var new_index
+
+      if(items === null || items === undefined){
+        return items
+      }
+
+      for(var i = 0; i < filter_len; i++){
+        time_with_index.push(new Date(items[i].time))
+      }
+
+      time_with_index = this.sortWithIndeces(time_with_index, "DESC")
+
+      new_index = time_with_index.sortIndices
+
+      for (var i = 0; i < new_index.length; i++){
+        filter_items.push((items[new_index[i]]))
+      }
+
+      return filter_items
+    },
+
     filter_center: function(){
       var filter_items = this.items
       var filter_price_sorting = this.filter_price_sorting
@@ -216,12 +283,19 @@ var postlist = new Vue({
       var filter_search = this.filter_search
       var filter_search_items = []
 
+      if(filter_price_sorting == 0 && filter_loc == "0" && filter_post_time == 0){
+        filter_items = this.sortWithTime(filter_items, filter_items.length)
+      }
+      else{
       filter_items = this.filter_price(filter_items, filter_price_sorting)
       filter_items = this.filter_location(filter_items, filter_loc)
       filter_items = this.filter_time(filter_items, filter_post_time)
+      }
+
       filter_search_items.push(this.filter_posts(filter_items, filter_search))
 
       this.filter_items = filter_search_items[0]
+      this.filter_len = filter_search_items[0].length
     }
   }
 });
