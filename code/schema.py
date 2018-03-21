@@ -34,18 +34,13 @@ class User(db.Model):
     address = db.Column(db.Text)
     rating = db.Column(db.Float) # average rating
     ratingCount = db.Column(db.Integer) # number of rating
-    wantToSell = db.Column(db.String(128)) # seller post list
-    wantToBuy = db.Column(db.String(128)) # buyer post list
+    sellerPosts = db.Column(db.String(128)) # seller post list
+    buyerPosts = db.Column(db.String(128)) # buyer post list
     favoriteSellerPosts = db.Column(db.String(128))
     favoriteBuyerPosts = db.Column(db.String(128))
 
     def __repr__(self):
         return '<User %r>' % self.username
-
-    def checkPassword(self, pw):
-        if pw == self.password:
-            return True
-        return False
 
 
 class BuyerPost(db.Model):

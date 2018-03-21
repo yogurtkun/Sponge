@@ -18,7 +18,7 @@ def registerUser(username, email, password, zipcode):
 def loginUser(username, password):
     user = User.query.get(username)
     if user:
-        if user.checkPassword(password):
+        if user.password == password:
             return 1
         return -1   # wrong password
     return 0    #user doesn't exist
@@ -41,16 +41,16 @@ def deleteUser(username):
         return False
 
 
-def addFavorite(username, postId, postType):
+def addPost(username, postId, postType):
     user = User.query.get(username)
     if (postType == "Seller"):
-        tmp = self.favoriteSellerPosts
+        tmp = user.sellerPosts
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
             tmp = tmp + ";" + str(postId)
         try:
-            self.favoriteSellerPosts = tmp
+            user.sellerPosts = tmp
             db.session.commit()
             return True
         except Exception as e:
@@ -58,13 +58,45 @@ def addFavorite(username, postId, postType):
             db.session.rollback()
             return False
     if (postType == "Buyer"):
-        tmp = self.favoriteBuyerPosts
+        tmp = user.buyerPosts
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
             tmp = tmp + ";" + str(postId)
         try:
-            self.favoriteSellerPosts = tmp
+            user.buyerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+
+
+def addFavorite(username, postId, postType):
+    user = User.query.get(username)
+    if (postType == "Seller"):
+        tmp = user.favoriteSellerPosts
+        if tmp==None or len(tmp)==0:
+            tmp = str(postId)
+        else:
+            tmp = tmp + ";" + str(postId)
+        try:
+            user.favoriteSellerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+    if (postType == "Buyer"):
+        tmp = user.favoriteBuyerPosts
+        if tmp==None or len(tmp)==0:
+            tmp = str(postId)
+        else:
+            tmp = tmp + ";" + str(postId)
+        try:
+            user.favoriteBuyerPosts = tmp
             db.session.commit()
             return True
         except Exception as e:

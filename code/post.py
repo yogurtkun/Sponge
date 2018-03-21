@@ -6,11 +6,11 @@ import datetime
 db = schema.db
 
 
-def createPost(title, description, category, price, location, image, username, seller, buyer):
+def createPost(title, description, category, price, location, image, username, postType):
     time = datetime.datetime.now()
-    if seller:
+    if postType == "Seller":
         post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=username, time=time)
-    if buyer:
+    if postType == "Buyer":
         post = BuyerPost(title=title, description=description, category=category, price=price, location=location, image=image, buyerName=username, time=time)      
     try:
         db.session.add(post)
@@ -22,10 +22,10 @@ def createPost(title, description, category, price, location, image, username, s
         return None
 
 
-def getPost(postId, seller, buyer):#
-    if seller:
+def getPost(postId, postType):#
+    if postType == "Seller":
         return searchSellerPosts(postId)
-    if buyer:
+    if postType == "Buyer":
         return searchBuyerPosts(postId)
     return None
 

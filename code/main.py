@@ -1,5 +1,5 @@
-from google.appengine.ext import vendor
-vendor.add('lib')
+#from google.appengine.ext import vendor
+#vendor.add('lib')
 
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
@@ -193,8 +193,11 @@ def createPost(request, flag):
         image = image.read() # to binary file
     # time = current time, will be calculated in database
     name = session['username']
-    postId = post.createPost(title, description, category, price, location, image, name, isSeller, isBuyer)
+    postId = post.createPost(title, description, category, price, location, image, name, flag)
     if postId == None:
+        return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post failed!')
+    res = account.addPost(name, postId, flag)
+    if res == None:
         return render_template('post.html', seller=isSeller, buyer=isBuyer, error='Create post failed!')
     if isSeller:
         return redirect('/SellerPost?postId=' + str(postId))
@@ -246,7 +249,7 @@ def getBuyerPost():
 def getPost(postId, flag):
     isSeller = flag == "Seller"
     isBuyer = flag == "Buyer"
-    postData = post.getPost(postId, isSeller, isBuyer)
+    postData = post.getPost(postId, flag)
     if postData == None:
         if isSeller:
             return redirect('/NewSellerPost')
@@ -273,9 +276,7 @@ def buyOrder():
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
 	postId = int(request.args['postId'])
-	isSeller = True
-	isBuyer = False
-	postData = post.getPost(postId, isSeller, isBuyer)
+	postData = post.getPost(postId, "Seller")
 	if postData == None:
 		return render_template('notFound.html'), 404
 	return render_template("order.html", item=postData)
