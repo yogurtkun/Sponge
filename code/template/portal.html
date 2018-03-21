@@ -1,5 +1,7 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
 <script src="static/portal.js"></script>
+<script src="static/dist/bootstrap-table.min.js"></script>
+<link rel="stylesheet" href="static/dist/bootstrap-table.min.css"></link>
 <br>
 <div class="modal-body" style="min-height:75vh">
   <div class="container-fluid">
@@ -10,7 +12,10 @@
             <a class="nav-link active" href="#info-tab" data-toggle="tab">Information</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#buy-tab" data-toggle="tab">Buy list</a>
+            <a class="nav-link" href="#buy-tab" data-toggle="tab">Buy Posts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#sell-tab" data-toggle="tab">Sell Posts</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#message-tab" data-toggle="tab">Message</a>
@@ -42,21 +47,21 @@
               <div class="form-group row">
                 <label for="zipcode" class="col-sm-4 col-form-label">Zipcode</label>
                 <div class="col-sm-8">
-                  <input type="text"  class="form-control-plaintext writeable-text" id="staticzipcode" v-model="user.zipcode">
+                  <input type="text" class="form-control-plaintext writeable-text" id="staticzipcode" v-model="user.zipcode">
                 </div>
               </div>
 
               <div class="form-group row">
                 <label for="phone" class="col-sm-4 col-form-label">Phone Number</label>
                 <div class="col-sm-8">
-                  <input type="text"  class="form-control-plaintext writeable-text" id="staticphone" v-model="user.phonenumber">
+                  <input type="text" class="form-control-plaintext writeable-text" id="staticphone" v-model="user.phonenumber">
                 </div>
               </div>
 
               <div class="form-group row">
                 <label for="address" class="col-sm-4 col-form-label">Address</label>
                 <div class="col-sm-8">
-                  <input type="text"  class="form-control-plaintext writeable-text" id="staticaddress" v-model="user.address">
+                  <input type="text" class="form-control-plaintext writeable-text" id="staticaddress" v-model="user.address">
                 </div>
               </div>
 
@@ -66,8 +71,15 @@
             {% endraw %}
 
           </div>
-          <div id="buy-tab" class="tab-pane fade">Will coming soon
+
+          <div id="buy-tab" class="tab-pane fade">
+            <table id="buy-post-table"></table>
           </div>
+
+          <div id="sell-tab" class="tab-pane fade">
+            <table id="sell-post-table"></table>
+          </div>
+
           <div id="message-tab" class="tab-pane fade">
             Coming soon...
           </div>
