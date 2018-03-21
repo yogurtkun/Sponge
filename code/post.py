@@ -31,7 +31,6 @@ def getPost(postId, seller, buyer):
 
 
 def searchSellerPosts(postId=None):
-    print "get seller post ", postId
     try:
         if postId is None:
             #   return all the sell posts
@@ -49,7 +48,6 @@ def searchSellerPosts(postId=None):
 
 
 def searchBuyerPosts(postId=None):
-    print "get buyer post ", postId
     try:
         if postId is None:
             #   return all the sell posts

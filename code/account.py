@@ -1,5 +1,5 @@
 from main import schema
-from schema import User
+from schema import User, from_sql
 
 db = schema.db
 
@@ -27,7 +27,7 @@ def loginUser(username, password):
 def searchUser(username):
     user = User.query.get(username)
     if user:
-        return schema.from_sql(user)
+        return from_sql(user)
     return None
 
 
@@ -39,3 +39,11 @@ def deleteUser(username):
     except:
         db.session.rollback()
         return False
+
+
+def addFavorite(username, postId, postType):
+    user = User.query.get(username)
+    if (postType == "Seller"):
+        return user.addWTS(postId)
+    if (postType == "Buyer"):
+        return user.addWTB(postId)

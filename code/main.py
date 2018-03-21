@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
 import json
-import account, post
+import account, post, order
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
@@ -229,6 +229,60 @@ def getPost(postId, flag):
 		newImage = base64.b64encode(image).decode('ascii')
 		postData['image'] = newImage
 	return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData)
+
+
+'''
+Place order page
+'''
+@app.route('/Checkout', methods=['GET'])
+def order():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	postId = int(request.args['postId'])
+	isSeller = True
+	isBuyer = False
+	postData = post.getPost(postId, isSeller, isBuyer)
+	if postData == None:
+		return render_template('notFound.html'), 404
+	image = postData['image']
+	if image != None:
+		newImage = base64.b64encode(image).decode('ascii')
+		postData['image'] = newImage
+	return render_template("checkout.html", seller=isSeller, buyer=isBuyer, post=postData)
+
+
+'''
+Place order
+'''
+@qpp.route('/placeOrder', methods=['POST'])
+def placeOrder():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	postId = int(request.form['postId'])
+	buyerName = session['username']
+	transType = str(request.form['transType'])
+	rcvAddress = str(request.form['rcvAddress']) if transType == "Online" else None
+	orderId = order.createOrder(postId, buyerName, transType, rcvAddress)
+	if orderId == None:
+		return "Placing order failed!"
+	return "Placeing order succeeded!"
+
+
+'''
+Favorite
+'''
+@app.route('/likes', methods=['POST'])
+def likes():
+	if not loggedIn():
+		return render_template('login.html', error='Please login first')
+	postType = str(request.form['postTtype'])
+	postId = int(request.form['postId'])
+	username = session['username']
+	if account.addFavorite(username, postId, postType):
+		return "Adding to favorites succeeded!"
+	return "Adding to favorites failed!"
+
+
 
 
 
