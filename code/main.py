@@ -51,6 +51,17 @@ def updateUser():
         return 'Fail'
     return 'Success'
 
+'''
+Get user info
+'''
+@app.route('/userinfo',methods=['POST'])
+def userinfo():
+    if not loggedIn():
+        return redirect('/login')  
+    username = session['username']
+    user = account.searchUser(username) 
+    return json.dumps(user)
+
 
 '''
 Retrival posts related to the user
