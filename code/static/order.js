@@ -1,62 +1,42 @@
 $(document).ready(function () {
-    var postInfo = new Vue({
-        el: '.order-confirmation',
-        data: {
-            item: {
-                title: "",
-                sellername: "",
-                description: "",
-                price: ""
-            }
-        },
-        created() {
-            $.ajax({
-                url: 'BuyerPost',
-                dataType: 'json',
-                type: 'GET',
-                success: (data) => {
-                    this.item = data;
-                }
-            })
-        }
-    });
-})
-
-$(document).ready(function () {
     var checkoutInfo = new Vue({
         el: '#checkoutform',
-        data:{
-            sendAddress: "",
+        data: {
+            rcvAddress: "",
             transactionType: ""
         },
-        created(){
+        created() {
             $.ajax({
                 url: '/userinfo',
                 type: 'POST',
                 success: (data) => {
                     retUser = JSON.parse(data);
+                    console.log(retUser);
 
-                    this.sendAddress = retUser.address;
+                    this.rcvAddress = retUser.address;
                 }
             });
         },
-        methods:{
-            checkout: function(){
-                tdata={"sendAddress":this.sendAddress,"transactionType":this.transactionType};
+        methods: {
+            checkout: function () {
+                tdata = { 
+                    "rcvAddress": this.rcvAddress, "transactionType": this.transactionType,
+                    "postId": $("#item-postid").val()
+                };
                 console.log(tdata);
                 $.ajax({
-                    url:'/checkout',
-                    type:'POST',
-                    data:tdata,
-                    success:(data)=>{
+                    url: '/checkout',
+                    type: 'POST',
+                    data: tdata,
+                    success: (data) => {
                         console.log("success!")
                     }
                 })
             },
-            checkType: function(){
-                if(this.transactionType === "Face to Face"){
+            checkType: function () {
+                if (this.transactionType === "Face to Face") {
                     $('#addressmayhide').hide();
-                }else{
+                } else {
                     $('#addressmayhide').show();
                 }
             }

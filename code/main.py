@@ -35,10 +35,20 @@ User portal
 def userPortal():
     if not loggedIn():
         return redirect('/login')
-    username = session['username']
-    user = account.searchUser(username)
-    return render_template("portal.html", user = user)
+    return render_template("portal.html")
 
+
+<<<<<<< HEAD
+'''
+Get user info
+'''
+@app.route('/userinfo',methods=['POST'])
+def userinfo():
+    if not loggedIn():
+        return redirect('/login')  
+    username = session['username']
+    user = account.searchUser(username) 
+    return json.dumps(user)
 
 '''
 Update user informatin
@@ -50,7 +60,8 @@ def updateUser():
     if user is None:
         return 'Fail'
     return 'Success'
-
+=======
+>>>>>>> 75eea484aed16adc863addb183a8e4ae0df734ba
 
 '''
 Retrival posts related to the user
