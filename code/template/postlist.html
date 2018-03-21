@@ -26,7 +26,7 @@
         <div class="row row-bordered">
           <div class="col-sm-7">
             <form class="form-inline my-2">
-              <span class="label label-info">Price : </span>
+              <span class="label label-info mx-2">Price : </span>
               <select v-model="filter_price_sorting" id="filter-price-sort" class="form-control mx-2" id="state" name="price_sort" style="width: 100px;">
                 <option value="0">N/A</option>
                 <option value="1">low &nbsp;to high</option>
@@ -102,16 +102,19 @@
               </form>
           </div>
 
-          <div class="col-sm-4">
+          <div class="col-sm-3">
             <form class="form-inline my-2 float-right">
-              <input v-model="filter_search" id="filter-search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 120px;">
+              <input v-model="filter_search" id="filter-search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 110px;">
               <span class="badge badge-pill badge-info"> {{filter_len}} items </span>
               <!--<a href="#"><i class="fas fa-lg fa-search"></i></a>-->
             </form>
           </div>
 
-          <div class="col-sm-   my-2">
-              <button v-on:click="reset_filter" id="filter-reset" class="btn btn-primary container-fluid loginBtn float-right" type="submit">Reset</button>
+          <div class="col-sm-2">
+            <form class="form-inline my-2 float-right mx-2">
+              <button v-on:click="reset_filter" id="filter-reset" class="btn btn-primary float-right" type="submit">Reset</button>
+              <label mx-2></label>
+            </form>
           </div>
         </div>
       </div>
@@ -122,7 +125,7 @@
             <div class="row">
               <div class="col-7">
                 <div>
-                  <h2>
+                  <h2 class="mx-3 my-2">
                     <a class="card-title hide_overflow" v-if="item.buyerName" v-bind:href="'BuyerPost\?postId=' + item.postId">
                       {{item.title}}
                     </a>
@@ -130,48 +133,51 @@
                       {{item.title}}
                     </a>
                   </h2>
-                  <p class="card-text hide_overflow">
+                  <p class="card-text hide_overflow mx-3" >
                     {{item.description}}
                   </p>
                 </div>
               </div>
               <div class="col-3">
-                <p class="row text-left">Category : &nbsp
-                  <a v-bind:href="'/postlist/' + item.category"> {{item.category}}</a>
+                <p class="row text-left my-3">Category : &nbsp
+                  <!--<a v-bind:href="'/postlist/' + item.category"> {{item.category}}</a>-->
+                  <a href="#"> {{item.category}}</a>
                 </p> 
                 <p v-if="item.location" class="row text-left">Location : {{item.location}} </p> 
                 <p class="row text-left">{{item.time}}</p>
               </div>
               <div class="col-2">
                 <h4 class="text-danger">
-                  <p v-if="item.price" class="text-right">
+                  <p v-if="item.price" class="text-right  mx-3 my-3">
                     ${{item.price}}
                   </p>
-                  <p v-else class="text-right">
+                  <p v-else class="text-right  mx-3 my-3">
                     Not Specify
                   </p>
                 </h4>
-                <p v-if="item.buyerName" class="text-right">
+                <p v-if="item.buyerName" class="text-right mx-3">
                   <i class="fas fa-user"></i>
-                  <a v-bind:href="'/postlist/' + item.buyerName"> {{item.buyerName}}</a>
+                  <!--<a v-bind:href="'/postlist/' + item.buyerName"> {{item.buyerName}}</a>-->
+                  <a href="#"> {{item.buyerName}}</a>
                 </p>
-                <p v-else-if="item.sellerName" class="text-right">
+                <p v-else-if="item.sellerName" class="text-right mx-3">
                   <i class="fas fa-user"></i>
-                  <a v-bind:href="'/postlist/' + item.sellerName"> {{item.sellerName}}</a>
+                  <!--<a v-bind:href="'/postlist/' + item.sellerName"> {{item.sellerName}}</a>-->
+                  <a href="#"> {{item.sellerName}}</a>
                 </p>
               </div>
             </div>
           <div class="row">
             <div class="col">
               <p class="card-text">
-                <div v-if="item.image" class="product_image2">
+                <div v-if="item.image" class="product_image2 mx-3 my-1">
                   <a v-if="item.buyerName" v-bind:href="'BuyerPost\?postId=' + item.postId">
                     <img v-bind:src="'data:image/jpeg;base64,'+item.image" />
                   </a>
                   <a v-else-if="item.sellerName" v-bind:href="'SellerPost\?postId=' + item.postId">
                     <img v-bind:src="'data:image/jpeg;base64,'+item.image" />
                   </a>
-                  <div class="product_buttons">
+                  <div class="product_buttons text-center">
                     <button class="product_heart"><i class="fa fa-heart"></i></button>
                   </div>
                 </div>
