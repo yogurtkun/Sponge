@@ -9,7 +9,7 @@
                 <h4 style="margin-top:2vh">Check the details</h4>
                 <div class="row">
                     <div class="media col-md-3">
-                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" />
+                        <img src="data:image/jpeg;base64,{{item.image}}"/>
                     </div>
 
                     <div class="col-md-9">
@@ -17,24 +17,24 @@
                             <div class="form-group row">
                                 <label for="item-title" class="col-sm-3 col-form-label">Product Title</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control-plaintext unwriteable-text" readonly id="item-title" v-model="item.title">
+                                    <input type="text" class="form-control-plaintext unwriteable-text" readonly id="item-title" value="{{item.title}}">
                                 </div>
 
-                                <label for="item-seller" class="col-sm-3 col-form-label">Seller Name</label>
+                                <label for="item-postid" class="col-sm-3 col-form-label">Post ID</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control-plaintext unwriteable-text" readonly id="item-seller" v-model="item.sellername">
+                                    <input type="text" class="form-control-plaintext unwriteable-text" readonly id="item-postid" value="{{item.postId}}">
                                 </div>
                             </div>
 
                             <div class="col-md-12 form-group" style="padding:0">
                                 <label for="description">Decription</label>
-                                <textarea readonly class="form-control-plaintext unwriteable-text" v-model="item.description"></textarea>
+                                <textarea readonly class="form-control-plaintext unwriteable-text">{{item.description}}</textarea>
                             </div>
 
                             <div class="col-md-12 form-group row" style="padding:0">
                                 <label for="item-price" class="col-md-3 col-form-label">Price</label>
 
-                                <input type="text" class="form-control-plaintext unwriteable-text col-md-9" readonly id="item-price" v-model="item.price">
+                                <input type="text" class="form-control-plaintext unwriteable-text col-md-9" readonly id="item-price" value={{item.price}}>
 
                             </div>
                         </div>
@@ -54,9 +54,9 @@
                 </div>
 
                 <div class="form-group row" id="addressmayhide">
-                    <label for="send-address" class="col-sm-4 col-form-label">Sending address</label>
+                    <label for="rcv-address" class="col-sm-4 col-form-label">Receive address</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control-plaintext writeable-text" id="send-address" v-model="sendAddress">
+                        <input type="text" class="form-control-plaintext writeable-text" id="rcv-address" v-model="rcvAddress">
                     </div>
                 </div>
 
