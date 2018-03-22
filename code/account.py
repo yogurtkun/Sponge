@@ -112,11 +112,11 @@ def deleteFavorite(username, postId, postType):
         tmp = user.favoriteSellerPosts
         if tmp == None or len(tmp) == 0:
             return False
-        favs = tmp.split(';')
+        favs = tmp.split(DELIMITER)
         favs = filter(lambda e : e != str(postId), favs)
         tmp = ""
         for e in favs:
-            tmp += (e + ";")
+            tmp += (e + DELIMITER)
         tmp = tmp[:-1]
         try:
             user.favoriteSellerPosts = tmp
@@ -130,11 +130,11 @@ def deleteFavorite(username, postId, postType):
         tmp = user.favoriteBuyerPosts
         if tmp == None or len(tmp) == 0:
             return False
-        favs = tmp.split(';')
+        favs = tmp.split(DELIMITER)
         favs = filter(lambda e : e != str(postId), favs)
         tmp = ""
         for e in favs:
-            tmp += (e + ";")
+            tmp += (e + DELIMITER)
         tmp = tmp[:-1]
         try:
             user.favoriteBuyerPosts = tmp

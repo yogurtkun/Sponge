@@ -129,6 +129,7 @@ class MainTest(unittest.TestCase):
             postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
             rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
             res = re.findall("postId=\d+#", rv.data)
+            print "res len: ", len(res)
             assert len(res) == 1
             postId = res[0][7:-1]
             postdata = {"postId":postId, "postType":"Seller"}

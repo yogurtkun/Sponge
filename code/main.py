@@ -1,5 +1,5 @@
-from google.appengine.ext import vendor
-vendor.add('lib')
+#from google.appengine.ext import vendor
+#vendor.add('lib')
 
 from flask import Flask, session, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
