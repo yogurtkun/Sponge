@@ -7,7 +7,7 @@ DELIMITER = ';'
 
 def registerUser(username, email, password, zipcode):
     user = User(username=username, email=email, password=password, zipcode=zipcode)
-    try: 
+    try:
         db.session.add(user)
         db.session.commit()
         return True
@@ -81,6 +81,8 @@ def addFavorite(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
+            if str(postId) in tmp.split(DELIMITER):
+                return True
             tmp = tmp + DELIMITER + str(postId)
         try:
             user.favoriteSellerPosts = tmp
@@ -95,6 +97,8 @@ def addFavorite(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
+            if str(postId) in tmp.split(DELIMITER):
+                return True
             tmp = tmp + DELIMITER + str(postId)
         try:
             user.favoriteBuyerPosts = tmp

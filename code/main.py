@@ -28,7 +28,7 @@ def signup():
     return render_template("signup.html")
 
 
-''' 
+'''
 User portal
 '''
 @app.route('/portal')
@@ -44,9 +44,9 @@ Get user info
 @app.route('/userinfo',methods=['POST'])
 def userinfo():
     if not loggedIn():
-        return redirect('/login')  
+        return redirect('/login')
     username = session['username']
-    user = account.searchUser(username) 
+    user = account.searchUser(username)
     return json.dumps(user)
 
 '''
@@ -85,7 +85,7 @@ def registerUser():
     if res: # signup successful
         session['logged_in'] = True
         session['username'] = username
-        return redirect('/')        
+        return redirect('/')
     else:
         return render_template("signup.html", error="User exists!")
 
@@ -131,7 +131,7 @@ check if there is a logged_in user
 def loggedIn():
     return 'logged_in' in session.keys() and session['logged_in']
 
-        
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('notFound.html'), 404
@@ -335,7 +335,7 @@ Delete favorite
 @app.route('/deleteFavorite', methods=['POST'])
 def deleteFavorite():
     if not loggedIn():
-        return render_template('login.html', error='Please login first')
+		return render_template('login.html', error='Please login first')
     postType = str(request.form['postType'])
     postId = int(request.form['postId'])
     username = session['username']
