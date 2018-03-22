@@ -158,6 +158,18 @@ def getFavorite(username):
     return [], []
 
 
+def searchFavorite(username, postId, flag):
+    user = User.query.get(username)
+    if user:
+        user = from_sql(user)
+        if flag == "Seller":
+            return str(postId) in user["favoriteSellerPosts"].split(DELIMITER)
+        if flag == "Buyer":
+            return str(postId) in user["favoriteBuyerPosts"].split(DELIMITER)
+    return False
+
+
+
 '''
 data: {attribute => value} for update
 e.g. {'zipcode': '10027'}

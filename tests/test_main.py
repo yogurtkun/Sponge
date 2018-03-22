@@ -34,7 +34,7 @@ class MainTest(unittest.TestCase):
             post.deleteSellerPostByUser("testUser")
             post.deleteBuyerPostByUser("testUser")
             account.deleteUser("testUser")
-        
+
 
     #def test_hello_world(self):
     #    rv = self.app.get('/')
@@ -87,7 +87,7 @@ class MainTest(unittest.TestCase):
             rv = self.app.get('/portal')
             assert b"portal" not in rv.data
             self.app.post("/loginUser", data = user)
-            rv = self.app.get('/portal')  
+            rv = self.app.get('/portal')
 
             # user portal update
             update = {"username":user['username'], "zipcode":"10027"}

@@ -259,9 +259,12 @@ def getBuyerPost():
 
 
 def getPost(postId, flag):
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
     isSeller = flag == "Seller"
     isBuyer = flag == "Buyer"
     postData = post.getPost(postId, flag)
+    postData["favorite"] = account.searchFavorite(session['username'], postId, flag)
     if postData == None:
         if isSeller:
             return redirect('/NewSellerPost')
