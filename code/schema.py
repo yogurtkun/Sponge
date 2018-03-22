@@ -52,7 +52,7 @@ class BuyerPost(db.Model):
     price = db.Column(db.Integer)
     time = db.Column(db.DateTime)
     location = db.Column(db.String(32))
-    buyerName = db.Column(db.String(32), db.ForeignKey('user.username'))
+    buyerName = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
     user = db.relationship("User", lazy=True, cascade="all,delete")
 
     def __repr__(self):
@@ -68,7 +68,7 @@ class SellerPost(db.Model):
     price = db.Column(db.Integer)
     time = db.Column(db.DateTime)
     location = db.Column(db.String(32))
-    sellerName = db.Column(db.String(32), db.ForeignKey('user.username'))
+    sellerName = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
     user = db.relationship("User", lazy=True, cascade="all,delete")
 
     def __repr__(self):
@@ -77,11 +77,11 @@ class SellerPost(db.Model):
 
 class Order(db.Model):
     orderId = db.Column(db.Integer, primary_key=True)
-    postId = db.Column(db.Integer, db.ForeignKey('seller_post.postId'))
+    postId = db.Column(db.Integer, db.ForeignKey('seller_post.postId', ondelete='CASCADE'))
     sellerPost = db.relationship("SellerPost", lazy=True)
-    buyerName = db.Column(db.String(32), db.ForeignKey("user.username"))
+    buyerName = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     buyer = db.relationship("User", foreign_keys=[buyerName], lazy=True, cascade="all,delete")
-    sellerName = db.Column(db.String(32), db.ForeignKey("user.username"))
+    sellerName = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     seller = db.relationship("User", foreign_keys=[sellerName], lazy=True, cascade="all,delete")
     time = db.Column(db.DateTime)
     status = db.Column(db.String(32))
@@ -95,9 +95,9 @@ class Order(db.Model):
 
 class Message(db.Model):
     messageId = db.Column(db.Integer, primary_key=True)
-    senderUsername = db.Column(db.String(32), db.ForeignKey("user.username"))
+    senderUsername = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     sender = db.relationship("User", foreign_keys=[senderUsername], lazy=True, cascade="all,delete")
-    receiverUsername = db.Column(db.String(32), db.ForeignKey("user.username"))
+    receiverUsername = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     receiver = db.relationship("User", foreign_keys=[receiverUsername], lazy=True, cascade="all,delete")
     title = db.Column(db.String(64), nullable=False)
     content = db.Column(db.Text, nullable=False)
