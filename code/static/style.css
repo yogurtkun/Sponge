@@ -614,3 +614,9 @@ ul.product_list {
 .alertdiv{
   color: #DF0404 
 }
+
+/*CSS for header toolbar*/
+.nav-margin{
+  margin-left: 1vw;
+  margin-right: 1vw
+}
