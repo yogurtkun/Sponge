@@ -140,6 +140,23 @@ class MainTest(unittest.TestCase):
             print "Adding and deleting favorite posts pass\n"
 
 
+    def test_order(self):
+        with main.app.app_context():
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
+            user = {"username":"testUser", "password":"1234"}
+            self.app.post("/loginUser", data=user, follow_redirects=True)
+            postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
+            rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
+            res = re.findall("postId=\d+#", rv.data)
+            print "res len: ", len(res)
+            assert len(res) == 1
+            postId = res[0][7:-1]
+            postdata = {"postId":postId, "transactionType":"Face to Face"}
+            rv = self.app.post("/checkout", data=postdata, follow_redirects=True)
+            assert "Placeing order succeeded!" == rv.data
+            print "Place order pass\n"
+
+
 
 
 if __name__ == '__main__':
