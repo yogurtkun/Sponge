@@ -299,7 +299,7 @@ var postlist = new Vue({
     addFavorite: function(postType, postId){
 
 
-      tdata = {"postTtype": postType, 'postId': postId}
+      tdata = {"postType": postType, 'postId': postId}
       console.log(tdata);
       $.ajax({
           url: '/favorite',

@@ -17,7 +17,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return redirect('/postlist') #render_template("index.html")
 
 
 '''
@@ -321,7 +321,7 @@ Favorite
 def addFavorite():
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
-	postType = str(request.form['postTtype'])
+	postType = str(request.form['postType'])
 	postId = int(request.form['postId'])
 	username = session['username']
 	if account.addFavorite(username, postId, postType):
@@ -329,6 +329,19 @@ def addFavorite():
 	return "Adding to favorites failed!"
 
 
+'''
+Delete favorite
+'''
+@app.route('/deleteFavorite', methods=['POST'])
+def deleteFavorite():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    username = session['username']
+    if account.deleteFavorite(username, postId, postType):
+        return "Deleting a favorite item succeeded!"
+    return "Deleting a favorite item failed!"
 
 
 

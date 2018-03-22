@@ -75,7 +75,6 @@ def addPost(username, postId, postType):
 
 
 def addFavorite(username, postId, postType):
-    print "favorite"
     user = User.query.get(username)
     if (postType == "Seller"):
         tmp = user.favoriteSellerPosts
@@ -97,6 +96,46 @@ def addFavorite(username, postId, postType):
             tmp = str(postId)
         else:
             tmp = tmp + DELIMITER + str(postId)
+        try:
+            user.favoriteBuyerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+
+
+def deleteFavorite(username, postId, postType):
+    user = User.query.get(username)
+    if postType == "Seller":
+        tmp = user.favoriteSellerPosts
+        if tmp == None or len(tmp) == 0:
+            return False
+        favs = tmp.split(';')
+        favs = filter(lambda e : e != str(postId), favs)
+        tmp = ""
+        for e in favs:
+            tmp += (e + ";")
+        tmp = tmp[:-1]
+        try:
+            user.favoriteSellerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+    if postType == "Buyer":
+        tmp = user.favoriteBuyerPosts
+        if tmp == None or len(tmp) == 0:
+            return False
+        favs = tmp.split(';')
+        favs = filter(lambda e : e != str(postId), favs)
+        tmp = ""
+        for e in favs:
+            tmp += (e + ";")
+        tmp = tmp[:-1]
         try:
             user.favoriteBuyerPosts = tmp
             db.session.commit()
