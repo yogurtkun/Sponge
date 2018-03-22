@@ -316,6 +316,27 @@ ul.product_list {
   height: 40px;
 }
 
+
+.buttons_favorite button {
+  color: #DF0404;
+  border: none;
+  background: rgba(150, 150, 150, 0.5);
+  font-size: 1em;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.buttons_not_favorite button {
+  color: #fff;
+  border: none;
+  background: rgba(150, 150, 150, 0.5);
+  font-size: 1em;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
 .product_price a {
   color: #000;
 }

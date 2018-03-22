@@ -3,13 +3,60 @@ $(document).ready(function(){
     el:"#checkbutton",
     methods: {
       checkout: function(){
-        var urlParams =new URLSearchParams(window.location.search);
+        var urlParams = new URLSearchParams(window.location.search);
         var postId = urlParams.get("postId");
         window.location.href = "/buyorder?postId="+postId;
       }
     }
   });
+
+  var favoriteBtn = new Vue({
+  el: "#favoriteBtn",
+  data: {
+    is_favorite : undefined
+  },
+  methods:{
+    deleteFavorite : function(postType, postId){
+      console.log("delete")
+      console.log(postType, postId)
+      this.is_favorite = false
+      console.log(this.is_favorite)
+      
+      tdata = {"postType": postType, 'postId': postId}
+      console.log("delete", tdata);
+      $.ajax({
+          url: '/deleteFavorite',
+          type: 'POST',
+          data: tdata,
+          success: (data) => {
+              console.log("success!")
+              this.query_buyer_seller_post()
+          }
+      })
+    },
+
+    addFavorite : function(postType, postId){
+      console.log("add")
+      console.log(postType, postId)
+      this.is_favorite = true
+      console.log(this.is_favorite)
+
+      tdata = {"postType": postType, 'postId': postId}
+      console.log("add", tdata);
+      $.ajax({
+          url: '/favorite',
+          type: 'POST',
+          data: tdata,
+          success: (data) => {
+              console.log("success!")
+              this.query_buyer_seller_post()
+          }
+        })
+      } 
+    }
+  });
 });
+
 
 /*Move to Top Button*/
 Vue.component('backtotop', {
@@ -47,26 +94,4 @@ Vue.component('backtotop', {
 
 var app = new Vue({
   el: '#toTop'
-});
-
-var sidebar = new Vue({
-  el: '#sidebars',
-  data: {
-    post_user: "anonymous",
-  },
-  created(){
-    $.ajax({
-      url: '/testPostDetail',
-      dataType: 'json',
-      type: "POST",
-
-      success: (json)=>{
-          console.log(json);
-          this.post_user = json.data.user;
-      },
-      }).fail(function($xhr) {
-          var data = $xhr.responseJSON;
-          console.log(data);
-      });
-  },
 });
