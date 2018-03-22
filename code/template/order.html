@@ -9,7 +9,7 @@
                 <h4 style="margin-top:2vh">Review Your Order</h4>
                 <hr>
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="form-group" style="font-size:1.5vh col-md-12">
                             <div class="form-group">
                                 <label for="item-title" class="col-form-label">Product Title</label>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
 
-                    <div class="media col-md-3">
+                    <div class="media col-md-4">
                         {% if item.image %}
                         <img src="data:;base64,{{ item.image }}" /> {% endif %}
                     </div>
@@ -353,8 +353,18 @@
                 <div class="form-group row" v-if="ifCheck">
                     <div class="form-group col-md-9"></div>
                     <div class="form-group col-md-3">
+                        <div style="color:rgb(233, 59, 16);font-size:1.2vh">
+                            Please Click Again to Checkout!
+                        </div>
                         <a class="form-control btn btn-primary mb-2" v-on:click="checkout" style="text-align:center;color:white">Checkout</a>
                     </div>
+
+                    <!-- <div class="form-group col-md-2">
+                        <div style="color:rgb(233, 59, 16);font-size:1.2vh">
+                            Click this to think again!
+                        </div>
+                        <a class="form-control btn btn-primary mb-2" v-on:click="review" style="text-align:center;color:white">Review</a>
+                    </div> -->
                 </div>
             </div>
         </div>

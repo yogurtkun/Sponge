@@ -28,6 +28,10 @@ $(document).ready(function () {
         },
         methods: {
             checkform: function () {
+                if(this.transactionType === "Face to Face"){
+                    return true;
+                }
+
                 let ispass = true;
                 if (this.transactionType === "") {
                     this.errors.push("Transaction Type Required")
@@ -75,11 +79,17 @@ $(document).ready(function () {
                 var self = this;
                 self.$nextTick(function () {
                     self.errors=[];
-                    if (!self.checkform()) {
+                    if (!self.checkform() ) {
                         console.log(this.errors);
                         return;
                     }
                     self.ifCheck = true;
+                });
+            },
+            review: function(){
+                var self = this;
+                self.$nextTick(function(){
+                    self.ifCheck = false;
                 });
             },
             checkType: function () {
