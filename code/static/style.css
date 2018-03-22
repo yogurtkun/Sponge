@@ -247,7 +247,6 @@ ul.product_list {
   position: relative;
   overflow: hidden;
   width: 200px;
-  padding-left: 35px;
 }
 .product_image2 a {
   display: block;
@@ -271,6 +270,10 @@ ul.product_list {
   bottom: 0;
 }
 
+.product_image2:hover .product_buttons_favorite {
+  bottom: 0;
+}
+
 .product_buttons {
   position: absolute;
   bottom: -40%;
@@ -281,6 +284,18 @@ ul.product_list {
   -moz-transition: all .35s ease;
   transition: all .35s ease;
 }
+
+.product_buttons_favorite {
+  position: absolute;
+  bottom: -40%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  -webkit-transition: all .35s ease;
+  -moz-transition: all .35s ease;
+  transition: all .35s ease;
+}
+
 .product_buttons button {
   color: #fff;
   border: none;
@@ -290,9 +305,25 @@ ul.product_list {
   width: 40px;
   height: 40px;
 }
+
+.product_buttons_favorite button {
+  color: #DF0404;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 1em;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
 .product_buttons .product_heart:hover {
   color: #DF0404;
   background: rgba(255, 255, 255, 0.5);
+}
+
+.product_buttons_favorite .product_heart_favorite:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .product_buttons .add_to_cart:hover {
@@ -553,8 +584,7 @@ ul.product_list {
 
 /*CSS for portal */
 .writeable-text{
-  font-style:italic;
-  text-align: center;
+  text-align: left;
   border : 1px;
   border-color: #bfcbd9;
   border-style: solid;
@@ -563,8 +593,7 @@ ul.product_list {
 }
 
 .unwriteable-text{
-  font-style:italic;
-  text-align: center
+  text-align: left
 }
 
 .auto-center{
@@ -580,4 +609,8 @@ ul.product_list {
   border-style: solid;
   border-radius: 4px;
   margin-top: 5vh
+}
+
+.alertdiv{
+  color: #DF0404 
 }

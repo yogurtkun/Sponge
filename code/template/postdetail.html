@@ -1,170 +1,72 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
 <script src="static/postdetail.js"></script>
 <body>
-<!-- Page Content -->
-<div class="container">
 
+{% if buyer %}
+<h1 class="mt-4">Buyer Post Details</h1>      
+{% endif %}
+{% if seller %}
+<h1 class="mt-4">Seller Post Details</h1>
+{% endif %}
+<hr>
+
+<div class="container mt-5">
   <div class="row">
-
-    <!-- Post Content Column -->
-    <div class="col-lg-8">
-
-      <div id="post-info">
-        <!-- Title -->
-        {% if buyer %}
-        <h1 class="mt-4">Buyer Post Details</h1>      
-        {% endif %} {% if seller %}
-        <h1 class="mt-4">Seller Post Details</h1>
-        {% endif %}
-
-        <h1 id="post-title" class="mt-4">{{post.title}}</h1>
-        <hr>
-        <!-- Date/Time -->
-        <p id="post-date"><a id="poster" href="#">
-        {% if buyer %}
-        {{post.buyerName}}
-        {% endif %} {% if seller %}
-        {{post.sellerName}} 
-        {% endif %}
-        </a> 
-
-        posted on {{post.time}}</p>
-
-        <hr>
-
+    <div class="col-sm-6 text-left">
         <!-- Preview Image -->
         {% if post.image %}
-        <img src="data:;base64,{{ post.image }}"/>
-        <hr>
+        <img src="data:;base64,{{ post.image }}"  style="width:1000px"/>
+        {% else %}
+        <img src="http://via.placeholder.com/500"  style="width:1000px"/>
         {% endif %}
-        
-
-        <!-- Post Content -->
-        <p class="lead" style="overflow-wrap:break-word">{{post.description}}</p>
-
-        <a class="btn btn-primary mb-2" id="checkbutton" style="float:right" v-on:click="checkout">Checkout</a>
-
-        <hr>
-      </div>
-
-      <!-- Comments Form 
-      <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <textarea class="form-control" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="media mb-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-        <div class="media-body">
-          <h5 class="mt-0">Commenter Name</h5>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-        </div>
-      </div>
-
-      <div class="media mb-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-        <div class="media-body">
-          <h5 class="mt-0">Commenter Name</h5>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-          <div class="media mt-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-              <h5 class="mt-0">Commenter Name</h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            </div>
-          </div>
-
-          <div class="media mt-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-              <h5 class="mt-0">Commenter Name</h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            </div>
-          </div>
-
-        </div>
-      </div>
-
     </div>
-
-    -->
-    <!-- Sidebar Widgets Column
-    <div class="col-md-4">
-
-      <div id="sidebars">
-        <div class="card my-4">
-          <h5 class="card-header">Relative post</h5>
-          <div class="card-body">
-            <div class="row">
-              <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+      
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-8">
+          <h1 id="post-title">{{post.title}}</h1>
         </div>
-
-        <div class="card my-4">
-          <h5 class="card-header">Nearby</h5>
-          <div class="card-body">
-            <div class="row">
-              <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="card my-4">
-          <h5 class="card-header">Posted by <a id="poster" href="#">
-        {% if buyer %}
-        {{post.buyerName}}
-        {% endif %} {% if seller %}
-        {{post.sellerName}} 
-        {% endif %}
-           </a></h5>
-          <div class="card-body">
-            <div class="row">
-              <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div class="col-sm-4">
+          {% if post.price %}
+          <h1 class="float-right text-danger">${{post.price}}</h1>
+          {% else %}
+          <h3 class="my-2 float-right text-danger">Not Specify</h3>
+          {% endif %}
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-7">
+          <p id="post-date">
+            <a id="poster" href="#"> 
+            {% if buyer %}
+            {{post.buyerName}}
+            {% endif %} 
+            {% if seller %}
+            {{post.sellerName}} 
+            {% endif %}
+            </a>
+            - {{post.time}}
+          </p>
+        </div>
+
+        <div class="col-sm-3">
+          {% if post.location %}
+          <a href="#">{{post.location}}</a>
+        </div>
+        <div class="col-sm-2">
+          {% endif %}
+          <a class="float-right" href="#">{{post.category}}</a>
+        </div>
+      </div>
+      <hr>
+      <strong>Description : </strong>
+      <textarea readonly class="form-control-plaintext unwriteable-text text-left" style=" min-height:300px;">{{post.description}}</textarea>
+
+      {% if seller %}
+      <div id="checkbutton" class="btn btn-primary btn-lg float-center" v-on:click="checkout" role="button" style="position:absolute; bottom: 0px; width: 40%; margin-left: 30%;margin-right: 30%">Buy
+      </div>
+      {% endif %}
     </div>
-     -->
   </div>
 </div>
 

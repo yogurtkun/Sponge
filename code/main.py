@@ -54,7 +54,7 @@ Update user informatin
 '''
 @app.route('/updateUser', methods=['POST'])
 def updateUser():
-    update = {key : request.form[key] for key in ('username', 'email', 'zipcode', 'password') if key in request.form}
+    update = {key : request.form[key] for key in ('username', 'email', 'zipcode', 'password','phoneNumber','address') if key in request.form}
     user = account.updateUser(update, update['username'])
     if user is None:
         return 'Fail'
@@ -225,10 +225,22 @@ Return posts data
 @app.route('/postlist/<role>', methods=['POST'])
 def postListContent(role):
     if role == 'seller':
-        return json.dumps(post.searchSellerPosts())
+        posts = post.searchSellerPosts()
+        favorite, _ = account.getFavorite(session['username'])
+        for item in posts:
+            if str(item['postId']) in favorite:
+                item['favorite'] = True
+            else:
+                item['favorite'] = False
     elif role == 'buyer':
-        return json.dumps(post.searchBuyerPosts())
-    return ''
+        posts = post.searchBuyerPosts()
+        _, favorite = account.getFavorite(session['username'])
+        for item in posts:
+            if str(item['postId']) in favorite:
+                item['favorite'] = True
+            else:
+                item['favorite'] = False
+    return json.dumps(posts)
 
 
 '''
