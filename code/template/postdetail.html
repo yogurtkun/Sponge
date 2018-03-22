@@ -80,50 +80,53 @@ window.onload = function() {
       </div>
       {% endif %} 
 
-          <div id="favoriteBtn" style="position:absolute; bottom: 0px; width: 40%; margin-left: 72%;">
-            <div v-if="is_favorite===undefined">
-              {% if post.favorite == true %}
-              <div class="buttons_favorite my-2">
-                {% if buyer %}
-                <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-                {% endif %}
-                {% if seller %}
-                <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-                {% endif %}
-              </div>
-              {% else %}
-              <div class="buttons_not_favorite my-2">
-                {% if buyer %}
-                <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-                {% endif %}
-                {% if seller %}
-                <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-                {% endif %}
-              </div>
-              {% endif %}
+      {% if seller %}
+      <div id="favoriteBtn" style="position:absolute; bottom: -5px; width: 40%; margin-left: 72%;">
+      {% else %}
+      <div id="favoriteBtn" style="position:absolute; bottom: -5px; width: 40%; margin-left: 50%;">
+      {% endif %}
+        <div v-if="is_favorite===undefined">
+          {% if post.favorite == true %}
+          <div class="buttons_favorite my-2">
+            {% if buyer %}
+            <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
+            {% if seller %}
+            <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
           </div>
-          <div v-else-if="is_favorite===true">
-            <div class="buttons_favorite my-2">
-              {% if buyer %}
-              <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-              {% endif %}
-              {% if seller %}
-              <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-              {% endif %}
-            </div>
+          {% else %}
+          <div class="buttons_not_favorite my-2">
+            {% if buyer %}
+            <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
+            {% if seller %}
+            <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
           </div>
-          <div v-else>
-            <div class="buttons_not_favorite my-2">
-              {% if buyer %}
-              <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-              {% endif %}
-              {% if seller %}
-              <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-              {% endif %}
-            </div>
+          {% endif %}
+        </div>
+        <div v-else-if="is_favorite===true">
+          <div class="buttons_favorite my-2">
+            {% if buyer %}
+            <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
+            {% if seller %}
+            <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
           </div>
         </div>
-
+        <div v-else>
+          <div class="buttons_not_favorite my-2">
+            {% if buyer %}
+            <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
+            {% if seller %}
+            <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
