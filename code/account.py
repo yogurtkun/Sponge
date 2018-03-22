@@ -74,6 +74,7 @@ def addPost(username, postId, postType):
 
 
 def addFavorite(username, postId, postType):
+    print "favorite"
     user = User.query.get(username)
     if (postType == "Seller"):
         tmp = user.favoriteSellerPosts
