@@ -123,7 +123,7 @@
         <div v-for="item in filter_items">
           <div class="card mt-2">
             <div class="row">
-              <div class="col-7">
+              <div class="col-6">
                 <div>
                   <h2 class="mx-3 my-2">
                     <a class="card-title hide_overflow" v-if="item.buyerName" v-bind:href="'BuyerPost\?postId=' + item.postId">
@@ -146,7 +146,7 @@
                 <p v-if="item.location" class="row text-left">Location : {{item.location}} </p> 
                 <p class="row text-left">{{item.time}}</p>
               </div>
-              <div class="col-2">
+              <div class="col-3">
                 <h4 class="text-danger">
                   <p v-if="item.price" class="text-right  mx-3 my-3">
                     ${{item.price}}
@@ -156,12 +156,12 @@
                   </p>
                 </h4>
                 <p v-if="item.buyerName" class="text-right mx-3">
-                  <i class="fas fa-user"></i>
+                  <i class="fas fa-user mx-1"></i>
                   <!--<a v-bind:href="'/postlist/' + item.buyerName"> {{item.buyerName}}</a>-->
                   <a href="#"> {{item.buyerName}}</a>
                 </p>
                 <p v-else-if="item.sellerName" class="text-right mx-3">
-                  <i class="fas fa-user"></i>
+                  <i class="fas fa-user mx-1"></i>
                   <!--<a v-bind:href="'/postlist/' + item.sellerName"> {{item.sellerName}}</a>-->
                   <a href="#"> {{item.sellerName}}</a>
                 </p>
