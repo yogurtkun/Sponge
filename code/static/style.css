@@ -584,7 +584,6 @@ ul.product_list {
 
 /*CSS for portal */
 .writeable-text{
-  font-style:italic;
   text-align: left;
   border : 1px;
   border-color: #bfcbd9;
@@ -594,7 +593,6 @@ ul.product_list {
 }
 
 .unwriteable-text{
-  font-style:italic;
   text-align: left
 }
 

@@ -49,7 +49,7 @@
 
                 <div class="form-group">
                     <label for="transactionType" class="col-form-label">*Transaction Type</label>
-                    <select class="form-control" v-model="transactionType" v-on:change="checkType">
+                    <select class="form-control" v-model="transactionType" v-on:change="checkType" v-bind:disabled="ifCheck?true:false">
                         <option>Face to Face</option>
                         <option>Online</option>
                     </select>
@@ -67,21 +67,21 @@
                 <div class="form-group" id="addressmayhide">
                     <div class="form-group">
                         <label class="col-form-label">*Address Line 1</label>
-                        <input id="address-line1" name="address-line1" type="text" v-model="rcvAddress.ad1" class="form-control">
+                        <input id="address-line1" name="address-line1" type="text" v-model="rcvAddress.ad1" class="form-control" v-bind:readonly="ifCheck?true:false">
                         <p class="help-block">Street address, P.O. box, company name, c/o</p>
 
                     </div>
                     <!-- address-line2 input-->
                     <div class="form-group">
                         <label class="col-form-label">Address Line 2</label>
-                        <input id="address-line2" name="address-line2" type="text" v-model="rcvAddress.ad2" class="form-control">
+                        <input id="address-line2" name="address-line2" type="text" v-model="rcvAddress.ad2" class="form-control" v-bind:readonly="ifCheck?true:false">
                         <p class="help-block">Apartment, suite , unit, building, floor, etc.</p>
 
                     </div>
                     <!-- city input-->
                     <div class="form-group">
                         <label class="col-form-label">*City / Town</label>
-                        <input id="city" name="city" type="text" v-model="rcvAddress.city" class="form-control">
+                        <input id="city" name="city" type="text" v-model="rcvAddress.city" class="form-control" v-bind:readonly="ifCheck?true:false">
                         <p class="help-block"></p>
 
                     </div>
@@ -89,7 +89,7 @@
                     <div class="form-group">
                         <label class="col-form-label">State / Province / Region</label>
 
-                        <input id="region" name="region" type="text" v-model="rcvAddress.region" class="form-control">
+                        <input id="region" name="region" type="text" v-model="rcvAddress.region" class="form-control" v-bind:readonly="ifCheck?true:false">
                         <p class="help-block"></p>
 
                     </div>
@@ -98,7 +98,7 @@
                     <div class="form-group">
                         <label class="col-form-label">*Country</label>
 
-                        <select v-model="rcvAddress.country" id="country" name="country" class="form-control">
+                        <select v-bind:disabled="ifCheck?true:false" v-model="rcvAddress.country" id="country" name="country" class="form-control">
                             <option value="" selected="selected">(please select a country)</option>
                             <option value="AF">Afghanistan</option>
                             <option value="AL">Albania</option>
@@ -343,7 +343,14 @@
 
                     </div>
                 </div>
-                <div class="form-group row">
+
+                <div class="form-group row" v-if="!ifCheck">
+                    <div class="form-group col-md-9"></div>
+                    <div class="form-group col-md-3">
+                        <a class="form-control btn btn-primary mb-2" v-on:click="confirm" style="text-align:center;color:white">Confirm</a>
+                    </div>
+                </div>
+                <div class="form-group row" v-if="ifCheck">
                     <div class="form-group col-md-9"></div>
                     <div class="form-group col-md-3">
                         <a class="form-control btn btn-primary mb-2" v-on:click="checkout" style="text-align:center;color:white">Checkout</a>
