@@ -50,14 +50,18 @@
           </p>
         </div>
 
+        {% if post.location %}
         <div class="col-sm-3">
-          {% if post.location %}
           <a href="#">{{post.location}}</a>
         </div>
         <div class="col-sm-2">
-          {% endif %}
           <a class="float-right" href="#">{{post.category}}</a>
         </div>
+        {% else %}
+        <div class="col-sm-5">
+          <a class="float-right" href="#">{{post.category}}</a>
+        </div>
+        {% endif %}
       </div>
       <hr>
       <strong>Description : </strong>
