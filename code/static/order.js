@@ -10,7 +10,8 @@ $(document).ready(function () {
                 region: "",
                 country: ""
             },
-            transactionType: ""
+            transactionType: "",
+            ifCheck: false
         },
         created() {
             $.ajax({
@@ -28,32 +29,28 @@ $(document).ready(function () {
         methods: {
             checkform: function () {
                 let ispass = true;
-                if (this.transactionType === "") { 
-                    this.errors.push("Transaction Type Required") 
+                if (this.transactionType === "") {
+                    this.errors.push("Transaction Type Required")
                     ispass = false;
                 };
 
-                if(this.rcvAddress.ad1 === ""){
+                if (this.rcvAddress.ad1 === "") {
                     this.errors.push("Address Required");
                     ispass = false;
                 }
 
-                if(this.rcvAddress.city === ""){
+                if (this.rcvAddress.city === "") {
                     this.errors.push("City Required");
                     ispass = false;
                 }
 
-                if(this.rcvAddress.country === ""){
+                if (this.rcvAddress.country === "") {
                     this.errors.push("Country Required");
                     ispass = false;
                 }
                 return ispass;
             },
             checkout: function () {
-                if(!this.checkform()){
-                    console.log(this.errors);
-                    return;
-                }
                 stringAddress = JSON.stringify(this.rcvAddress);
                 var urlParams = new URLSearchParams(window.location.search);
                 var postId = urlParams.get("postId");
@@ -73,6 +70,17 @@ $(document).ready(function () {
                         }
                     }
                 })
+            },
+            confirm: function () {
+                var self = this;
+                self.$nextTick(function () {
+                    self.errors=[];
+                    if (!self.checkform()) {
+                        console.log(this.errors);
+                        return;
+                    }
+                    self.ifCheck = true;
+                });
             },
             checkType: function () {
                 if (this.transactionType === "Face to Face") {
