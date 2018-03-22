@@ -1,4 +1,6 @@
 $(document).ready(function(){
+  $("#favoriteBtn").attr('class', 'visible');
+
   var checkVue = new Vue({
     el:"#checkbutton",
     methods: {
@@ -21,7 +23,7 @@ $(document).ready(function(){
       console.log(postType, postId)
       this.is_favorite = false
       console.log(this.is_favorite)
-      
+
       tdata = {"postType": postType, 'postId': postId}
       console.log("delete", tdata);
       $.ajax({

@@ -1,12 +1,5 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
 <script src="static/postdetail.js"></script>
-<script>
-window.onload = function() {
-  console.log("onload")
-  bindFavorite("12");
-};
-</script>
-
 <body>
 
 {% if buyer %}
@@ -81,13 +74,13 @@ window.onload = function() {
       {% endif %} 
 
       {% if seller %}
-      <div id="favoriteBtn" style="position:absolute; bottom: -5px; width: 40%; margin-left: 72%;">
+      <div id="favoriteBtn" class="invisible" style="position:absolute; bottom: -5px; width: 40%; margin-left: 72%;">
       {% else %}
-      <div id="favoriteBtn" style="position:absolute; bottom: -5px; width: 40%; margin-left: 50%;">
+      <div id="favoriteBtn" class="invisible" style="position:absolute; bottom: -5px; width: 40%; margin-left: 50%;">
       {% endif %}
         <div v-if="is_favorite===undefined">
           {% if post.favorite == true %}
-          <div class="buttons_favorite my-2">
+          <div  class="buttons_favorite my-2">
             {% if buyer %}
             <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
             {% endif %}
