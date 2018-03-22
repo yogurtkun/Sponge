@@ -11,7 +11,7 @@ def createPost(title, description, category, price, location, image, username, p
     if postType == "Seller":
         post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=username, time=time)
     if postType == "Buyer":
-        post = BuyerPost(title=title, description=description, category=category, price=price, location=location, image=image, buyerName=username, time=time)      
+        post = BuyerPost(title=title, description=description, category=category, price=price, location=location, image=image, buyerName=username, time=time)
     try:
         db.session.add(post)
         db.session.commit()
@@ -30,7 +30,7 @@ def getPost(postId, postType):#
     return None
 
 
-def deleteSellerPostById(postId):
+def deleteSellerPositById(postId):
     try:
         SellerPost.query.filter_by(postId = postId).delete()
         db.session.commit()
@@ -68,8 +68,8 @@ def deleteBuyerPostByUser(username):
     except:
         db.session.rollback()
         return False
-        
-        
+
+
 def searchSellerPosts(postId=None, category=None, username=None):
     try:
         if postId is not None and category is None:

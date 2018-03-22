@@ -316,21 +316,6 @@ ul.product_list {
   height: 40px;
 }
 
-.product_buttons .product_heart:hover {
-  color: #DF0404;
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.product_buttons_favorite .product_heart_favorite:hover {
-  color: #fff;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.product_buttons .add_to_cart:hover {
-  color: #4DC8D3;;
-  background: rgba(255, 255, 255, 0.5);
-}
-
 .product_price a {
   color: #000;
 }

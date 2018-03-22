@@ -13,7 +13,8 @@
 # limitations under the License.
 import sys
 import os.path
-from flask import Flask
+import re
+from flask import Flask, jsonify
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, 'code')))
 
 
@@ -33,7 +34,7 @@ class MainTest(unittest.TestCase):
             post.deleteSellerPostByUser("testUser")
             post.deleteBuyerPostByUser("testUser")
             account.deleteUser("testUser")
-        
+
 
     #def test_hello_world(self):
     #    rv = self.app.get('/')
@@ -86,7 +87,7 @@ class MainTest(unittest.TestCase):
             rv = self.app.get('/portal')
             assert b"portal" not in rv.data
             self.app.post("/loginUser", data = user)
-            rv = self.app.get('/portal')  
+            rv = self.app.get('/portal')
 
             # user portal update
             update = {"username":user['username'], "zipcode":"10027"}
@@ -109,16 +110,53 @@ class MainTest(unittest.TestCase):
             self.app.post("/loginUser", data=user, follow_redirects=True)
             postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
             rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
-            assert b"Post Details" in rv.data
+            assert b"postId=" in rv.data
             postdata = {"title":"test", "description":"wanna buy test", "category":"Books"}
             rv = self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
-            assert b"Post Details" in rv.data
+            assert b"postId=" in rv.data
             print "seller and buyer post creating and viewing details pass\n"
 
 
     def test_postList(self):
         pass
-            
+
+
+    def test_favorite(self):
+        with main.app.app_context():
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
+            user = {"username":"testUser", "password":"1234"}
+            self.app.post("/loginUser", data=user, follow_redirects=True)
+            postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
+            rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
+            res = re.findall("postId=\d+#", rv.data)
+            print "res len: ", len(res)
+            assert len(res) == 1
+            postId = res[0][7:-1]
+            postdata = {"postId":postId, "postType":"Seller"}
+            rv = self.app.post("/favorite", data=postdata, follow_redirects=True)
+            assert "Adding to favorites succeeded!" == rv.data
+            rv = self.app.post("/deleteFavorite", data=postdata, follow_redirects=True)
+            assert "Deleting a favorite item succeeded!" == rv.data
+            print "Adding and deleting favorite posts pass\n"
+
+
+    def test_order(self):
+        with main.app.app_context():
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
+            user = {"username":"testUser", "password":"1234"}
+            self.app.post("/loginUser", data=user, follow_redirects=True)
+            postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
+            rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
+            res = re.findall("postId=\d+#", rv.data)
+            print "res len: ", len(res)
+            assert len(res) == 1
+            postId = res[0][7:-1]
+            postdata = {"postId":postId, "transactionType":"Face to Face"}
+            rv = self.app.post("/checkout", data=postdata, follow_redirects=True)
+            assert "Placeing order succeeded!" == rv.data
+            print "Place order pass\n"
+
+
 
 
 if __name__ == '__main__':

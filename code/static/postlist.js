@@ -18,11 +18,30 @@ var postlist = new Vue({
     filter_search: "",
     filter_is_apply: false,
     filter_offset : 0,
+    filter_is_favorite : 0,
     _ITEMS_PER_PAGE : 10,
   },
   mounted(){
     console.log(this.filter_items)
-    $.ajax({
+    this.query_buyer_seller_post()
+  },
+  watch: {
+    filter_price_sorting: function(){
+      this.filter_center()
+    },
+    filter_loc: function(){
+      this.filter_center()
+    },
+    filter_post_time: function(){
+      this.filter_center()
+    },
+    filter_search: function(){
+      this.filter_center()
+    },
+  },
+  methods:{
+    query_buyer_seller_post(){
+      $.ajax({
       url: '/postlist/buyer',
       dataType: 'json',
       type: "POST",
@@ -69,22 +88,8 @@ var postlist = new Vue({
           var data = $xhr.responseJSON;
           console.log(data);
       });
-  },
-  watch: {
-    filter_price_sorting: function(){
-      this.filter_center()
     },
-    filter_loc: function(){
-      this.filter_center()
-    },
-    filter_post_time: function(){
-      this.filter_center()
-    },
-    filter_search: function(){
-      this.filter_center()
-    },
-  },
-  methods:{
+
     reset_filter: function(event){
       this.filter_price_sorting = 0
       this.filter_loc = "0"
@@ -297,19 +302,32 @@ var postlist = new Vue({
     },
 
     addFavorite: function(postType, postId){
-
-
-      tdata = {"postTtype": postType, 'postId': postId}
-      console.log(tdata);
+      tdata = {"postType": postType, 'postId': postId}
+      console.log("add", tdata);
       $.ajax({
           url: '/favorite',
           type: 'POST',
           data: tdata,
           success: (data) => {
               console.log("success!")
+              this.query_buyer_seller_post()
           }
       })
-    }
+    },
+
+    deleteFavorite: function(postType, postId){
+      tdata = {"postType": postType, 'postId': postId}
+      console.log("delete", tdata);
+      $.ajax({
+          url: '/deleteFavorite',
+          type: 'POST',
+          data: tdata,
+          success: (data) => {
+              console.log("success!")
+              this.query_buyer_seller_post()
+          }
+      })
+    },
   }
 });
 

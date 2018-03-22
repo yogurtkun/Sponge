@@ -17,7 +17,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return redirect('/postlist') #render_template("index.html")
 
 
 '''
@@ -28,7 +28,7 @@ def signup():
     return render_template("signup.html")
 
 
-''' 
+'''
 User portal
 '''
 @app.route('/portal')
@@ -44,9 +44,9 @@ Get user info
 @app.route('/userinfo',methods=['POST'])
 def userinfo():
     if not loggedIn():
-        return redirect('/login')  
+        return redirect('/login')
     username = session['username']
-    user = account.searchUser(username) 
+    user = account.searchUser(username)
     return json.dumps(user)
 
 '''
@@ -85,7 +85,7 @@ def registerUser():
     if res: # signup successful
         session['logged_in'] = True
         session['username'] = username
-        return redirect('/')        
+        return redirect('/')
     else:
         return render_template("signup.html", error="User exists!")
 
@@ -131,7 +131,7 @@ check if there is a logged_in user
 def loggedIn():
     return 'logged_in' in session.keys() and session['logged_in']
 
-        
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('notFound.html'), 404
@@ -259,9 +259,12 @@ def getBuyerPost():
 
 
 def getPost(postId, flag):
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
     isSeller = flag == "Seller"
     isBuyer = flag == "Buyer"
     postData = post.getPost(postId, flag)
+    postData["favorite"] = account.searchFavorite(session['username'], postId, flag)
     if postData == None:
         if isSeller:
             return redirect('/NewSellerPost')
@@ -269,10 +272,12 @@ def getPost(postId, flag):
             return redirect('/NewBuyerPost')
     return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData)
 
+
 @app.route('/buypostlist',methods=["POST"])
 def buypostlist():
     posts = post.searchBuyerPosts(username=session['username'])
     return json.dumps(posts)
+
 
 @app.route('/sellpostlist',methods=["POST"])
 def sellpostlist():
@@ -319,7 +324,7 @@ Favorite
 def addFavorite():
 	if not loggedIn():
 		return render_template('login.html', error='Please login first')
-	postType = str(request.form['postTtype'])
+	postType = str(request.form['postType'])
 	postId = int(request.form['postId'])
 	username = session['username']
 	if account.addFavorite(username, postId, postType):
@@ -327,6 +332,19 @@ def addFavorite():
 	return "Adding to favorites failed!"
 
 
+'''
+Delete favorite
+'''
+@app.route('/deleteFavorite', methods=['POST'])
+def deleteFavorite():
+    if not loggedIn():
+		return render_template('login.html', error='Please login first')
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    username = session['username']
+    if account.deleteFavorite(username, postId, postType):
+        return "Deleting a favorite item succeeded!"
+    return "Deleting a favorite item failed!"
 
 
 

@@ -7,7 +7,7 @@ DELIMITER = ';'
 
 def registerUser(username, email, password, zipcode):
     user = User(username=username, email=email, password=password, zipcode=zipcode)
-    try: 
+    try:
         db.session.add(user)
         db.session.commit()
         return True
@@ -81,6 +81,8 @@ def addFavorite(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
+            if str(postId) in tmp.split(DELIMITER):
+                return True
             tmp = tmp + DELIMITER + str(postId)
         try:
             user.favoriteSellerPosts = tmp
@@ -95,7 +97,49 @@ def addFavorite(username, postId, postType):
         if tmp==None or len(tmp)==0:
             tmp = str(postId)
         else:
+            if str(postId) in tmp.split(DELIMITER):
+                return True
             tmp = tmp + DELIMITER + str(postId)
+        try:
+            user.favoriteBuyerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+
+
+def deleteFavorite(username, postId, postType):
+    user = User.query.get(username)
+    if postType == "Seller":
+        tmp = user.favoriteSellerPosts
+        if tmp == None or len(tmp) == 0:
+            return False
+        favs = tmp.split(DELIMITER)
+        favs = filter(lambda e : e != str(postId), favs)
+        tmp = ""
+        for e in favs:
+            tmp += (e + DELIMITER)
+        tmp = tmp[:-1]
+        try:
+            user.favoriteSellerPosts = tmp
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+    if postType == "Buyer":
+        tmp = user.favoriteBuyerPosts
+        if tmp == None or len(tmp) == 0:
+            return False
+        favs = tmp.split(DELIMITER)
+        favs = filter(lambda e : e != str(postId), favs)
+        tmp = ""
+        for e in favs:
+            tmp += (e + DELIMITER)
+        tmp = tmp[:-1]
         try:
             user.favoriteBuyerPosts = tmp
             db.session.commit()
@@ -112,6 +156,18 @@ def getFavorite(username):
         user = from_sql(user)
         return user['favoriteSellerPosts'].split(DELIMITER), user['favoriteBuyerPosts'].split(DELIMITER)
     return [], []
+
+
+def searchFavorite(username, postId, flag):
+    user = User.query.get(username)
+    if user:
+        user = from_sql(user)
+        if flag == "Seller":
+            return str(postId) in user["favoriteSellerPosts"].split(DELIMITER)
+        if flag == "Buyer":
+            return str(postId) in user["favoriteBuyerPosts"].split(DELIMITER)
+    return False
+
 
 
 '''
