@@ -123,6 +123,7 @@ def updateUser(data, username):
         user = User.query.get(username)
         for k, v in data.items():
             setattr(user, k, v)
+        db.session.commit()
         return schema.from_sql(user)
     except Exception as e:
         print e

@@ -54,7 +54,7 @@ Update user informatin
 '''
 @app.route('/updateUser', methods=['POST'])
 def updateUser():
-    update = {key : request.form[key] for key in ('username', 'email', 'zipcode', 'password') if key in request.form}
+    update = {key : request.form[key] for key in ('username', 'email', 'zipcode', 'password','phoneNumber','address') if key in request.form}
     user = account.updateUser(update, update['username'])
     if user is None:
         return 'Fail'

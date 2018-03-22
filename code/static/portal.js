@@ -2,10 +2,26 @@ $(document).ready(() => {
     var userinfo = new Vue({
         el: '#user-info',
         data: {
-            user: { 'username': "Empty", "email": "Empty", "zipcode": "Empty", "phonenumber": "Empty", "address": "Empty" }
+            user: { 
+                'username': "Empty", 
+                "email": "Empty", 
+                "zipcode": "Empty", 
+                "phoneNumber": "Empty", 
+                "address": "Empty"
+            },
+            myaddress: {
+                ad1: "",
+                ad2: "",
+                city: "",
+                region: "",
+                country: ""
+            }
         },
         methods: {
             changeInfo: function(){
+                this.user.address = JSON.stringify(this.myaddress)
+                console.log(this.user)
+
                 $.ajax({
                     url: '/updateUser',
                     type: 'POST',
@@ -27,6 +43,9 @@ $(document).ready(() => {
                 success: (data) => {
                     retUser = JSON.parse(data)
                     this.user = Object.assign({},retUser);
+                    let tempaddr = JSON.parse(this.user.address);
+
+                    this.myaddress = tempaddr
 
                     for(let k in this.user){
                         if(this.user[k] === "" || this.user[k] === null ){
