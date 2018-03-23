@@ -231,8 +231,7 @@ def postListContent(role):
             posts = post.searchBuyerPosts()
         for item in posts:
             item['favorite'] = False
-        return json.dumps(posts)
-    if role == 'seller':
+    elif role == 'seller':
         posts = post.searchSellerPosts()
         favorite, _ = account.getFavorite(session['username'])
         for item in posts:
@@ -248,6 +247,10 @@ def postListContent(role):
                 item['favorite'] = True
             else:
                 item['favorite'] = False
+
+    for item in posts:
+        item['order'] = order.checkOrderByPost(item['postId'])
+
     return json.dumps(posts)
 
 

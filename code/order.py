@@ -25,3 +25,14 @@ def createOrder(postId, buyerName, transactionType, rcvAddress):
 		print e
 		db.session.rollback()
 		return None
+
+
+def checkOrderByPost(postId):
+	try:
+		count = Order.query.filter_by(postId=postId).count()
+		if count == 0:
+			return False
+		else:
+			return True
+	except:
+		return False
