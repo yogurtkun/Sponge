@@ -224,6 +224,14 @@ Return posts data
 '''
 @app.route('/postlist/<role>', methods=['POST'])
 def postListContent(role):
+    if not loggedIn():
+        if role == 'seller':
+            posts = post.searchSellerPosts()
+        elif role == 'buyer':
+            posts = post.searchBuyerPosts()
+        for item in posts:
+            item['favorite'] = False
+        return json.dumps(posts)
     if role == 'seller':
         posts = post.searchSellerPosts()
         favorite, _ = account.getFavorite(session['username'])

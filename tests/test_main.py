@@ -75,7 +75,6 @@ class MainTest(unittest.TestCase):
             assert b'User doesn\'t exist!' not in rv.data
             print "user login pass\n"
 
-
     def test_userPortal(self):
         with main.app.app_context():
             # user portal display
@@ -118,7 +117,20 @@ class MainTest(unittest.TestCase):
 
 
     def test_postList(self):
-        pass
+        with main.app.app_context():
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
+            user = {"username":"testUser", "password":"1234"}
+            self.app.post("/loginUser", data=user, follow_redirects=True)
+            postdata = {"title":"test_sellerpost", "description":"wanna sell test", "category":"Books"}
+            self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
+            postdata = {"title":"test_buyerpost", "description":"wanna buy test", "category":"Books"}
+            self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
+            self.app.get('/logout')
+            rv = self.app.post('/postlist/seller')
+            assert 'test_sellerpost' in rv.data
+            rv = self.app.post('/postlist/buyer')
+            assert 'test_buyerpost' in rv.data
+            print 'post list pass\n'
 
 
     def test_favorite(self):
@@ -155,6 +167,7 @@ class MainTest(unittest.TestCase):
             rv = self.app.post("/checkout", data=postdata, follow_redirects=True)
             assert "Placeing order succeeded!" == rv.data
             print "Place order pass\n"
+
 
 
 
