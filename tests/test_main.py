@@ -14,13 +14,14 @@
 import sys
 import os.path
 import re
+import json
 from flask import Flask, jsonify
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, 'code')))
 
 
 import main
 import unittest
-import account, post
+import account, post, message
 import schema
 
 class MainTest(unittest.TestCase):
@@ -168,7 +169,17 @@ class MainTest(unittest.TestCase):
             assert "Placeing order succeeded!" == rv.data
             print "Place order pass\n"
 
-
+    def test_message(self):
+        with main.app.app_context():
+            account.registerUser("testSender", "tests@domain.com", "1234", "10025")
+            account.registerUser("testReceiver", "testr@domain.com", "1234", "10025")
+            message.sendMessage(sender="testSender", receiver="testReceiver", title="message_title", content="message_content")
+            assert "message_title" in  json.dumps(message.getMessages(sender="testSender", receiver="testReceiver"))
+            assert "message_content" in  json.dumps(message.getMessagesByUser("testSender"))
+            assert "message_content" in json.dumps(message.getMessagesByUser("testReceiver"))
+            account.deleteUser("testSender")
+            account.deleteUser("testReceiver")
+            print "message test pass"
 
 
 
