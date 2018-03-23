@@ -18,11 +18,9 @@ var postlist = new Vue({
     filter_search: "",
     filter_is_apply: false,
     filter_offset : 0,
-    filter_is_favorite : 0,
     _ITEMS_PER_PAGE : 10,
   },
   mounted(){
-    console.log(this.filter_items)
     this.query_buyer_seller_post()
   },
   watch: {
@@ -36,6 +34,9 @@ var postlist = new Vue({
       this.filter_center()
     },
     filter_search: function(){
+      this.filter_center()
+    },
+    items: function(){
       this.filter_center()
     },
   },
@@ -310,7 +311,10 @@ var postlist = new Vue({
           data: tdata,
           success: (data) => {
               console.log("success!")
-              this.query_buyer_seller_post()
+              for(var i = 0; i < this.items.length; i++)
+                if(this.items[i].postId == postId){
+                  this.items[i].favorite = true
+                }
           }
       })
     },
@@ -324,7 +328,10 @@ var postlist = new Vue({
           data: tdata,
           success: (data) => {
               console.log("success!")
-              this.query_buyer_seller_post()
+              for(var i = 0; i < this.items.length; i++)
+                if(this.items[i].postId == postId){
+                  this.items[i].favorite = false
+                }
           }
       })
     },
