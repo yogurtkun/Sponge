@@ -99,7 +99,7 @@ var postlist = new Vue({
       });
     },
 
-    reset_filter: function(event){
+    reset_filter: function(){
       this.filter_price_sorting = 0
       this.filter_loc = "0"
       this.filter_post_time = 0
