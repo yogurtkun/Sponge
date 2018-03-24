@@ -180,7 +180,7 @@ class MainTest(unittest.TestCase):
             print "message test pass"
 
 
-    def test_review(self):
+    def test_post_review(self):
         with main.app.app_context():
             account.registerUser("testUser", "test@domain.com", "1234", "10025")
             user = {"username":"testUser", "password":"1234"}
@@ -193,13 +193,13 @@ class MainTest(unittest.TestCase):
             assert len(res) == 1
             postId = res[0][7:-1]
             data = {"postType":"Seller", "postId":postId, "title":"Review test title", "content":"Review test content"}
-            rv = self.app.post("/addReview", data=data, follow_redirects=True)
+            rv = self.app.post("/addPostReview", data=data, follow_redirects=True)
             assert "Review succeeded!" in rv.data
             res = re.findall("reviewId=\d+", rv.data)
             assert len(res) == 1
             reviewId = res[0][9:]
             data = {"postType":"Seller", "reviewId":reviewId}
-            rv = self.app.post("/delReview", data=data, follow_redirects=True)
+            rv = self.app.post("/delPostReview", data=data, follow_redirects=True)
             assert "Deleting review succeeded!" == rv.data
             #test buyer post review
             data = {"title":"test", "description":"wanna buy test", "category":"Books"}
@@ -208,16 +208,16 @@ class MainTest(unittest.TestCase):
             assert len(res) == 1
             postId = res[0][7:-1]
             data = {"postType":"Buyer", "postId":postId, "title":"Review test title", "content":"Review test content"}
-            rv = self.app.post("/addReview", data=data, follow_redirects=True)
+            rv = self.app.post("/addPostReview", data=data, follow_redirects=True)
             assert "Review succeeded!" in rv.data
             res = re.findall("reviewId=\d+", rv.data)
             assert len(res) == 1
             reviewId = res[0][9:]
             data = {"postType":"Buyer", "reviewId":reviewId}
-            rv = self.app.post("/delReview", data=data, follow_redirects=True)
+            rv = self.app.post("/delPostReview", data=data, follow_redirects=True)
             assert "Deleting review succeeded!" == rv.data
 
-            print "review test pass"
+            print "post review test pass"
 
 
 
