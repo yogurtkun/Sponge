@@ -141,16 +141,28 @@
             <div class="row">
               <div class="col-6">
                 <div>
-                  <h2 class="mx-3 my-2">
-                    <a class="card-title hide_overflow" v-if="item.buyerName" v-bind:href="'BuyerPost\?postId=' + item.postId">
+                  <div class="mx-3 my-2" v-if="item.buyerName" >
+                    <h2>
+                    <a class="card-title hide_overflow" v-bind:href="'BuyerPost\?postId=' + item.postId">
                       {{item.title}}
                     </a>
-                    <a class="card-title hide_overflow" v-else-if="item.sellerName" v-bind:href="'SellerPost\?postId=' + item.postId">
+                    </h2>
+                    <div class="text-left">
+                      <span class="badge badge-pill badge-success">Need</span>
+                    </div>
+                  </div>
+                  <div class="mx-3 my-2"  v-else-if="item.sellerName">
+                    <h2>
+                    <a class="card-title hide_overflow" v-bind:href="'SellerPost\?postId=' + item.postId">
                       {{item.title}}
                     </a>
-                  </h2>
+                    </h2>
+                    <div class="text-left" >
+                      <span class="badge badge-pill badge-warning">For Sale</span>
+                    </div>
+                  </div>
                   <p class="card-text hide_overflow mx-3" >
-                    {{item.description}}
+                    <strong> Description : </strong> {{item.description}}
                   </p>
                 </div>
               </div>
