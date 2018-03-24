@@ -17,7 +17,7 @@ var postlist = new Vue({
     filter_post_time: 0,
     filter_search: "",
     filter_is_apply: false,
-    filter_category_index: "all",
+    filter_category_index: "ALL",
     filter_offset : 0,
     _ITEMS_PER_PAGE : 10,
   },
@@ -100,7 +100,7 @@ var postlist = new Vue({
       this.filter_loc = "0"
       this.filter_post_time = 0
       this.filter_search = ""
-      this.filter_category_index = "all"
+      this.filter_category_index = "ALL"
     },
 
     filter_posts: function(filter_items, filter_search){
@@ -238,7 +238,7 @@ var postlist = new Vue({
       var items = filter_items
       var filter_items = []
 
-      if(category == "all")
+      if(category == "ALL")
       {
         return items
       }

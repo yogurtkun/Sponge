@@ -10,6 +10,8 @@
         <h5 class="card-header">category</h5>
         <div class="card-body">
             <div>
+              <button v-if="filter_category_index == 'ALL'" class="btn btn-block btn-primary" v-on:click="set_category('ALL')" > ALL </button>
+              <button v-else class="btn btn-block " v-on:click="set_category('ALL')" > ALL </button>
               <button v-if="filter_category_index == 'Beauty'" class="btn btn-block btn-primary" v-on:click="set_category('Beauty')" > Beauty </button>
               <button v-else class="btn btn-block " v-on:click="set_category('Beauty')" > Beauty </button>
               <button v-if="filter_category_index == 'Books'" class="btn btn-block btn-primary" v-on:click="set_category('Books')" > Books </button>
