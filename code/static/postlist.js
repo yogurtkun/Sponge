@@ -311,31 +311,6 @@ var postlist = new Vue({
       return filter_items
     },
 
-    filter_center: function(){
-      var filter_items = this.items
-      var filter_price_sorting = this.filter_price_sorting
-      var filter_loc = this.filter_loc
-      var filter_post_time = this.filter_post_time
-      var filter_search = this.filter_search
-      var filter_search_items = []
-      var filter_category = this.filter_category_index
-
-      if(filter_price_sorting == 0 && filter_loc == "0" &&
-         filter_post_time == 0 && filter_category == "all"){
-        filter_items = this.sortWithTime(filter_items, filter_items.length)
-      }
-      else{
-      filter_items = this.filter_price(filter_items, filter_price_sorting)
-      filter_items = this.filter_location(filter_items, filter_loc)
-      filter_items = this.filter_time(filter_items, filter_post_time)
-      filter_items = this.filter_category(filter_items, filter_category)
-      }
-
-      filter_search_items.push(this.filter_posts(filter_items, filter_search))
-
-      this.filter_items = filter_search_items[0]
-      this.filter_len = filter_search_items[0].length
-    },
 
     addFavorite: function(postType, postId){
       tdata = {"postType": postType, 'postId': postId}
@@ -369,6 +344,53 @@ var postlist = new Vue({
                 }
           }
       })
+    },
+
+    _remove_ordered_item: function(filter_items){
+      var items = filter_items
+      var filter_items = []
+
+      if(items === null || items === undefined){
+        return items
+      }
+
+      for (var i = 0; i < items.length; i++){
+        console.log("order")
+        console.log(items[i].order)
+        if(items[i].order == false){
+          filter_items.push(items[i])
+        }
+      }
+
+      return filter_items
+    },
+
+    filter_center: function(){
+      var filter_items = this.items
+      var filter_price_sorting = this.filter_price_sorting
+      var filter_loc = this.filter_loc
+      var filter_post_time = this.filter_post_time
+      var filter_search = this.filter_search
+      var filter_search_items = []
+      var filter_category = this.filter_category_index
+
+      if(filter_price_sorting == 0 && filter_loc == "0" &&
+        filter_post_time == 0 && filter_category == "all"){
+        filter_items = this.sortWithTime(filter_items, filter_items.length)
+        filter_items = this._remove_ordered_item(filter_items)
+      }
+      else{
+      filter_items = this.filter_price(filter_items, filter_price_sorting)
+      filter_items = this.filter_location(filter_items, filter_loc)
+      filter_items = this.filter_time(filter_items, filter_post_time)
+      filter_items = this.filter_category(filter_items, filter_category)
+      filter_items = this._remove_ordered_item(filter_items)
+      }
+
+      filter_search_items.push(this.filter_posts(filter_items, filter_search))
+
+      this.filter_items = filter_search_items[0]
+      this.filter_len = filter_search_items[0].length
     },
   }
 });
