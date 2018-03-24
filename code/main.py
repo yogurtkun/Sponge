@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
 import json
-import account, post, order
+import account, post, order, review
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
@@ -358,6 +358,56 @@ def deleteFavorite():
     return "Deleting a favorite item failed!"
 
 
+'''
+Add review on posts
+'''
+@app.route('/addReview', methods=['POST'])
+def addReview():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    author = session['username']
+    title = str(request.form['title'])
+    content = str(request.form['content'])
+    reviewId = review.addReview(postType, postId, author, title, content)
+    if reviewId == None:
+        return "Review failed!"
+    return "Review succeeded! reviewId=" + str(reviewId)
+
+
+'''
+Delete review on posts
+'''
+@app.route('/delReview', methods=['POST'])
+def delReview():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    postType = str(request.form['postType'])
+    reviewId = int(request.form['reviewId'])
+    username = session['username']
+    res = review.delReview(postType, reviewId, username)
+    if res :
+        return "Deleting review succeeded!"
+    return "Deleting review failed!"
+    
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

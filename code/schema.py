@@ -75,6 +75,34 @@ class SellerPost(db.Model):
         return '<SellPost %r>' % self.postId
 
 
+class SellerPostReview(db.Model):
+    reviewId = db.Column(db.Integer, primary_key=True)
+    postId = db.Column(db.Integer, db.ForeignKey('seller_post.postId', ondelete='CASCADE'))
+    sellerPost = db.relationship("SellerPost", lazy=True)
+    author = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
+    user = db.relationship("User", lazy=True, cascade="all,delete")
+    title = db.Column(db.String(64), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    time = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<Review %r>' % self.reviewId
+
+
+class BuyerPostReview(db.Model):
+    reviewId = db.Column(db.Integer, primary_key=True)
+    postId = db.Column(db.Integer, db.ForeignKey('buyer_post.postId', ondelete='CASCADE'))
+    buyerPost = db.relationship("BuyerPost", lazy=True)
+    author = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
+    user = db.relationship("User", lazy=True, cascade="all,delete")
+    title = db.Column(db.String(64), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    time = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<Review %r>' % self.reviewId
+
+
 class Order(db.Model):
     orderId = db.Column(db.Integer, primary_key=True)
     postId = db.Column(db.Integer, db.ForeignKey('seller_post.postId', ondelete='CASCADE'))
