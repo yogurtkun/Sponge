@@ -18,6 +18,7 @@ var postlist = new Vue({
     filter_search: "",
     filter_is_apply: false,
     filter_category_index: "ALL",
+    filter_post_type : "ALL",
     filter_offset : 0,
     _ITEMS_PER_PAGE : 10,
   },
@@ -41,6 +42,10 @@ var postlist = new Vue({
       this.filter_center()
     },
     filter_category_index: function(){
+      this.filter_center()
+    },
+    filter_post_type: function(){
+      console.log("121252")
       this.filter_center()
     }
   },
@@ -101,6 +106,7 @@ var postlist = new Vue({
       this.filter_post_time = 0
       this.filter_search = ""
       this.filter_category_index = "ALL"
+      this.filter_post_type = "ALL"
     },
 
     filter_posts: function(filter_items, filter_search){
@@ -246,14 +252,46 @@ var postlist = new Vue({
       if(items === null || items === undefined){
         return items
       }
-
-      // Only select the city.
       for (var i = 0; i < items.length; i++){
         if(items[i].category == category){
           filter_items.push(items[i])
         }
       }
-      console.log(filter_items)
+
+      return filter_items
+    },
+
+    filter_type: function(filter_items, type){
+      var items = filter_items
+      var filter_items = []
+
+      if(type == "ALL" || type == "0")
+      {
+        return items
+      }
+
+      if(items === null || items === undefined){
+        return items
+      }
+
+      if(type == "1"){
+        for (var i = 0; i < items.length; i++){
+          if(items[i].hasOwnProperty("buyerName")){
+            filter_items.push(items[i])
+          }
+        }
+      }
+      else if(type == "2"){
+        for (var i = 0; i < items.length; i++){
+          if(items[i].hasOwnProperty("sellerName")){
+            filter_items.push(items[i])
+          }
+        }
+      }
+      else{
+        return items
+      }
+
       return filter_items
     },
 
@@ -372,6 +410,7 @@ var postlist = new Vue({
       var filter_post_time = this.filter_post_time
       var filter_search = this.filter_search
       var filter_search_items = []
+      var filter_type = this.filter_post_type
       var filter_category = this.filter_category_index
 
       if(filter_price_sorting == 0 && filter_loc == "0" &&
@@ -380,11 +419,12 @@ var postlist = new Vue({
         filter_items = this._remove_ordered_item(filter_items)
       }
       else{
-      filter_items = this.filter_price(filter_items, filter_price_sorting)
-      filter_items = this.filter_location(filter_items, filter_loc)
-      filter_items = this.filter_time(filter_items, filter_post_time)
-      filter_items = this.filter_category(filter_items, filter_category)
-      filter_items = this._remove_ordered_item(filter_items)
+        filter_items = this.filter_price(filter_items, filter_price_sorting)
+        filter_items = this.filter_location(filter_items, filter_loc)
+        filter_items = this.filter_time(filter_items, filter_post_time)
+        filter_items = this.filter_category(filter_items, filter_category)
+        filter_items = this.filter_type(filter_items, filter_type)
+        filter_items = this._remove_ordered_item(filter_items)
       }
 
       filter_search_items.push(this.filter_posts(filter_items, filter_search))

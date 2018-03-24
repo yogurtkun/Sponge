@@ -42,17 +42,17 @@
     <div class="col-lg-10 my-3" style="z-index:9">
       <div id="filter-bar" class="table sticky-top  bg-light mt-2 ">
         <div class="row row-bordered">
-          <div class="col-sm-7">
+          <div class="col-sm-8">
             <form class="form-inline my-2">
-              <span class="label label-info mx-2">Price : </span>
-              <select v-model="filter_price_sorting" id="filter-price-sort" class="form-control mx-2" id="state" name="price_sort" style="width: 100px;">
+              <span class="label label-info mx-2" style="width: 50px;">Price</span>
+              <select v-model="filter_price_sorting" id="filter-price-sort" class="form-control" id="state" name="price_sort" style="width: 150px;">
                 <option value="0">N/A</option>
                 <option value="1">low &nbsp;to high</option>
                 <option value="2">high to low</option>
               </select>
-
-              <label class="control-label mx-2">State : </label>
-                <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 100px;">
+              <span class="mx-3"></span>
+              <label class="control-label" style="width: 50px;">State</label>
+                <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 200px;">
                   <option value="0">N/A</option>
                   <option value="AK">Alaska</option>
                   <option value="AL">Alabama</option>
@@ -108,8 +108,21 @@
                   <option value="WY">Wyoming</option>
                 </select>
 
-              <label class="control-label mx-2">Posted : </label>
-                <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 100px;">
+          </div>
+
+          <div class="col-sm-4">
+            <form class="form-inline">
+              <span class="badge badge-pill badge-info float-right my-3 mx-3"> {{filter_len}} items </span>
+              <input v-model="filter_search" id="filter-search" class="form-control  float-right  my-2" type="search" placeholder="Search" aria-label="Search" style="width: 180px;">
+            </form>
+          </div>
+        </div>
+        <div class="row row-bordered">
+
+          <div class="col-sm-8">
+            <form class="form-inline">
+              <label class="control-label mx-2"  style="width: 50px;">Posted</label>
+                <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 150px;">
                   <option value="0">N/A</option>
                   <option value="1">6 hours</option>
                   <option value="2">24 hours</option>
@@ -117,18 +130,17 @@
                   <option value="4">1 month</option>
                   <option value="5">3 months</option>
                 </select>
-              </form>
-          </div>
-
-          <div class="col-sm-3">
-            <form class="form-inline my-2 float-right">
-              <input v-model="filter_search" id="filter-search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 110px;">
-              <span class="badge badge-pill badge-info"> {{filter_len}} items </span>
-              <!--<a href="#"><i class="fas fa-lg fa-search"></i></a>-->
+            <span class="mx-3"></span>
+              <label class="control-label"  style="width: 80px;">Post Type</label>
+                <select v-model="filter_post_type" id="filter-post-type" class="form-control" id="type" style="width: 170px;">
+                  <option value="ALL">N/A</option>
+                  <option value="1">Buyer</option>
+                  <option value="2">Seller</option>
+                </select>
             </form>
           </div>
 
-          <div class="col-sm-2">
+          <div class="col-sm-4">
             <form class="form-inline my-2 float-right mx-2">
               <button v-on:click="reset_filter" id="filter-reset" class="btn btn-primary float-right" type="submit">Reset</button>
               <label mx-2></label>
@@ -170,10 +182,11 @@
               </div>
               <div class="col-3">
                 <p class="row text-left my-3">Category : &nbsp
-                  <!--<a v-bind:href="'/postlist/' + item.category"> {{item.category}}</a>-->
                   <a href="#"> {{item.category}}</a>
                 </p> 
-                <p v-if="item.location" class="row text-left">Location : {{item.location}} </p> 
+                <p v-if="item.location" class="row text-left">Location : &nbsp
+                  <a href="#"> {{item.location}}</a>
+                </p>
                 <p class="row text-left">{{item.time}}</p>
               </div>
               <div class="col-3">
