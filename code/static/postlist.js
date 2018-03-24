@@ -17,6 +17,7 @@ var postlist = new Vue({
     filter_post_time: 0,
     filter_search: "",
     filter_is_apply: false,
+    filter_category_index: "all",
     filter_offset : 0,
     _ITEMS_PER_PAGE : 10,
   },
@@ -39,6 +40,9 @@ var postlist = new Vue({
     items: function(){
       this.filter_center()
     },
+    filter_category_index: function(){
+      this.filter_center()
+    }
   },
   methods:{
     query_buyer_seller_post(){
@@ -96,6 +100,7 @@ var postlist = new Vue({
       this.filter_loc = "0"
       this.filter_post_time = 0
       this.filter_search = ""
+      this.filter_category_index = "all"
     },
 
     filter_posts: function(filter_items, filter_search){
@@ -178,7 +183,7 @@ var postlist = new Vue({
       var post_dt = []
       var need_dt = 0
 
-      if(location == "0")
+      if(time == "0")
       {
         return items
       }
@@ -227,6 +232,33 @@ var postlist = new Vue({
       } 
 
       return filter_items
+    },
+
+    filter_category: function(filter_items, category){
+      var items = filter_items
+      var filter_items = []
+
+      if(category == "all")
+      {
+        return items
+      }
+
+      if(items === null || items === undefined){
+        return items
+      }
+
+      // Only select the city.
+      for (var i = 0; i < items.length; i++){
+        if(items[i].category == category){
+          filter_items.push(items[i])
+        }
+      }
+      console.log(filter_items)
+      return filter_items
+    },
+
+    set_category: function(category){
+      this.filter_category_index = category   
     },
 
     sortWithIndeces: function(toSort, order) {
@@ -286,14 +318,17 @@ var postlist = new Vue({
       var filter_post_time = this.filter_post_time
       var filter_search = this.filter_search
       var filter_search_items = []
+      var filter_category = this.filter_category_index
 
-      if(filter_price_sorting == 0 && filter_loc == "0" && filter_post_time == 0){
+      if(filter_price_sorting == 0 && filter_loc == "0" &&
+         filter_post_time == 0 && filter_category == "all"){
         filter_items = this.sortWithTime(filter_items, filter_items.length)
       }
       else{
       filter_items = this.filter_price(filter_items, filter_price_sorting)
       filter_items = this.filter_location(filter_items, filter_loc)
       filter_items = this.filter_time(filter_items, filter_post_time)
+      filter_items = this.filter_category(filter_items, filter_category)
       }
 
       filter_search_items.push(this.filter_posts(filter_items, filter_search))

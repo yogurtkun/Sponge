@@ -2,26 +2,42 @@
 
 <body>
 <!-- Sidebar Widgets Column -->
-<div class="container-fluid">
+<div id="postlist"  class="container-fluid">
   <div class="row"> 
     <div class="col-lg-2">
       <!-- Search Widget -->
       <div class="card my-4">
         <h5 class="card-header">category</h5>
         <div class="card-body">
-          {% for category in categories %}
-            <!--<a href="/postlist/{{category}}"> {{category}} </a>-->
             <div>
-              <a href="/postlist"> {{category}} </a>
+              <button v-if="filter_category_index == 'Beauty'" class="btn btn-block btn-primary" v-on:click="set_category('Beauty')" > Beauty </button>
+              <button v-else class="btn btn-block " v-on:click="set_category('Beauty')" > Beauty </button>
+              <button v-if="filter_category_index == 'Books'" class="btn btn-block btn-primary" v-on:click="set_category('Books')" > Books </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Books')" > Books </button>
+              <button v-if="filter_category_index == 'Electronics'" class="btn btn-block btn-primary" v-on:click="set_category('Electronics')" > Electronics </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Electronics')" > Electronics </button>
+              <button v-if="filter_category_index == 'Clothing'" class="btn btn-block btn-primary" v-on:click="set_category('Clothing')" > Clothing </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Clothing')" > Clothing </button>
+              <button v-if="filter_category_index == 'Accessories'" class="btn btn-block btn-primary" v-on:click="set_category('Accessories')" > Accessories </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Accessories')" > Accessories </button>
+              <button v-if="filter_category_index == 'Kitchen'" class="btn btn-block btn-primary" v-on:click="set_category('Kitchen')" > Kitchen </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Kitchen')" > Kitchen </button>
+              <button v-if="filter_category_index == 'Music'" class="btn btn-block btn-primary" v-on:click="set_category('Music')" > Music </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Music')" > Music </button>
+              <button v-if="filter_category_index == 'Software'" class="btn btn-block btn-primary" v-on:click="set_category('Software')" > Software </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Software')" > Software </button>
+              <button v-if="filter_category_index == 'Outdoor'" class="btn btn-block btn-primary" v-on:click="set_category('Outdoor')" > Outdoor </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Outdoor')" > Outdoor </button>
+              <button v-if="filter_category_index == 'Furniture'" class="btn btn-block btn-primary" v-on:click="set_category('Furniture')" > Furniture </button>
+              <button v-else class="btn btn-block" v-on:click="set_category('Furniture')" > Furniture </button>
             </div>
-          {% endfor %}
         </div>
       </div>
     </div>
 
 
     {% raw %}
-    <div id="postlist" class="col-lg-10 my-3" style="z-index:9">
+    <div class="col-lg-10 my-3" style="z-index:9">
       <div id="filter-bar" class="table sticky-top  bg-light mt-2 ">
         <div class="row row-bordered">
           <div class="col-sm-7">
