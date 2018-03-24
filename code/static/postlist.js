@@ -45,7 +45,6 @@ var postlist = new Vue({
       this.filter_center()
     },
     filter_post_type: function(){
-      console.log("121252")
       this.filter_center()
     }
   },
@@ -352,13 +351,11 @@ var postlist = new Vue({
 
     addFavorite: function(postType, postId){
       tdata = {"postType": postType, 'postId': postId}
-      console.log("add", tdata);
       $.ajax({
           url: '/favorite',
           type: 'POST',
           data: tdata,
           success: (data) => {
-              console.log("success!")
               for(var i = 0; i < this.items.length; i++)
                 if(this.items[i].postId == postId){
                   this.items[i].favorite = true
@@ -369,13 +366,11 @@ var postlist = new Vue({
 
     deleteFavorite: function(postType, postId){
       tdata = {"postType": postType, 'postId': postId}
-      console.log("delete", tdata);
       $.ajax({
           url: '/deleteFavorite',
           type: 'POST',
           data: tdata,
           success: (data) => {
-              console.log("success!")
               for(var i = 0; i < this.items.length; i++)
                 if(this.items[i].postId == postId){
                   this.items[i].favorite = false
@@ -393,8 +388,6 @@ var postlist = new Vue({
       }
 
       for (var i = 0; i < items.length; i++){
-        console.log("order")
-        console.log(items[i].order)
         if(items[i].order == false){
           filter_items.push(items[i])
         }
