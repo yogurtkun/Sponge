@@ -293,6 +293,7 @@ def buypostlist():
 @app.route('/sellpostlist',methods=["POST"])
 def sellpostlist():
     posts = post.searchSellerPosts(username=session['username'])
+    print posts
     return json.dumps(posts)
 
 
@@ -390,6 +391,39 @@ def delReview():
     if res :
         return "Deleting review succeeded!"
     return "Deleting review failed!"
+
+'''
+Chat Box test
+'''
+@app.route('/chatbox',methods=['GET'])
+def chatbox():
+    talker = request.args['person']
+    print talker
+    return render_template("chatbox.html",username = session['username'])
+
+@app.route('/messageTable',methods=['POST'])
+def messageTable():
+    data = [{'username':'kk','time':'1998'},{'username':'bb','time':'2004'},{'username':'ff','time':'123123'}]
+    return json.dumps(data)
+
+@app.route('/newMessage',methods=['POST'])
+def newMessage():
+    data = request.form
+    print data
+    return 'success'
+
+@app.route('/getAllMessage',methods=['POST'])
+def getAllMessage():
+    print request.form
+    receiver = request.form['receiver']
+    print receiver
+    data = [
+        {'content':"time1message","time":"1","senderUsername":"yjc","receiverUsername":"kk"},
+        {'content':"time2message","time":"2","senderUsername":"kk","receiverUsername":"yjc"},
+        {'content':"time3message","time":"3","senderUsername":"yjc","receiverUsername":"kk"}
+    ]
+
+    return json.dumps(data)
     
 
 

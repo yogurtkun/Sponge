@@ -168,3 +168,37 @@ $(document).ready(function () {
         ]
     });
 })
+
+$(document).ready(function(){
+    $("#message-table").bootstrapTable({
+        url:"/messageTable",
+        method: "POST",
+        sidePagination: "client",
+        pagination: true,
+        search: true,
+        pageSize: 10,
+        strictSearch: false,
+        sortName: "time",
+        sortOrder: 'desc',
+        columns: [
+            {
+                title: 'Contact',
+                field: 'username',
+                align: 'center',
+                valign: 'middle',
+                width: '30%'
+            },
+            {
+                title: 'Time',
+                field: 'time',
+                align: 'center',
+                valign: 'middle',
+                sortable: true,
+                width: '70%',
+                formatter: function (value, row, index) {
+                    return '<a href="/chatbox?person='+row['username']+'">'+value+'</a>';
+                }
+            }
+        ]
+    });
+})
