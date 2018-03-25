@@ -131,7 +131,7 @@ class MainTest(unittest.TestCase):
             assert 'test_sellerpost' in rv.data
             rv = self.app.post('/postlist/buyer')
             assert 'test_buyerpost' in rv.data
-            print 'post list pass\n'
+            print 'post list pass\n' 
 
 
     def test_favorite(self):
@@ -164,8 +164,8 @@ class MainTest(unittest.TestCase):
             postId = res[0][7:-1]
             postdata = {"postId":postId, "transactionType":"Face to Face"}
             rv = self.app.post("/checkout", data=postdata, follow_redirects=True)
-            assert "Placeing order succeeded!" == rv.data
-            print "Place order pass\n"
+            assert "Placing order succeeded!" in rv.data
+            print "Place order pass\n" 
 
     def test_message(self):
         with main.app.app_context():
