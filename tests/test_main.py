@@ -220,6 +220,37 @@ class MainTest(unittest.TestCase):
             print "post review test pass"
 
 
+    def test_user_review(self):
+        with main.app.app_context():
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
+            user = {"username":"testUser", "password":"1234"}
+            self.app.post("/loginUser", data=user, follow_redirects=True)
+
+            postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
+            rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
+            res = re.findall("postId=\d+#", rv.data)
+            assert len(res) == 1
+            postId = res[0][7:-1]
+
+            self.app.get("/logout")
+            account.registerUser("testReviewer", "testReviewer@domain.com", "1234", "10025")
+            user = {"username":"testReviewer", "password":"1234"}
+            self.app.post("/loginUser", data=user, follow_redirects=True)
+            postdata = {"postId":postId, "transactionType":"Face to Face"}
+            rv = self.app.post("/checkout", data=postdata, follow_redirects=True)
+            res = re.findall("orderId=\d+", rv.data)
+            assert len(res) == 1
+            orderId = res[0][8:]
+
+            data = {"reviewee":"testUser", "rating":5, "content":"Good seller", "orderId":orderId}
+            rv = self.app.post("/addReview", data=data, follow_redirects=True)
+            account.deleteUser("testReviewer")
+            assert "Review succeeded!" == rv.data
+            print "user review test pass"
+            
+
+
+
 
 
 if __name__ == '__main__':

@@ -11,7 +11,8 @@ def registerUser(username, email, password, zipcode):
         db.session.add(user)
         db.session.commit()
         return True
-    except:
+    except Exception as e:
+        print e
         db.session.rollback()
         return False
 
@@ -168,6 +169,32 @@ def searchFavorite(username, postId, flag):
             return str(postId) in user["favoriteBuyerPosts"].split(DELIMITER)
     return False
 
+
+'''
+When receiving a review, update rating
+'''
+def updateRating(username, rating):
+    user = User.query.get(username)
+    if user:
+        tmp = user.rating
+        c = user.ratingCount
+        if tmp == None:
+            tmp = rating
+            c = 1
+        else:
+            tmp = (tmp * c + rating) / (c + 1.0)
+            c = c + 1
+        try:
+            user.rating = tmp
+            db.session.commit()
+            user.ratingCount = c
+            db.session.commit()
+            return True
+        except Exception as e:
+            print e
+            db.session.rollback()
+            return False
+    return False
 
 
 '''

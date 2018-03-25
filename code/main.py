@@ -322,10 +322,9 @@ def checkout():
 	transactionType = str(request.form['transactionType'])
 	rcvAddress = str(request.form['rcvAddress']) if transactionType == "Online" else None
 	orderId = order.createOrder(postId, buyerName, transactionType, rcvAddress)
-	print "order id: ", orderId
 	if orderId == None:
 		return "Placing order failed!"
-	return "Placeing order succeeded!"
+	return "Placing order succeeded! orderId=" + str(orderId)
 
 
 '''
@@ -362,7 +361,7 @@ def deleteFavorite():
 Add review on posts
 '''
 @app.route('/addPostReview', methods=['POST'])
-def addReview():
+def addPostReview():
     if not loggedIn():
         return render_template('login.html', error='Please login first')
     postType = str(request.form['postType'])
@@ -380,7 +379,7 @@ def addReview():
 Delete review on posts
 '''
 @app.route('/delPostReview', methods=['POST'])
-def delReview():
+def delPostReview():
     if not loggedIn():
         return render_template('login.html', error='Please login first')
     postType = str(request.form['postType'])
@@ -391,6 +390,24 @@ def delReview():
         return "Deleting review succeeded!"
     return "Deleting review failed!"
     
+
+'''
+Add review on users
+'''
+@app.route('/addReview', methods=['POST'])
+def addReview():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    reviewer = session['username']
+    reviewee = str(request.form['reviewee'])
+    rating = int(request.form['rating'])
+    content = str(request.form['content'])
+    orderId = int(request.form['orderId'])
+    reviewId = review.addReview(reviewer, reviewee, rating, content, orderId)
+    if reviewId == None:
+        return "Review failed!"
+    return "Review succeeded!"
+
 
 
 

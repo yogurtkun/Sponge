@@ -137,12 +137,13 @@ class Message(db.Model):
 
 class Review(db.Model):
     reviewId = db.Column(db.Integer, primary_key=True)
-    reviewerUsername = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     # who write the review
-    reviewer = db.relationship("User", foreign_keys=[reviewerUsername], lazy=True, cascade="all,delete")
-    receiveeUsername = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
+    reviewer = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))  
+    reviewerUser = db.relationship("User", foreign_keys=[reviewer], lazy=True, cascade="all,delete")
     # who receives the review
-    reviewee = db.relationship("User", foreign_keys=[receiveeUsername], lazy=True, cascade="all,delete")
+    reviewee = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
+    revieweeUser = db.relationship("User", foreign_keys=[reviewee], lazy=True, cascade="all,delete")
+    rating = db.Column(db.Integer)
     content = db.Column(db.Text, nullable=False)
     time = db.Column(db.DateTime)
     # a review must be related to an order

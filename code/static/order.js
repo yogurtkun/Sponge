@@ -69,7 +69,7 @@ $(document).ready(function () {
                     type: 'POST',
                     data: tdata,
                     success: (data) => {
-                        if (data === "Placeing order succeeded!") {
+                        if (data !== "Placing order failed!") {
                             window.location = "/portal"
                         }
                     }
