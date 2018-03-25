@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
 import json
-import account, post, order, review
+import account, post, order, review, post_review
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
@@ -323,10 +323,9 @@ def checkout():
 	transactionType = str(request.form['transactionType'])
 	rcvAddress = str(request.form['rcvAddress']) if transactionType == "Online" else None
 	orderId = order.createOrder(postId, buyerName, transactionType, rcvAddress)
-	print "order id: ", orderId
 	if orderId == None:
 		return "Placing order failed!"
-	return "Placeing order succeeded!"
+	return "Placing order succeeded! orderId=" + str(orderId)
 
 
 '''
@@ -362,8 +361,8 @@ def deleteFavorite():
 '''
 Add review on posts
 '''
-@app.route('/addReview', methods=['POST'])
-def addReview():
+@app.route('/addPostReview', methods=['POST'])
+def addPostReview():
     if not loggedIn():
         return render_template('login.html', error='Please login first')
     postType = str(request.form['postType'])
@@ -371,7 +370,7 @@ def addReview():
     author = session['username']
     title = str(request.form['title'])
     content = str(request.form['content'])
-    reviewId = review.addReview(postType, postId, author, title, content)
+    reviewId = post_review.addPostReview(postType, postId, author, title, content)
     if reviewId == None:
         return "Review failed!"
     return "Review succeeded! reviewId=" + str(reviewId)
@@ -380,14 +379,14 @@ def addReview():
 '''
 Delete review on posts
 '''
-@app.route('/delReview', methods=['POST'])
-def delReview():
+@app.route('/delPostReview', methods=['POST'])
+def delPostReview():
     if not loggedIn():
         return render_template('login.html', error='Please login first')
     postType = str(request.form['postType'])
     reviewId = int(request.form['reviewId'])
     username = session['username']
-    res = review.delReview(postType, reviewId, username)
+    res = post_review.delPostReview(postType, reviewId, username)
     if res :
         return "Deleting review succeeded!"
     return "Deleting review failed!"
@@ -425,6 +424,44 @@ def getAllMessage():
 
     return json.dumps(data)
     
+
+'''
+Add review on users
+'''
+@app.route('/addReview', methods=['POST'])
+def addReview():
+    if not loggedIn():
+        return "Please log in first!"
+    reviewer = session['username']
+    reviewee = str(request.form['reviewee'])
+    rating = int(request.form['rating'])
+    content = str(request.form['content'])
+    orderId = int(request.form['orderId'])
+    reviewId = review.addReview(reviewer, reviewee, rating, content, orderId)
+    if reviewId == None:
+        return "Review failed!"
+    return "Review succeeded!"
+
+
+'''
+Add user info page
+'''
+@app.route('/UserInfo', methods=['GET'])
+def getUserInfo():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    username = str(request.args['username'])
+    rating = account.getRating(username)
+    return render_template("user_information.html", username=username, rating=rating)
+
+
+@app.route('/getReviewsToUser', methods=['POST'])
+def getReviewsToUser():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    reviewee = str(request.form['username'])
+    reviewList = review.getReviewToUser(reviewee)
+    return json.dumps(reviewList)
 
 
 
