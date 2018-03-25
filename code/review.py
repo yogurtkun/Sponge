@@ -18,3 +18,11 @@ def addReview(reviewer, reviewee, rating, content, orderId):
 		print e
 		db.session.rollback()
 		return None
+
+
+def getReviewToUser(reviewee):
+	res = Review.query.filter_by(reviewee=reviewee).all()
+	reviews = []
+	for r in res:
+		reviews.append(from_sql(r))
+	return reviews

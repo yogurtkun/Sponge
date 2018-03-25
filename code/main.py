@@ -397,7 +397,7 @@ Add review on users
 @app.route('/addReview', methods=['POST'])
 def addReview():
     if not loggedIn():
-        return render_template('login.html', error='Please login first')
+        return "Please log in first!"
     reviewer = session['username']
     reviewee = str(request.form['reviewee'])
     rating = int(request.form['rating'])
@@ -408,6 +408,26 @@ def addReview():
         return "Review failed!"
     return "Review succeeded!"
 
+
+'''
+Add user info page
+'''
+@app.route('/UserInfo', methods=['GET'])
+def getUserInfo():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    username = str(request.args['username'])
+    rating = account.getRating(username)
+    return render_template("user_information.html", username=username, rating=rating)
+
+
+@app.route('/getReviewsToUser', methods=['POST'])
+def getReviewsToUser():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    reviewee = str(request.form['username'])
+    reviewList = review.getReviewToUser(reviewee)
+    return json.dumps(reviewList)
 
 
 

@@ -217,7 +217,7 @@ class MainTest(unittest.TestCase):
             rv = self.app.post("/delPostReview", data=data, follow_redirects=True)
             assert "Deleting review succeeded!" == rv.data
 
-            print "post review test pass"
+            print "post review test pass" 
 
 
     def test_user_review(self):
@@ -236,19 +236,23 @@ class MainTest(unittest.TestCase):
             account.registerUser("testReviewer", "testReviewer@domain.com", "1234", "10025")
             user = {"username":"testReviewer", "password":"1234"}
             self.app.post("/loginUser", data=user, follow_redirects=True)
+
             postdata = {"postId":postId, "transactionType":"Face to Face"}
             rv = self.app.post("/checkout", data=postdata, follow_redirects=True)
             res = re.findall("orderId=\d+", rv.data)
             assert len(res) == 1
             orderId = res[0][8:]
 
-            data = {"reviewee":"testUser", "rating":5, "content":"Good seller", "orderId":orderId}
+            data = {"reviewee":"testUser", "rating":4, "content":"Good seller", "orderId":orderId}
             rv = self.app.post("/addReview", data=data, follow_redirects=True)
-            account.deleteUser("testReviewer")
             assert "Review succeeded!" == rv.data
-            print "user review test pass"
-            
 
+            data = {"username":"testUser"}
+            rv = self.app.post("/getReviewsToUser", data=data, follow_redirects=True)
+            assert "Good seller" in rv.data
+
+            account.deleteUser("testReviewer")
+            print "user review test pass"
 
 
 

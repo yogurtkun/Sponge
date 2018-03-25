@@ -197,6 +197,13 @@ def updateRating(username, rating):
     return False
 
 
+def getRating(username):
+    user = User.query.get(username)
+    if user:
+        return user.rating
+    return None
+
+
 '''
 data: {attribute => value} for update
 e.g. {'zipcode': '10027'}
