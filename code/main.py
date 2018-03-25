@@ -392,35 +392,36 @@ def delPostReview():
     return "Deleting review failed!"
 
 
-@app.route('/chatbox',methods=['GET'])
-def chatbox():
+@app.route('/messages',methods=['GET'])
+def messages():
     talker = request.args['person']
     print talker
     return render_template("chatbox.html",username = session['username'])
 
 @app.route('/messageTable',methods=['POST'])
 def messageTable():
-    data = [{'username':'kk','time':'1998'},{'username':'bb','time':'2004'},{'username':'ff','time':'123123'}]
-    return json.dumps(data)
+    #data = [{'username':'kk','time':'1998'},{'username':'bb','time':'2004'},{'username':'ff','time':'123123'}]
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    messages = message.getMessagesByUser(session['username'])
+    messages = sorted(messages, key=lambda k : k['time'])
+    return json.dumps(messages)
 
 @app.route('/newMessage',methods=['POST'])
 def newMessage():
-    data = request.form
-    print data
-    return 'success'
+    if not loggedIn():
+        return json.dumps('fail')
+    content = str(request.form['content'])
+    receiver = str(request.form['receiverUsername'])
+    messageId = message.sendMessage(sender=session['username'], receiver=receiver, title='', content=content)
+    return json.dumps('success')
 
 @app.route('/getAllMessage',methods=['POST'])
 def getAllMessage():
-    print request.form
     receiver = request.form['receiver']
-    print receiver
-    data = [
-        {'content':"time1message","time":"1","senderUsername":"yjc","receiverUsername":"kk"},
-        {'content':"time2message","time":"2","senderUsername":"kk","receiverUsername":"yjc"},
-        {'content':"time3message","time":"3","senderUsername":"yjc","receiverUsername":"kk"}
-    ]
-
-    return json.dumps(data)
+    messages = message.getMessages(sender=session['username'], receiver=receiver) + message.getMessages(sender=receiver, receiver=session['username'])
+    messages = sorted(messages, key=lambda k : k['time'])
+    return json.dumps(messages)
     
 
 '''
