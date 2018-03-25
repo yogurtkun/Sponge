@@ -135,7 +135,7 @@ class Message(db.Model):
         return '<Message %r>' % messageId
 
 
-class UserReview(db.Model):
+class Review(db.Model):
     reviewId = db.Column(db.Integer, primary_key=True)
     # who write the review
     reviewer = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))  
