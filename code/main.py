@@ -391,13 +391,7 @@ def delPostReview():
         return "Deleting review succeeded!"
     return "Deleting review failed!"
 
-'''
-Chat Box test
-chatbox：返回chatbox界面
-messageTable：返回所有和session username有聊天记录的用户和最后的消息时间
-newMessage：向后端传送新发的消息
-getAllMessage: 获得两个人的所有消息记录，按时间排序
-'''
+
 @app.route('/chatbox',methods=['GET'])
 def chatbox():
     talker = request.args['person']
