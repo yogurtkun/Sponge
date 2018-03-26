@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
 import json
-import account, post, order, review, post_review
+import account, post, order, review, post_review, message
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
@@ -404,8 +404,20 @@ def messageTable():
     if not loggedIn():
         return render_template('login.html', error='Please login first')
     messages = message.getMessagesByUser(session['username'])
-    messages = sorted(messages, key=lambda k : k['time'])
-    return json.dumps(messages)
+    ret_dict = {}
+    for mess in messages:
+        another = mess['senderUsername'] if mess['senderUsername'] != session['username'] else mess['receiverUsername']
+        if another not in ret_dict:
+            ret_dict[another] = []
+        ret_dict[another].append(mess['time'])
+    res = []
+    for user,times in ret_dict.items():
+        temp_dict = {}
+        temp_dict['username'] = user
+        temp_dict['time'] = max(times)
+        res.append(temp_dict)
+    print res
+    return json.dumps(res)
 
 @app.route('/newMessage',methods=['POST'])
 def newMessage():

@@ -196,7 +196,7 @@ $(document).ready(function(){
                 sortable: true,
                 width: '70%',
                 formatter: function (value, row, index) {
-                    return '<a href="/chatbox?person='+row['username']+'">'+value+'</a>';
+                    return '<a href="/messages?person='+row['username']+'">'+value+'</a>';
                 }
             }
         ]

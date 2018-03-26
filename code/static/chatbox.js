@@ -85,8 +85,8 @@ $(document).ready(function () {
                 dataType: 'json',
                 data: { "receiver": person },
                 success: function (data) {
+                    console.log(data)
                     data.forEach(function(subMessage){
-                        console.log(subMessage["senderUsername"])
                         if(subMessage["senderUsername"] === person){
                             addNewSent(subMessage["content"]);
                         }else{
