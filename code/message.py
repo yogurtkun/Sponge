@@ -27,9 +27,9 @@ def getMessages(sender=None, receiver=None):
 	try:
 		query = Message.query
 		if sender is not None:
-			query.filter_by(senderUsername=sender)
+			query = query.filter_by(senderUsername=sender)
 		if receiver is not None:
-			query.filter_by(receiverUsername=receiver)
+			query = query.filter_by(receiverUsername=receiver)
 		messages = []
 		for message in query.all():
 			messages.append(from_sql(message))

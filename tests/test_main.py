@@ -173,6 +173,7 @@ class MainTest(unittest.TestCase):
             account.registerUser("testReceiver", "testr@domain.com", "1234", "10025")
             message.sendMessage(sender="testSender", receiver="testReceiver", title="message_title", content="message_content")
             assert "message_title" in  json.dumps(message.getMessages(sender="testSender", receiver="testReceiver"))
+            assert "message_title" not in json.dumps(message.getMessages(sender="testReceiver", receiver="testSender"))
             assert "message_content" in  json.dumps(message.getMessagesByUser("testSender"))
             assert "message_content" in json.dumps(message.getMessagesByUser("testReceiver"))
             account.deleteUser("testSender")
