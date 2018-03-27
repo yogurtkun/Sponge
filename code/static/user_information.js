@@ -12,7 +12,7 @@
             var tdata = {"username" : username}
 
             $.ajax({
-            url: '/getReviewsToUser',
+            url: '/getOrdersToUser',
             type: 'POST',
             data: tdata,
             success: (data) => {
@@ -28,6 +28,25 @@
         },
 
         methods:{
+            add_review_post: function(){
+                var tdata = {"reviewee" : 'zcd', rating:4, 'content':"testreview testreview testreview testreview", 'orderId': 123}
+
+                $.ajax({
+                url: '/addReview',
+                type: 'POST',
+                data: tdata,
+                success: (data) => {
+                    json = JSON.parse(data)
+                    console.log(json)
+
+                    this.reviews = json
+                },
+                }).fail(function($xhr) {
+                  var data = $xhr.responseJSON;
+                  console.log(data);
+                });
+            },
+
             query_review_info: function(){
                 var usr_text = $("#user-name").text().replace(/ /g,'');
                 var index = usr_text.indexOf("User")

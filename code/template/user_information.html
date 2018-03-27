@@ -103,7 +103,7 @@
             <div class="col-sm-12">
                 <hr/>
                 <div class="review-block">
-                    <div v-if="orders.length === 0 ">
+                    <div v-if="orders.length === 0 || orders === undefined || orders === 'null'">
                         <h2 class="text-center">User doesn't have any order.</h2>
                     </div>
                     <div  v-else v-for="order in orders">
@@ -246,7 +246,7 @@
             <div class="col-sm-12">
                 <hr/>
                 <div class="review-block">
-                    <div v-if="reviews.length === 0 ">
+                    <div v-if="reviews.length === 0 || reviews === undefined || reviews === 'null'">
                         <h2 class="text-center">User has not received any review.</h2>
                     </div>
                     <div  v-else v-for="review in reviews">
