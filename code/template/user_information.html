@@ -1,0 +1,320 @@
+{# [START form] #} {% extends "header.html"%} {% block content %}
+<script src="static/dist/bootstrap-table.min.js"></script>
+<link rel="stylesheet" href="static/dist/bootstrap-table.min.css"></link>
+
+<br>
+
+<div id="user-info" class="modal-body" style="min-height:75vh">
+    <div class="row">
+        <ul class="nav  nav-fill nav-pills" style="border: 1px solid #e1e2e5; rounded;min-width: 1100px;max-width: 1100px">
+          <li class="nav-item">
+            <a class="nav-link active" href="#info-tab" data-toggle="tab" style="min-width: 545px">Order History</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="#review-tab" v-on:click="query_review_info()" data-toggle="tab" style="min-width: 545px">Reviews</a>
+          </li>
+        </ul>
+    </div>
+    <div class="row">
+      <div class="col-md-12" style="border: 1px solid #e1e2e5; rounded; min-width: 1100px;max-width: 1100px">
+
+        <div id="myTabContent" class="tab-content">
+          <div id="info-tab" class="tab-pane in active">
+
+            <div style="margin-top:5vh;margin-left:auto;margin-right:auto;">
+                <h1 id="user-name" style="display:inline;">
+                  User : {{username}}
+                </h1>
+                <div class="float-right rating-block">
+                  <h4 style="display:inline;">Rating :
+                  {% if (rating == 0) or (rating == None)%}
+                  <span>
+                    <h2 style="display:inline;" class="bold mx-2  my-2">No review</h2>
+                  </span>
+                  {% else %}
+                  <span>
+                    <h2 style="display:inline;" class="bold mx-2  my-2">{{rating}} <small>/ 5</small></h2>
+                  </span>
+                  
+                    {% if 1 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 2 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% endif %}
+
+                    {% if 3 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 4 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 5 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% endif %}
+
+                  {% endif %}
+                </div>
+              </div>
+
+              <!--
+              <label class="badge badge-pill badge-info my-2 text-right" >Receive 
+                <span class="badge badge-pill badge-light">{{rating_count}}</span> reviews
+              </label>
+              -->       
+
+              <div>
+
+{%raw%}
+        <div class="row my-5">
+            <div class="col-sm-12">
+                <hr/>
+                <div class="review-block">
+                    <div v-if="orders.length === 0 ">
+                        <h2 class="text-center">User doesn't have any order.</h2>
+                    </div>
+                    <div  v-else v-for="order in orders">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                            <div class="review-block-name"><a v-bind:href="'UserInfo\?username=' + order.reviewer">{{order.reviewer}}</a></div>
+                            <div class="review-block-date">{{order.time}}<br/></div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="review-block-rate">
+                              <span v-if="order.rating === 'null'">
+                              </span>
+                              <span v-else>
+                                <button v-if="1 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="2 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="3 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="4 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="5 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                            </div>
+                            <!--<div class="review-block-title">this was nice in buy</div>-->
+                            <div class="review-block-description">{{order.content}}</div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+                </div>
+            </div>
+        </div>
+
+{%endraw%}
+
+
+              </div>
+            </div>
+
+
+          <div id="review-tab" class="tab-pane fade">
+            <div style="margin-top:5vh;margin-left:auto;margin-right:auto;">
+                <h1 style="display:inline;">
+
+                  User : {{username}}
+                </h1>
+                <div class="float-right rating-block">
+                  <h4 style="display:inline;">Rating :
+                  {% if (rating == 0) or (rating == None)%}
+                  <span>
+                    <h2 style="display:inline;" class="bold mx-2  my-2">No review</h2>
+                  </span>
+                  {% else %}
+                  <span>
+                    <h2 style="display:inline;" class="bold mx-2  my-2">{{rating}} <small>/ 5</small></h2>
+                  </span>
+                  
+                    {% if 1 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 2 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% endif %}
+
+                    {% if 3 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 4 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 5 <= rating %}
+                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% endif %}
+
+                  {% endif %}
+                </div>
+
+{%raw%}
+        <div class="row my-5">
+            <div class="col-sm-12">
+                <hr/>
+                <div class="review-block">
+                    <div v-if="reviews.length === 0 ">
+                        <h2 class="text-center">User has not received any review.</h2>
+                    </div>
+                    <div  v-else v-for="review in reviews">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+                            <div class="review-block-name"><a v-bind:href="'UserInfo\?username=' + review.reviewer">{{review.reviewer}}</a></div>
+                            <div class="review-block-date">{{review.time}}<br/></div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="review-block-rate">
+                              <span v-if="review.rating === 'null'">
+                              </span>
+                              <span v-else>
+                                <button v-if="1 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="2 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="3 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="4 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="5 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                            </div>
+                            <!--<div class="review-block-title">this was nice in buy</div>-->
+                            <div class="review-block-description">{{review.content}}</div>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+                </div>
+            </div>
+        </div>
+
+{%endraw%}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script src="static/user_information.js"></script>
+{% endblock %} {# [END form] #}
