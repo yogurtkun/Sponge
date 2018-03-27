@@ -18,7 +18,7 @@ var postlist = new Vue({
     filter_search: "",
     filter_is_apply: false,
     filter_category_index: "ALL",
-    filter_post_type : "ALL",
+    filter_post_type : "0",
     filter_offset : 0,
     _ITEMS_PER_PAGE : 10,
   },
@@ -105,7 +105,7 @@ var postlist = new Vue({
       this.filter_post_time = 0
       this.filter_search = ""
       this.filter_category_index = "ALL"
-      this.filter_post_type = "ALL"
+      this.filter_post_type = "0"
     },
 
     filter_posts: function(filter_items, filter_search){
@@ -264,25 +264,20 @@ var postlist = new Vue({
       var items = filter_items
       var filter_items = []
 
-      if(type == "ALL" || type == "0")
-      {
-        return items
-      }
-
       if(items === null || items === undefined){
         return items
       }
 
-      if(type == "1"){
+      if(type == "0"){
         for (var i = 0; i < items.length; i++){
-          if(items[i].hasOwnProperty("buyerName")){
+          if(items[i].hasOwnProperty("sellerName")){
             filter_items.push(items[i])
           }
         }
       }
-      else if(type == "2"){
+      else if(type == "1"){
         for (var i = 0; i < items.length; i++){
-          if(items[i].hasOwnProperty("sellerName")){
+          if(items[i].hasOwnProperty("buyerName")){
             filter_items.push(items[i])
           }
         }
