@@ -8,10 +8,13 @@
     <div class="row">
         <ul class="nav  nav-fill nav-pills" style="border: 1px solid #e1e2e5; rounded;min-width: 1100px;max-width: 1100px">
           <li class="nav-item">
-            <a class="nav-link active" href="#info-tab" data-toggle="tab" style="min-width: 545px">Order History</a>
+            <a class="nav-link active" href="#info-tab" data-toggle="tab" style="min-width: 363px">Items On Sell</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#review-tab" v-on:click="query_review_info()" data-toggle="tab" style="min-width: 545px">Reviews</a>
+            <a class="nav-link" href="#sell-history-tab" v-on:click="query_on_sell_info()" data-toggle="tab" style="min-width: 364px">Selling History</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="#review-tab" v-on:click="query_review_info()" data-toggle="tab" style="min-width: 363px">Reviews</a>
           </li>
         </ul>
     </div>
@@ -22,66 +25,67 @@
           <div id="info-tab" class="tab-pane in active">
 
             <div style="margin-top:5vh;margin-left:auto;margin-right:auto;">
-                <h1 id="user-name" style="display:inline;">
-                  User : {{username}}
-                </h1>
-                <div class="float-right rating-block">
-                  <h4 style="display:inline;">Rating :
+                <div   >
+                  <i class="fas fa-user mx-2" style="font-size: 30px;"></i>
+                  <h1 id="user-name" style="display:inline;">{{username}}</h1>
+                </div>
+                <div class="my-4 mx-2" style="font-size: 16px;">
+                  <i style="display:inline;">Rating : </i>
                   {% if (rating == 0) or (rating == None)%}
                   <span>
-                    <h2 style="display:inline;" class="bold mx-2  my-2">No review</h2>
+                    <i style="display:inline;" class="bold">No review</i>
                   </span>
                   {% else %}
                   <span>
-                    <h2 style="display:inline;" class="bold mx-2  my-2">{{rating}} <small>/ 5</small></h2>
+                    <i style="display:inline;" class="bold mx-1">{{rating|round|int}} <small>/ 5</small></i>
                   </span>
                   
                     {% if 1 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align" >
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
 
                     {% endif %}
                     {% if 2 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% endif %}
 
                     {% if 3 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
 
                     {% endif %}
                     {% if 4 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
 
                     {% endif %}
                     {% if 5 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% endif %}
@@ -99,66 +103,68 @@
               <div>
 
 {%raw%}
-        <div class="row my-5">
+        <div class="row my-3">
             <div class="col-sm-12">
                 <hr/>
                 <div class="review-block">
-                    <div v-if="orders.length === 0 || orders === undefined || orders === 'null'">
-                        <h2 class="text-center">User doesn't have any order.</h2>
+                    <div v-if="selling_histories.length === 0 || selling_histories === undefined || selling_histories === 'null'">
+                        <h2 class="text-center">User has not sold anything.</h2>
                     </div>
-                    <div  v-else v-for="order in orders">
+                    <div  v-else v-for="(selling_history, index) in selling_histories">
                     <div class="row">
                         <div class="col-sm-3">
-                            <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                            <div class="review-block-name"><a v-bind:href="'UserInfo\?username=' + order.reviewer">{{order.reviewer}}</a></div>
-                            <div class="review-block-date">{{order.time}}<br/></div>
-                        </div>
-                        <div class="col-sm-9">
+                            <div class="review-block-name" style="font-size:15px"><a v-bind:href="'UserInfo\?username=' + selling_history.reviewer">{{selling_history.reviewer}}</a></div>
                             <div class="review-block-rate">
-                              <span v-if="order.rating === 'null'">
+                              <span v-if="selling_history.rating === 'null'">
                               </span>
                               <span v-else>
-                                <button v-if="1 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                <button v-if="1 <= selling_history.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-
-                                <button v-if="2 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
 
-                                <button v-if="3 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                <button v-if="2 <= selling_history.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-
-                                <button v-if="4 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
 
-                                <button v-if="5 <= order.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                <button v-if="3 <= selling_history.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="4 <= selling_history.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="5 <= selling_history.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
                             </span>
                             </div>
-                            <!--<div class="review-block-title">this was nice in buy</div>-->
-                            <div class="review-block-description">{{order.content}}</div>
+                            <div class="review-block-time my-2">Item: order item</div>
+                            <div class="review-block-date my-2">{{selling_history.time}}<br/></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="review-block-title">Review title</div>
+                            <div class="review-block-description"><strong>Review: </strong>{{selling_history.content}}</div>
                         </div>
                     </div>
-                    <hr/>
+                    <div v-if="index != (selling_histories.length-1)">
+                    	<hr/>
+                    </div>
                 </div>
                 </div>
             </div>
@@ -166,142 +172,307 @@
 
 {%endraw%}
 
-
               </div>
             </div>
 
 
-          <div id="review-tab" class="tab-pane fade">
-            <div style="margin-top:5vh;margin-left:auto;margin-right:auto;">
-                <h1 style="display:inline;">
+          <div id="sell-history-tab" class="tab-pane fade">
+            
 
-                  User : {{username}}
-                </h1>
-                <div class="float-right rating-block">
-                  <h4 style="display:inline;">Rating :
+            <div style="margin-top:5vh;margin-left:auto;margin-right:auto;">
+                <div   >
+                  <i class="fas fa-user mx-2" style="font-size: 30px;"></i>
+                  <h1 id="user-name" style="display:inline;">{{username}}</h1>
+                </div>
+                <div class="my-4 mx-2" style="font-size: 16px;">
+                  <i style="display:inline;">Rating : </i>
                   {% if (rating == 0) or (rating == None)%}
                   <span>
-                    <h2 style="display:inline;" class="bold mx-2  my-2">No review</h2>
+                    <i style="display:inline;" class="bold">No review</i>
                   </span>
                   {% else %}
                   <span>
-                    <h2 style="display:inline;" class="bold mx-2  my-2">{{rating}} <small>/ 5</small></h2>
+                    <i style="display:inline;" class="bold mx-1">{{rating|round|int}} <small>/ 5</small></i>
                   </span>
                   
                     {% if 1 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align" >
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
 
                     {% endif %}
                     {% if 2 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% endif %}
 
                     {% if 3 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
 
                     {% endif %}
                     {% if 4 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
 
                     {% endif %}
                     {% if 5 <= rating %}
-                    <button type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% else %}
-                    <button type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                       <span class="far fa-star" aria-hidden="true"></span>
                     </button>
                     {% endif %}
 
                   {% endif %}
                 </div>
+              </div>
+
+              <!--
+              <label class="badge badge-pill badge-info my-2 text-right" >Receive 
+                <span class="badge badge-pill badge-light">{{rating_count}}</span> reviews
+              </label>
+              -->       
+
+              <div>
 
 {%raw%}
-        <div class="row my-5">
+        <div class="row my-3">
+            <div class="col-sm-12">
+                <hr/>
+                <div class="review-block">
+                    <div v-if="reviews.length === 0 || reviews === undefined || reviews === 'null'">
+                        <h2 class="text-center">User has not nothing on sell.</h2>
+                    </div>
+                    <div  v-else v-for="(review, index) in reviews">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="review-block-name" style="font-size:15px"><a v-bind:href="'UserInfo\?username=' + review.reviewer">{{review.reviewer}}</a></div>
+                            <div class="review-block-rate">
+                              <span v-if="review.rating === 'null'">
+                              </span>
+                              <span v-else>
+                                <button v-if="1 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="2 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="3 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="4 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="5 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                            </span>
+                            </div>
+                            <div class="review-block-time my-2">Item: order item</div>
+                            <div class="review-block-date my-2">{{review.time}}<br/></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="review-block-title">Review title</div>
+                            <div class="review-block-description"><strong>Review: </strong>{{review.content}}</div>
+                        </div>
+                    </div>
+                    <div v-if="index != (reviews.length-1)">
+                    	<hr/>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+{%endraw%}
+</div>
+</div>
+
+          <div id="review-tab" class="tab-pane fade">
+            
+
+            <div style="margin-top:5vh;margin-left:auto;margin-right:auto;">
+                <div   >
+                  <i class="fas fa-user mx-2" style="font-size: 30px;"></i>
+                  <h1 id="user-name" style="display:inline;">{{username}}</h1>
+                </div>
+                <div class="my-4 mx-2" style="font-size: 16px;">
+                  <i style="display:inline;">Rating : </i>
+                  {% if (rating == 0) or (rating == None)%}
+                  <span>
+                    <i style="display:inline;" class="bold">No review</i>
+                  </span>
+                  {% else %}
+                  <span>
+                    <i style="display:inline;" class="bold mx-1">{{rating|round|int}} <small>/ 5</small></i>
+                  </span>
+                  
+                    {% if 1 <= rating %}
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align" >
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="button_unclick btn btn-warning btn-grey btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 2 <= rating %}
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="button_unclick btn btn-warning btn-grey btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% endif %}
+
+                    {% if 3 <= rating %}
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 4 <= rating %}
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+
+                    {% endif %}
+                    {% if 5 <= rating %}
+                    <button type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% else %}
+                    <button type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                      <span class="far fa-star" aria-hidden="true"></span>
+                    </button>
+                    {% endif %}
+
+                  {% endif %}
+                </div>
+              </div>
+
+              <!--
+              <label class="badge badge-pill badge-info my-2 text-right" >Receive 
+                <span class="badge badge-pill badge-light">{{rating_count}}</span> reviews
+              </label>
+              -->       
+
+              <div>
+
+{%raw%}
+        <div class="row my-3">
             <div class="col-sm-12">
                 <hr/>
                 <div class="review-block">
                     <div v-if="reviews.length === 0 || reviews === undefined || reviews === 'null'">
                         <h2 class="text-center">User has not received any review.</h2>
                     </div>
-                    <div  v-else v-for="review in reviews">
+                    <div  v-else v-for="(review, index) in reviews">
                     <div class="row">
                         <div class="col-sm-3">
-                            <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                            <div class="review-block-name"><a v-bind:href="'UserInfo\?username=' + review.reviewer">{{review.reviewer}}</a></div>
-                            <div class="review-block-date">{{review.time}}<br/></div>
-                        </div>
-                        <div class="col-sm-9">
+                            <div class="review-block-name" style="font-size:15px"><a v-bind:href="'UserInfo\?username=' + review.reviewer">{{review.reviewer}}</a></div>
                             <div class="review-block-rate">
                               <span v-if="review.rating === 'null'">
                               </span>
                               <span v-else>
-                                <button v-if="1 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                <button v-if="1 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-
-                                <button v-if="2 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
 
-                                <button v-if="3 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                <button v-if="2 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-
-                                <button v-if="4 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
-                                  <span class="far fa-star" aria-hidden="true"></span>
-                                </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
 
-                                <button v-if="5 <= review.rating" type="button" class="btn btn-warning btn-sm my-2" aria-label="Left Align">
+                                <button v-if="3 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
-                                <button v-else type="button" class="btn btn-warning btn-grey  btn-sm my-2" aria-label="Left Align">
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="4 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+
+                                <button v-if="5 <= review.rating" type="button" class="button_unclick btn btn-warning btn-sm" aria-label="Left Align">
+                                  <span class="far fa-star" aria-hidden="true"></span>
+                                </button>
+                                <button v-else type="button" class="button_unclick btn btn-warning btn-grey  btn-sm" aria-label="Left Align">
                                   <span class="far fa-star" aria-hidden="true"></span>
                                 </button>
                             </span>
                             </div>
-                            <!--<div class="review-block-title">this was nice in buy</div>-->
-                            <div class="review-block-description">{{review.content}}</div>
+                            <div class="review-block-time my-2">Item: order item</div>
+                            <div class="review-block-date my-2">{{review.time}}<br/></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="review-block-title">Review title</div>
+                            <div class="review-block-description"><strong>Review: </strong>{{review.content}}</div>
                         </div>
                     </div>
-                    <hr/>
+                    <div v-if="index != (reviews.length-1)">
+                    	<hr/>
+                    </div>
                 </div>
                 </div>
             </div>
@@ -316,5 +487,6 @@
     </div>
   </div>
 </div>
+
 <script src="static/user_information.js"></script>
 {% endblock %} {# [END form] #}
