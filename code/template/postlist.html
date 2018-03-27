@@ -40,7 +40,7 @@
 
     {% raw %}
     <div class="col-lg-10 my-3" style="z-index:9">
-      <div id="filter-bar" class="table sticky-top  bg-light mt-2 ">
+      <div id="filter-bar" class="table sticky-top  bg-light mt-2 rounded" style="border: 1px solid #e1e2e5;">
         <div class="row row-bordered">
           <div class="col-sm-8">
             <form class="form-inline my-2">
@@ -121,7 +121,7 @@
 
           <div class="col-sm-8">
             <form class="form-inline">
-              <label class="control-label mx-2"  style="width: 50px;">Posted</label>
+              <label class="control-label mx-2  my-2"  style="width: 50px;">Posted</label>
                 <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 150px;">
                   <option value="0">N/A</option>
                   <option value="1">6 hours</option>
@@ -130,7 +130,7 @@
                   <option value="4">1 month</option>
                   <option value="5">3 months</option>
                 </select>
-            <span class="mx-3"></span>
+            <span class="mx-3  my-2"></span>
               <label class="control-label"  style="width: 80px;">Post Type</label>
                 <select v-model="filter_post_type" id="filter-post-type" class="form-control" id="type" style="width: 170px;">
                   <option value="ALL">N/A</option>
@@ -140,7 +140,7 @@
             </form>
           </div>
 
-          <div class="col-sm-4">
+          <div class="col-sm-4  my-2">
             <button v-on:click="reset_filter"  class="btn btn-primary float-right mx-2">Reset</button>
           </div>
         </div>
@@ -197,13 +197,11 @@
                 </h4>
                 <p v-if="item.buyerName" class="text-right mx-3">
                   <i class="fas fa-user mx-1"></i>
-                  <!--<a v-bind:href="'/postlist/' + item.buyerName"> {{item.buyerName}}</a>-->
-                  <a href="#"> {{item.buyerName}}</a>
+                  <a v-bind:href="'UserInfo\?username=' + item.buyerName"> {{item.buyerName}}</a>
                 </p>
                 <p v-else-if="item.sellerName" class="text-right mx-3">
                   <i class="fas fa-user mx-1"></i>
-                  <!--<a v-bind:href="'/postlist/' + item.sellerName"> {{item.sellerName}}</a>-->
-                  <a href="#"> {{item.sellerName}}</a>
+                  <a v-bind:href="'UserInfo\?username=' + item.sellerName"> {{item.sellerName}}</a>
                 </p>
               </div>
             </div>
