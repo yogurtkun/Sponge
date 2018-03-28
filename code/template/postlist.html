@@ -7,7 +7,7 @@
     <div class="col-lg-2">
       <!-- Search Widget -->
       <div class="card my-4">
-        <h5 class="card-header">category</h5>
+        <h5 class="card-header text-center">Category</h5>
         <div class="card-body">
             <div>
               <button v-if="filter_category_index == 'ALL'" class="btn btn-block btn-primary" v-on:click="set_category('ALL')" > ALL </button>
@@ -52,7 +52,8 @@
               </select>
               <span class="mx-3"></span>
               <label class="control-label" style="width: 50px;">State</label>
-                <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 200px;">
+                <div style="padding-left: 30px;"></div>
+                <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 170px;">
                   <option value="0">N/A</option>
                   <option value="AK">Alaska</option>
                   <option value="AL">Alabama</option>
@@ -133,9 +134,8 @@
             <span class="mx-3  my-2"></span>
               <label class="control-label"  style="width: 80px;">Post Type</label>
                 <select v-model="filter_post_type" id="filter-post-type" class="form-control" id="type" style="width: 170px;">
-                  <option value="ALL">N/A</option>
+                  <option value="0">Seller</option>
                   <option value="1">Buyer</option>
-                  <option value="2">Seller</option>
                 </select>
             </form>
           </div>

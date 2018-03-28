@@ -40,11 +40,13 @@
         <div class="col-sm-7">
           <p id="post-date">
             {% if buyer %}
+            <i class="fas fa-user"></i>
             <a id="poster" href="{{'UserInfo?username=%s' %post.buyerName}}"> 
             {{post.buyerName}}
             </a>
             {% endif %} 
             {% if seller %}
+            <i class="fas fa-user"></i>
             <a id="poster" href="{{'UserInfo?username=%s' %post.sellerName}}"> 
             {{post.sellerName}} 
             </a>
