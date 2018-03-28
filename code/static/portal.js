@@ -253,7 +253,7 @@ $(document).ready(function() {
                 }
             },
             {
-                title: 'product',
+                title: 'Product',
                 field: 'product',
                 align: 'center',
                 valign: 'middle',
