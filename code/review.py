@@ -1,5 +1,5 @@
 from main import schema
-from schema import Review, from_sql
+from schema import Review, Order, SellerPost, from_sql
 import account
 import datetime
 
@@ -25,4 +25,11 @@ def getReviewToUser(reviewee):
 	reviews = []
 	for r in res:
 		reviews.append(from_sql(r))
+	for r in reviews:
+		orderId = r['orderId']
+		order = Order.query.get(orderId)
+		postId = order.postId
+		post = SellerPost.query.get(postId)
+		orderTitle = post.title
+		r['orderTitle'] = orderTitle
 	return reviews
