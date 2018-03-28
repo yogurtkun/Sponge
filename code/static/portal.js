@@ -59,17 +59,17 @@ $(document).ready(() => {
     });
 });
 
-$(document).ready(function(){
-    var newChat = new Vue({
-        el: "#newMessageCreate",
-        methods:{
-            newchat: function(){
-                var inputuser = $("#new-user").val();
-                window.location.replace("/messages?person="+inputuser);
-            }
-        }
-    });
-});
+// $(document).ready(function(){
+//     var newChat = new Vue({
+//         el: "#newMessageCreate",
+//         methods:{
+//             newchat: function(){
+//                 var inputuser = $("#new-user").val();
+//                 window.location.replace("/messages?person="+inputuser);
+//             }
+//         }
+//     });
+// });
 
 $(document).ready(function () {
     $('#buy-post-table').bootstrapTable({

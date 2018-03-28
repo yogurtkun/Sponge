@@ -351,7 +351,7 @@
           </div>
 
           <div id="message-tab" class="tab-pane fade">
-            <div>
+            <!-- <div>
               <h3 style="margin-top:2vh">Send message</h3>
               <div id="newMessageCreate" class="form-group row " style="margin-top:2vh">
                 <div class="form-group col-md-9">
@@ -365,7 +365,8 @@
             <hr>
             <h3>History Message</h3>
             <table id="message-table"></table>
-          </div>
+          </div> -->
+          {% block message %}{% endblock%}
         </div>
 
       </div>

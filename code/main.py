@@ -35,7 +35,7 @@ User portal
 def userPortal():
     if not loggedIn():
         return redirect('/login')
-    return render_template("portal.html")
+    return render_template("messagebox.html",username = session['username'])
 
 
 '''
@@ -398,6 +398,10 @@ def messages():
     print talker
     return render_template("chatbox.html",username = session['username'])
 
+@app.route('/userExist',methods=['POST'])
+def userExist():
+    return 'success'
+
 @app.route('/messageTable',methods=['POST'])
 def messageTable():
     #data = [{'username':'kk','time':'1998'},{'username':'bb','time':'2004'},{'username':'ff','time':'123123'}]
@@ -416,6 +420,8 @@ def messageTable():
         temp_dict['username'] = user
         temp_dict['time'] = max(times)
         res.append(temp_dict)
+
+    res.sort(key=lambda x:x['time'],reverse=True)
     print res
     return json.dumps(res)
 

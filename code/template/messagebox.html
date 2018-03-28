@@ -1,0 +1,52 @@
+{# [START form] #} {% extends "portal.html"%} {% block message %}
+
+<link href="static/messagebox.css" rel="stylesheet"></link>
+<script src="static/chatbox.js"></script>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+
+
+<div id="frame">
+    <div id="sidepanel">
+        <div id="profile">
+            <div class="wrap">
+                <p>{{username}}</p>
+            </div>
+        </div>
+        <div id="contacts">
+            <ul>
+                <listuser v-for="item in users" v-bind:user="item" @move-top="moveUserTop"></listuser>
+            </ul>
+        </div>
+        <div id="bottom-bar">
+            <button id="addcontact">
+                <i class="fa fa-user-plus fa-fw" aria-hidden="true" v-on:click="addNewContact"></i>
+                <span>Add contact</span>
+            </button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contact-profile">
+            {% raw %}
+            <p style="margin-left:2vh">{{currentUser}}</p>
+            {% endraw %}
+        </div>
+        <div class="messages">
+            <ul>
+            </ul>
+        </div>
+        <div class="message-input">
+            <div class="wrap">
+                <input type="text" placeholder="Write your message..." />
+                <button class="submit" v-on:click="sendMessage">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <newuser @create-new-user="parentNewUser"></newuser>
+</div>
+
+
+
+{% endblock %} {# [END form] #}
