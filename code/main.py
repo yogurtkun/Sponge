@@ -481,6 +481,16 @@ def getReviewsToUser():
     return json.dumps(reviewList)
 
 
+'''
+Get order given user
+'''
+@app.route('/orderlist', methods=['POST'])
+def getOrderList():
+    if not loggedIn():
+        return json.dumps('')
+    orders = order.getOrderByUser(session['username'])
+    return json.dumps(orders)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

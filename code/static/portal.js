@@ -214,3 +214,74 @@ $(document).ready(function(){
         ]
     });
 })
+
+$(document).ready(function() {
+    $("#order-table").bootstrapTable({
+        url:"/orderlist",
+        method: "POST",
+        sidePagination: "client",
+        pagination: true,
+        search: true,
+        pageSize: 10,
+        strictSearch: false,
+        sortName: "time",
+        sortOrder: "desc",
+        columns: [
+            {
+                title: 'Type',
+                field: 'type',
+                align: 'center',
+                valign: 'middle',
+                width: '5%',
+                formatter: function (value, row, index) {
+                    if (value == 'selling') {
+                        return '<span class="badge badge-pill badge-primary">selling</span>'
+                    }
+                    else if (value == 'buying') {
+                        return '<span class="badge badge-pill badge-secondary">buying</span>'   
+                    }
+                }
+            },
+            {
+                title: 'Order Id',
+                field: 'orderId',
+                align: 'center',
+                valign: 'middle',
+                width: '15%',
+                formatter: function (value, row, index) {
+                    return '<a href="/Order?orderId=' + value + '">' + value + '</a>';
+                }
+            },
+            {
+                title: 'product',
+                field: 'product',
+                align: 'center',
+                valign: 'middle',
+                width: '20%'
+            },
+            {
+                title: 'Price',
+                field: 'price',
+                align: 'center',
+                valign: 'middle',
+                width: '20%'
+            },
+            {
+                title: 'Status',
+                field: 'status',
+                align: 'center',
+                valign: 'middle',
+                width: '20%',
+                sortable: true
+            },
+            {
+                title: 'Time',
+                field: 'time',
+                align: 'center',
+                valign: 'middle',
+                width: '20%',
+                sortable: true
+            }
+        ]
+    });
+})
