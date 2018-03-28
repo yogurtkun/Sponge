@@ -6,6 +6,7 @@ var userinfo = new Vue({
         on_sell_items : "null",
         in_need_items : "null",
 
+        all_reviews : "null",
         all_selling_items : "null",
         all_buying_items : "null",
         check_username : "null",
@@ -43,7 +44,7 @@ var userinfo = new Vue({
         },
 
         add_review_post: function(){
-            var tdata = {"reviewee" : 'testUser', 'rating':3, 'content':"testreview testreview testreview testreview", 'orderId': 137}
+            var tdata = {"reviewee" : 'testUser', 'rating':3, 'content':"testreview testreview testreview testreview", 'orderId': 144}
 
             $.ajax({
             url: '/addReview',
@@ -94,7 +95,8 @@ var userinfo = new Vue({
                 json = JSON.parse(data)
                 console.log(json)
 
-                this.reviews = json
+                this.all_reviews = json
+                this.reviews = this.sortWithTime(this.all_reviews, this.all_reviews.length)
             },
             }).fail(function($xhr) {
               var data = $xhr.responseJSON;
