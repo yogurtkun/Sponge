@@ -392,15 +392,14 @@ def delPostReview():
     return "Deleting review failed!"
 
 
-@app.route('/messages',methods=['GET'])
-def messages():
-    talker = request.args['person']
-    print talker
-    return render_template("chatbox.html",username = session['username'])
-
 @app.route('/userExist',methods=['POST'])
 def userExist():
-    return 'success'
+    username = request.form['username']
+    exist = account.searchUser(username = username)
+    if exist is not None:
+        return 'success'
+    else:
+        return 'fail'
 
 @app.route('/messageTable',methods=['POST'])
 def messageTable():

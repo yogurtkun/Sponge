@@ -9,7 +9,7 @@
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
-                <p>{{username}}</p>
+                <p id="myUserName">{{username}}</p>
             </div>
         </div>
         <div id="contacts">
@@ -44,9 +44,8 @@
         </div>
     </div>
 
-    <newuser @create-new-user="parentNewUser"></newuser>
+    <newuser @create-new-user="parentNewUser" v-bind:errormessage="addErrorMessage"></newuser>
 </div>
-
 
 
 {% endblock %} {# [END form] #}

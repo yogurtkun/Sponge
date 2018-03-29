@@ -77,12 +77,14 @@ $(document).ready(function () {
         }
     });
     Vue.component('newuser', {
-        template: '<div id="user_modal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Add new contact</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form class="form-horizontal" role="form"><div class="form-group row"><label class="col-sm-4 col-form-label">User Name</label><div class="col-sm-6"><input type="text" class="form-control" id="sub_new_user" placeholder="User Name"></div></div></form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary" data-toggle="modal" v-on:click="createNewTalk">Create</button></div></div></div></div>',
+        props:[
+            'errormessage'
+        ],
+        template: '<div id="user_modal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Add new contact</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form class="form-horizontal" role="form"><div class="form-group row"><label class="col-sm-4 col-form-label">User Name</label><div class="col-sm-6"><input type="text" class="form-control" id="sub_new_user" placeholder="User Name"></div></div><div class="form-group" style="color:red"'+ 'v-if="errormessage">'+'{{errormessage}}</div></form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary" data-toggle="modal" v-on:click="createNewTalk">Create</button></div></div></div></div>',
         methods: {
             createNewTalk: function () {
                 contactName = $('#sub_new_user').val();
                 this.$emit("create-new-user", contactName);
-                $('#user_modal').modal('hide');
             }
         }
     });
@@ -91,7 +93,8 @@ $(document).ready(function () {
         data: {
             currentUser: '',
             chatMessage: [],
-            users: []
+            users: [],
+            addErrorMessage: null
         },
         created() {
             var self = this;
@@ -139,13 +142,16 @@ $(document).ready(function () {
             },
             parentNewUser: function (contactName) {
                 var self = this;
+                var myname = $('#myUserName').text();
+                console.log(myname);
                 $.ajax({
                     url: 'userExist',
                     type: 'POST',
                     data: { "username": contactName },
                     success: function (data) {
-                        if (data === 'success') {
+                        if (data === 'success' && contactName !== myname) {
                             self.$nextTick(function () {
+                                self.addErrorMessage = null;
                                 if (!self.moveUserTop(contactName)) {
                                     self.users.unshift({
                                         'username': contactName,
@@ -154,6 +160,15 @@ $(document).ready(function () {
                                     self.currentUser = contactName;
                                     self.loadMessge();
                                 }
+                            });
+                            $('#user_modal').modal('hide');
+                        } else if(contactName === myname){
+                            self.$nextTick(function(){
+                                self.addErrorMessage = "Please Add a New User";
+                            });
+                        } else {
+                            self.$nextTick(function(){
+                                self.addErrorMessage = "User Not Exists";
                             });
                         }
                     }
