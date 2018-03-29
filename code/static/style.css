@@ -2,10 +2,6 @@ body {
     font-family: "Lato", sans-serif;
 }
 
-.button_unclick{
-  font-size: 8px  !important;
-  padding:1px 3px  !important;
-}
 
 .sidenav {
     width: 150px;
@@ -676,4 +672,9 @@ ul.product_list {
 }
 .review-block-description{
   font-size:20px;
+}
+
+.button_unclick{
+  font-size: 8px  !important;
+  padding:1px 3px  !important;
 }
