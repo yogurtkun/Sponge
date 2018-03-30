@@ -27,6 +27,16 @@ def createOrder(postId, buyerName, transactionType, rcvAddress):
         return None
 
 
+def getDetail(orderId):
+    order = from_sql(Order.query.get(orderId))
+    postId = order['postId']
+    post = searchSellerPosts(postId)
+    orderDetail = {}
+    for d in [post, order]:
+        orderDetail.update(d)
+    return orderDetail
+
+
 def checkOrderByPost(postId):
     try:
         count = Order.query.filter_by(postId=postId).count()

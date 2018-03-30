@@ -249,7 +249,7 @@ $(document).ready(function() {
                 valign: 'middle',
                 width: '15%',
                 formatter: function (value, row, index) {
-                    return '<a href="/Order?orderId=' + value + '">' + value + '</a>';
+                    return '<a href="/OrderDetail?orderId=' + value + '">' + value + '</a>';
                 }
             },
             {

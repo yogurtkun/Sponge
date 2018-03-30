@@ -1,0 +1,88 @@
+{# [START form] #} {% extends "header.html"%} {% block content %}
+<script src="static/orderdetail.js"></script>
+<body>
+
+
+<h1 class="mt-4">Order Details</h1>
+<hr>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-sm-6 text-left" style="width:500px; height:500px">
+        <!-- Preview Image -->
+        {% if order.image %}
+        <img src="data:;base64,{{ order.image }}"  style="width:500px"/>
+        {% else %}
+        <img src="http://via.placeholder.com/500"  style="width:500px"/>
+        {% endif %}
+    </div>
+      
+    <div class="col-sm-6">
+      <div class="row">
+
+        <div class="col-sm-8">
+          <h1 id="order-title">{{order.title}}</h1>
+        </div>
+        <div class="col-sm-4">
+          {% if order.price %}
+          <h1 class="float-right text-danger">${{order.price}}</h1>
+          {% else %}
+          <h3 class="my-2 float-right text-danger">Not Specify</h3>
+          {% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-7">
+          <p>
+            <i class="fas fa-user"></i>
+            <a id="poster" href="{{'UserInfo?username=%s' %order.buyerName}}"> 
+            Buyer: {{order.buyerName}}
+            </a>
+          </p>
+          <p>
+            <i class="fas fa-user"></i>
+            <a id="poster" href="{{'UserInfo?username=%s' %order.sellerName}}"> 
+            Seller: {{order.sellerName}} 
+            </a>
+          </p>
+          <p>
+            Order Placed on {{order.time}}
+          </p>
+        </div>
+      </div>
+
+      <hr>
+      <p><strong>Category : </strong>{{order.category}}</p>
+
+      <p><strong>Description : </strong></p>
+      <textarea readonly class="form-control-plaintext unwriteable-text text-left">{{order.description}}</textarea>
+
+      <hr>
+      <p><strong>Transaction Type : </strong>{{order.transactionType}}</p>
+      {% if order.receiverAddress %}
+      <p><strong>Shipping Address</strong></p>
+      <p>{{order.receiverAddress.ad1}} {{order.receiverAddress.ad2}}</p>
+      <p>{{order.receiverAddress.city}}, {{order.receiverAddress.region}}, {{order.receiverAddress.country}}</p>
+      {%  endif %}
+
+      <hr>
+      <strong>Status : </strong>{{order.status}}
+
+      
+
+    </div>
+  </div>
+</div>
+
+
+<div id="toTop">
+  <backtotop></backtotop>
+  </div>
+</body>
+
+<script type="text/x-template" id="backtotop">
+  <button class="goTop" v-if="isVisible" @click="backToTop">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+  </button>
+</script>
+{% endblock %} {# [END form] #}

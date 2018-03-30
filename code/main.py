@@ -491,6 +491,20 @@ def getOrderList():
     return json.dumps(orders)
 
 
+'''
+Order detail page
+'''
+@app.route('/OrderDetail', methods=['GET'])
+def orderDetail():
+    if not loggedIn():
+        return json.dumps('')
+    orderId = int(request.args['orderId'])
+    orderDetail = order.getDetail(orderId)
+    address = json.loads(orderDetail.get("receiverAddress"))
+    orderDetail["receiverAddress"] = address
+    return render_template("orderdetail.html", order=orderDetail)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
