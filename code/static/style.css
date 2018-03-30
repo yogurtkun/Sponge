@@ -678,3 +678,11 @@ ul.product_list {
   font-size: 8px  !important;
   padding:1px 3px  !important;
 }
+
+
+/* Order details */
+#count_message {
+  background-color: smoke;
+  margin-top: -20px;
+  margin-right: 5px;
+}
