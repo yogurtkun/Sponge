@@ -6,7 +6,7 @@ var postlist = new Vue({
     {"postid": "2222", "category": "category2", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NJ", "imageDir":"http://placehold.it/500x300"},
     {"postid": "3333", "category": "category3", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
     ],
-    filter_items: 0,
+    filter_items: 'null',
     filter_buyer_items: 0,
     filter_seller_items: 0,
     filter_len : 0,

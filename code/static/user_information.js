@@ -27,6 +27,13 @@ var userinfo = new Vue({
           this.on_sell_items = this.get_on_sell_items(this.all_selling_items, this.check_username)
           this.on_sell_items = this.sortWithTime(this.on_sell_items, this.on_sell_items.length)
 
+          if(this.on_sell_items !== undefined)
+          {
+            if(this.on_sell_items.length == 0)
+            {
+              this.on_sell_items = "None"
+            }
+          }
       },
       }).fail(function($xhr) {
           var data = $xhr.responseJSON;
@@ -75,6 +82,14 @@ var userinfo = new Vue({
                   this.check_username = this.get_check_username()
                   this.in_need_items = this.get_in_need_items(this.all_buying_items, this.check_username)
                   this.in_need_items = this.sortWithTime(this.in_need_items, this.in_need_items.length)
+             
+                  if(this.in_need_items !== undefined)
+                  {
+                    if(this.in_need_items.length == 0)
+                    {
+                      this.in_need_items = "None"
+                    }
+                  }
               },
               }).fail(function($xhr) {
                   var data = $xhr.responseJSON;

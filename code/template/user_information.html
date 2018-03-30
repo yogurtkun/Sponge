@@ -23,17 +23,17 @@
 
         <div id="myTabContent" class="tab-content">
           <div id="on-sell-tab" class="tab-pane in active">
-
             <div style="margin-top:5vh;margin-left:auto;margin-right:auto;">
                 <div   >
                   <i class="fas fa-user mx-2" style="font-size: 30px;"></i>
                   <h1 id="user-name" style="display:inline;">{{username}}</h1>
                 </div>
                 <div class="my-4 mx-2" style="font-size: 16px;">
-                  <i style="display:inline;">Rating : </i>
+                  <i class="fas fa-tags" style="font-size: 12px;"></i>
+                  <p style="display:inline;">Rating : </p>
                   {% if (rating == 0) or (rating == None)%}
                   <span>
-                    <i style="display:inline;" class="bold">No review</i>
+                    <p style="display:inline;">No review</p>
                   </span>
                   {% else %}
                   <span>
@@ -93,13 +93,6 @@
                   {% endif %}
                 </div>
               </div>
-
-              <!--
-              <label class="badge badge-pill badge-info my-2 text-right" >Receive 
-                <span class="badge badge-pill badge-light">{{rating_count}}</span> reviews
-              </label>
-              -->       
-
               <div>
 
 {%raw%}
@@ -107,7 +100,10 @@
             <div class="col-sm-12">
                 <hr/>
 
-			<div v-if="on_sell_items.length === 0 || on_sell_items === undefined || on_sell_items === 'null'">
+      <div v-if="on_sell_items === 'null'">
+        <h2 class="text-center">Loading, please wait...</h2>
+      </div>
+			<div v-else-if="on_sell_items.length === 0 || on_sell_items === undefined || on_sell_items === 'None'">
         <h2 class="text-center">User has nothing on sell.</h2>
       </div>
       <div v-else id="postitem" class="mt-3">
@@ -220,10 +216,11 @@
                   <h1 id="user-name" style="display:inline;">{{username}}</h1>
                 </div>
                 <div class="my-4 mx-2" style="font-size: 16px;">
-                  <i style="display:inline;">Rating : </i>
+                  <i class="fas fa-tags" style="font-size: 12px;"></i>
+                  <p style="display:inline;">Rating : </p>
                   {% if (rating == 0) or (rating == None)%}
                   <span>
-                    <i style="display:inline;" class="bold">No review</i>
+                    <p style="display:inline;">No review</p>
                   </span>
                   {% else %}
                   <span>
@@ -299,8 +296,10 @@
 
 
 
-
-			<div v-if="in_need_items.length === 0 || in_need_items === undefined || in_need_items === 'null'">
+      <div v-if="in_need_items === 'null'">
+        <h2 class="text-center">Loading, please wait...</h2>
+      </div>
+      <div v-else-if="in_need_items.length === 0 || in_need_items === undefined || in_need_items === 'None'">
         <h2 class="text-center">User has nothing in need.</h2>
       </div>
       <div v-else id="postitem" class="mt-3">
@@ -414,10 +413,11 @@
                   <h1 id="user-name" style="display:inline;">{{username}}</h1>
                 </div>
                 <div class="my-4 mx-2" style="font-size: 16px;">
-                  <i style="display:inline;">Rating : </i>
+                  <i class="fas fa-tags" style="font-size: 12px;"></i>
+                  <p style="display:inline;">Rating : </p>
                   {% if (rating == 0) or (rating == None)%}
                   <span>
-                    <i style="display:inline;" class="bold">No review</i>
+                    <p style="display:inline;">No review</p>
                   </span>
                   {% else %}
                   <span>
@@ -490,6 +490,7 @@
         <div class="row my-3">
             <div class="col-sm-12">
                 <hr/>
+                
                     <div v-if="reviews.length === 0 || reviews === undefined || reviews === 'null'">
                         <h2 class="text-center">User has not received any review.</h2>
                     </div>

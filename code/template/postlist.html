@@ -147,7 +147,10 @@
       </div>
 
       <div id="postitem" class="mt-3">
-        <div v-for="item in filter_items">
+        <div v-if="filter_items === 'null'">
+        <h2 class="text-center">Loading, please wait...</h2>
+        </div>
+        <div v-else v-for="item in filter_items">
           <div class="card mt-2">
             <div class="row">
               <div class="col-6">
