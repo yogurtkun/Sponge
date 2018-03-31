@@ -26,10 +26,11 @@ var userinfo = new Vue({
           this.check_username = this.get_check_username()
           this.on_sell_items = this.get_on_sell_items(this.all_selling_items, this.check_username)
           this.on_sell_items = this.sortWithTime(this.on_sell_items, this.on_sell_items.length)
+          this.on_sell_items = this._remove_ordered_item(this.on_sell_items)
 
           if(this.on_sell_items !== undefined)
           {
-            if(this.on_sell_items.length == 0)
+            if(this.on_sell_items.length === 0)
             {
               this.on_sell_items = "None"
             }
@@ -50,25 +51,6 @@ var userinfo = new Vue({
             return username
         },
 
-        add_review_post: function(){
-            var tdata = {"reviewee" : 'testUser', 'rating':3, 'content':"testreview testreview testreview testreview", 'orderId': 144}
-
-            $.ajax({
-            url: '/addReview',
-            type: 'POST',
-            data: tdata,
-            success: (data) => {
-                json = JSON.parse(data)
-                console.log(json)
-
-                this.reviews = json
-            },
-            }).fail(function($xhr) {
-              var data = $xhr.responseJSON;
-              console.log(data);
-            });
-        },
-
         query_in_need_info: function(){
             $.ajax({
               url: '/postlist/buyer',
@@ -82,6 +64,7 @@ var userinfo = new Vue({
                   this.check_username = this.get_check_username()
                   this.in_need_items = this.get_in_need_items(this.all_buying_items, this.check_username)
                   this.in_need_items = this.sortWithTime(this.in_need_items, this.in_need_items.length)
+                  this.in_need_items = this._remove_ordered_item(this.in_need_items)
              
                   if(this.in_need_items !== undefined)
                   {
@@ -196,6 +179,23 @@ var userinfo = new Vue({
 
           for (var i = 0; i < new_index.length; i++){
             filter_items.push((items[new_index[i]]))
+          }
+
+          return filter_items
+        },
+        
+        _remove_ordered_item: function(filter_items){
+          var items = filter_items
+          var filter_items = []
+
+          if(items === null || items === undefined){
+            return items
+          }
+
+          for (var i = 0; i < items.length; i++){
+            if(items[i].order == false){
+              filter_items.push(items[i])
+            }
           }
 
           return filter_items
