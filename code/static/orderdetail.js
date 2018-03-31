@@ -1,58 +1,22 @@
-var userinfo = new Vue({
-    el: '#review_window',
-    data: {
-        review: 'null',
-        rating: 0,
-        reviewee: 'null',
-        orderId: undefined,
-        review_submit: false,
-        text_max: 150,
-        text_length: 0,
-    },
-    watch: {
-        // whenever question changes, this function will run
-        review: function () {
-          this.text_length = this.review.length
-        }
-    },
-    methods: {
-        get_reviewee: function(){
-            var reviewee_text = $("#seller").text().replace(/ /g,'');
-            var reviewee = reviewee_text.substring(reviewee_text.indexOf(':')+1, reviewee_text.length-1)
-            
-            return reviewee
+$(document).ready(() => {
+    var text_max = 200;
+    $('#count_message').html('0 / ' + text_max );
+
+    $('#text').keyup(function() {
+      var text_length = $('#text').val().length;
+      var text_remaining = text_max - text_length;
+      
+      $('#count_message').html(text_length + ' / ' + text_max);
+    });
+
+    var userinfo = new Vue({
+        el: '#completeBtn',
+        data: {
         },
+        methods: {
+            AddReview:function(){
 
-        get_order_id: function(){
-            var href = window.location.href;
-            var orderId = href.substr(href.indexOf("orderId")+8, 9)
-
-            return orderId  
-        },
-
-        AddReview:function(){
-            console.log('AddReview')
-            this.reviewee = this.get_reviewee()
-            this.orderId = this.get_order_id()
-
-            var tdata = {'reviewee':this.reviewee, 'rating':this.rating,
-                         'content':this.review, 'orderId':this.orderId}
-
-            this.review_submit = true
-
-            $.ajax({
-            url: '/addReview',
-            type: 'POST',
-            data: tdata,
-            dataType : 'json',
-            success: (data) => {
-                json = JSON.parse(data)
             },
-            }).fail(function($xhr) {
-              var data = $xhr.responseJSON;
-            });
-
         },
-    },
+    });
 });
-

@@ -51,6 +51,25 @@ var userinfo = new Vue({
             return username
         },
 
+        add_review_post: function(){
+            var tdata = {"reviewee" : 'JohnDoe', 'rating':4, 'content':"testreview testreview testreview testreview", 'orderId': 8}
+
+            $.ajax({
+            url: '/addReview',
+            type: 'POST',
+            data: tdata,
+            success: (data) => {
+                json = JSON.parse(data)
+                console.log(json)
+
+                this.reviews = json
+            },
+            }).fail(function($xhr) {
+              var data = $xhr.responseJSON;
+              console.log(data);
+            });
+        },
+
         query_in_need_info: function(){
             $.ajax({
               url: '/postlist/buyer',
