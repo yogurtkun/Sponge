@@ -2,14 +2,14 @@
 
 <link href="static/messagebox.css" rel="stylesheet"></link>
 <script src="static/chatbox.js"></script>
-<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+<link rel='stylesheet prefetch' href='static/reset.css'>
 
 
 <div id="frame">
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
-                <p id="myUserName">{{username}}</p>
+                <p id="myUserName"><strong style="font-size:xx-large" >{{username}}</strong></p>
             </div>
         </div>
         <div id="contacts">
@@ -18,8 +18,8 @@
             </ul>
         </div>
         <div id="bottom-bar">
-            <button id="addcontact">
-                <i class="fa fa-user-plus fa-fw" aria-hidden="true" v-on:click="addNewContact"></i>
+            <button id="addcontact" v-on:click="addNewContact">
+                <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>
                 <span>Add contact</span>
             </button>
         </div>
@@ -27,7 +27,7 @@
     <div class="content">
         <div class="contact-profile">
             {% raw %}
-            <p style="margin-left:2vh">{{currentUser}}</p>
+            <p style="margin-left:2vh;font-size: 1.5em;font-style:italic;">{{currentUser}}</p>
             {% endraw %}
         </div>
         <div class="messages">

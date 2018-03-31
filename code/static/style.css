@@ -122,12 +122,6 @@ body {
     margin-top:20px;
 }
 
-
-.footer{
-  border: 10x;
-  
-}
-
 /*========== Postlist Method  ==========*/
 .hide_overflow{
     white-space: nowrap; 
@@ -550,6 +544,10 @@ ul.product_list {
   }  
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 /* Custom, iPhone Retina */ 
 @media only screen and (max-width : 320px) {
    .product_sale {
@@ -590,6 +588,11 @@ ul.product_list {
 }
 
 /*CSS for portal */
+#portalside li{
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
 .writeable-text{
   text-align: left;
   border : 1px;

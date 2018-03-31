@@ -34,7 +34,7 @@
     max-width: 340px;
     width: 30%;
     height: 100%;
-    background: #73aae0;
+    background: #b7bbbe;
     color: #f5f5f5;
     overflow: hidden;
     position: relative;
@@ -46,8 +46,8 @@
     }
   }
   #frame #sidepanel #profile {
-    width: 80%;
-    margin: 25px auto;
+    width: 100%;
+    background: #97989b;
   }
   @media screen and (max-width: 735px) {
     #frame #sidepanel #profile {
@@ -325,7 +325,7 @@
     color: #f5f5f5;
   }
   #frame #sidepanel #contacts {
-    height: calc(100% - 177px);
+    height: calc(100% - 101px);
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -351,10 +351,17 @@
   }
   #frame #sidepanel #contacts ul li.contact {
     position: relative;
-    padding: 10px 0 15px 0;
+    padding: 10px 0 10px 0;
     font-size: 0.9em;
     cursor: pointer;
+    border-bottom: solid 1px #243140;
   }
+
+  #frame #sidepanel #contacts ul li.contact .name {
+    font-size: 1.5em;
+    font-style:italic;
+  }
+
   @media screen and (max-width: 735px) {
     #frame #sidepanel #contacts ul li.contact {
       padding: 6px 0 46px 8px;
@@ -453,7 +460,7 @@
     border: none;
     width: 100%;
     padding: 10px 0;
-    background: #87bbee;
+    background: #97989b;
     color: #f5f5f5;
     cursor: pointer;
     font-size: 0.85em;
@@ -471,6 +478,7 @@
   }
   #frame #sidepanel #bottom-bar button:nth-child(1) {
     border-right: 1px solid #2c3e50;
+    height: 41px;
   }
   @media screen and (max-width: 735px) {
     #frame #sidepanel #bottom-bar button:nth-child(1) {

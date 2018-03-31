@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-2" style="border: 1px solid #e1e2e5;min-height:75vh">
-        <ul class="nav flex-column nav-pills">
+        <ul class="nav flex-column nav-pills" id="portalside">
           <li class="nav-item" style="margin-top: 5px">
             <a class="nav-link active" href="#info-tab" data-toggle="tab">Information</a>
           </li>
@@ -369,16 +369,17 @@
             <h3>History Message</h3>
             <table id="message-table"></table>
           </div> -->
-          {% block message %}{% endblock%}
-        </div>
+            {% block message %}{% endblock%}
+          </div>
 
-        <div id="order-tab" class="tab-pane fade">
+          <div id="order-tab" class="tab-pane fade">
             <table id="order-table"></table>
-        </div>
+          </div>
 
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
 {% endblock %} {# [END form] #}
