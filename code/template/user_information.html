@@ -484,11 +484,13 @@
         <div class="row my-3">
             <div class="col-sm-12">
                 <hr/>
-                
-                    <div v-if="reviews.length === 0 || reviews === undefined || reviews === 'null'">
-                        <h2 class="text-center">User has not received any review.</h2>
-                    </div>
-                    <div  v-else v-for="(review, index) in reviews">
+                <div v-if="reviews === 'null'">
+                  <h2 class="text-center">Loading, please wait...</h2>
+                </div>
+                <div v-else-if="reviews.length === 0 || reviews === undefined || reviews === 'None'">
+                    <h2 class="text-center">User has not received any review.</h2>
+                </div>
+                <div  v-else v-for="(review, index) in reviews">
 
 
 
