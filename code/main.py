@@ -500,7 +500,9 @@ def orderDetail():
         return json.dumps('')
     orderId = int(request.args['orderId'])
     orderDetail = order.getDetail(orderId)
-    address = json.loads(orderDetail.get("receiverAddress"))
+    address = orderDetail.get("receiverAddress")
+    if address is not None:
+        address = json.loads(address)
     orderDetail["receiverAddress"] = address
     return render_template("orderdetail.html", order=orderDetail)
 

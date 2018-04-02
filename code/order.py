@@ -11,6 +11,13 @@ def createOrder(postId, buyerName, transactionType, rcvAddress):
     post = searchSellerPosts(postId)
     if post == None:
         return None
+    try:
+        post.valid = False
+        db.session.commit()
+    except Exception as e:
+        print e
+        db.session.rollback()
+        return None
     sellerName = post['sellerName']
     seller = account.searchUser(sellerName)
     if seller == None:
