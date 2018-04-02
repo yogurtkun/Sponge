@@ -65,3 +65,13 @@ def getOrderByUser(username):
         order['product'] = post['title']
         order['price'] = post['price']
     return orders
+
+
+def updateStatus(orderId, status):
+    order = Order.query.get(orderId)
+    order.status = status
+    try:
+        db.session.commit()
+    except Exception as e:
+        print e
+        db.session.rollback()

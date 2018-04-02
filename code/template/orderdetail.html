@@ -67,10 +67,18 @@
       <hr>
       <strong>Status : </strong>{{order.status}}
 
+      <div id="buttons">
+        {% if order.status == 'In progress' and username == order.sellerName%}
+        <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
+        {% endif %}
+        {% if order.status == 'Confirmed' and username == order.sellerName%}
+        <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>
+        {% endif %}
+      
+
+      
+      {% if order.status == 'Shipped' and username == order.buyerName%}
       {%raw%}
-      <div>
-        <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
-      </div>
 
       <div class="modal fade" id="review_window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -141,11 +149,17 @@
 
           </div>
         </div>
-    </div>
+      </div>
+      <div>
+        <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
+      </div>
+      {%endraw%}
+      {% endif %}
+      </div>
   </div>
 </div>
 
-{%endraw%}
+
 
 <div id="toTop">
   <backtotop></backtotop>

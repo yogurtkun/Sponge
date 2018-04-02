@@ -1,5 +1,5 @@
 var userinfo = new Vue({
-    el: '#review_window',
+    el: '#buttons',
     data: {
         review: undefined,
         rating: 0,
@@ -46,12 +46,29 @@ var userinfo = new Vue({
             data: tdata,
             dataType : 'json',
             success: (data) => {
-                json = JSON.parse(data)
+                this.updateOrderStatus('Completed')
             },
             }).fail(function($xhr) {
               var data = $xhr.responseJSON;
             });
 
+        },
+
+        updateOrderStatus : function(nextStatus) {
+            console.log('update order status')
+            var orderId = this.get_order_id();
+            var udata = {'orderId': orderId, 'status': nextStatus}
+            $.ajax({
+                url: '/updateOrderStatus',
+                type: 'POST',
+                data: udata,
+                dataType: 'json',
+                success: (data) => {
+                    window.location.reload(true)
+                }
+            }).fail(function($xhr) {
+                var data = $xhr.responseJSON;
+            });
         },
     },
 });

@@ -458,8 +458,8 @@ def addReview():
     orderId = int(request.form['orderId'])
     reviewId = review.addReview(reviewer, reviewee, rating, content, orderId)
     if reviewId == None:
-        return "Review failed!"
-    return "Review succeeded!"
+        return json.dumps("Review failed!")
+    return json.dumps("Review succeeded!")
 
 
 '''
@@ -507,8 +507,18 @@ def orderDetail():
     if address is not None:
         address = json.loads(address)
     orderDetail["receiverAddress"] = address
-    return render_template("orderdetail.html", order=orderDetail)
+    return render_template("orderdetail.html", order=orderDetail, username=session['username'])
 
+
+
+@app.route('/updateOrderStatus', methods=['POST'])
+def updateOrderStatus():
+    if not loggedIn():
+        return json.dumps('fail')
+    orderId = str(request.form['orderId'])
+    status = str(request.form['status'])
+    order.updateStatus(orderId, status)
+    return json.dumps('success')
 
 if __name__ == '__main__':
     app.run(debug=True)
