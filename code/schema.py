@@ -119,7 +119,8 @@ class Order(db.Model):
     transactionType = db.Column(db.String(32))
     senderAddress = db.Column(db.Text)
     receiverAddress = db.Column(db.Text)
-    Carrier  =db.Column(db.Enum())
+    carrier = db.Column(db.Enum("USPS", "FedEX", "UPS", "DHL"))
+    trackNo = db.Column(db.String(64))
 
     def __repr__(self):
         return '<Order %r>' % self.orderId
