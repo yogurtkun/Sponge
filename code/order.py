@@ -1,6 +1,6 @@
 from main import schema
 from schema import Order, from_sql
-from post import searchSellerPosts, getPost
+from post import searchSellerPosts, getPost, invalidSellerPost
 import account
 import datetime
 
@@ -11,12 +11,7 @@ def createOrder(postId, buyerName, transactionType, rcvAddress):
     post = searchSellerPosts(postId)
     if post == None:
         return None
-    try:
-        post.valid = False
-        db.session.commit()
-    except Exception as e:
-        print e
-        db.session.rollback()
+    if not invalidSellerPost(postId):
         return None
     sellerName = post['sellerName']
     seller = account.searchUser(sellerName)

@@ -56,7 +56,6 @@ class BuyerPost(db.Model):
     location = db.Column(db.String(32))
     buyerName = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
     user = db.relationship("User", lazy=True, cascade="all,delete")
-    valid = db.Column(db.Boolean, default=True)
 
     def __repr__(self):
         return '<BuyerPost %r>' % self.postId

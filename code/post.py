@@ -22,6 +22,17 @@ def createPost(title, description, category, price, location, image, username, p
         return None
 
 
+def invalidSellerPost(postId):
+    post = SellerPost.query.get(postId)
+    try:
+        post.valid = False
+        db.session.commit()
+        return True
+    except:
+        db.session.rollback()
+        return False
+
+
 def getPost(postId, postType):#
     if postType == "Seller":
         return searchSellerPosts(postId)
