@@ -246,7 +246,7 @@ class MainTest(unittest.TestCase):
 
             data = {"reviewee":"testUser", "rating":4, "content":"Good seller", "orderId":orderId}
             rv = self.app.post("/addReview", data=data, follow_redirects=True)
-            assert "Review succeeded!" == rv.data
+            assert "Review succeeded!" in rv.data
 
             data = {"username":"testUser"}
             rv = self.app.post("/getReviewsToUser", data=data, follow_redirects=True)
