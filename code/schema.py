@@ -56,6 +56,7 @@ class BuyerPost(db.Model):
     location = db.Column(db.String(32))
     buyerName = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
     user = db.relationship("User", lazy=True, cascade="all,delete")
+    valid = db.Column(db.Boolean, default=True)
 
     def __repr__(self):
         return '<BuyerPost %r>' % self.postId
@@ -72,6 +73,7 @@ class SellerPost(db.Model):
     location = db.Column(db.String(32))
     sellerName = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
     user = db.relationship("User", lazy=True, cascade="all,delete")
+    valid = db.Column(db.Boolean, default=True)
 
     def __repr__(self):
         return '<SellPost %r>' % self.postId
@@ -114,7 +116,7 @@ class Order(db.Model):
     sellerName = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     seller = db.relationship("User", foreign_keys=[sellerName], lazy=True, cascade="all,delete")
     time = db.Column(db.DateTime)
-    status = db.Column(db.String(32))
+    status = db.Column(db.Enum("In progress", "Confirmed", "Shipped", "Completed"))
     transactionType = db.Column(db.String(32))
     senderAddress = db.Column(db.Text)
     receiverAddress = db.Column(db.Text)
