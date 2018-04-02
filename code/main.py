@@ -510,6 +510,22 @@ def orderDetail():
     return render_template("orderdetail.html", order=orderDetail, username=session['username'])
 
 
+'''
+Delete post
+'''
+@app.route('/deletepost', methods=['POST'])
+def deletePost():
+    if not loggedIn():
+        return json.dumps('')
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    if post.deletePost(postType, postId):
+        return "Deleting post succeeded!"
+    return "Deleting post failed!"
+
+
+
+
 @app.route('/updateOrderStatus', methods=['POST'])
 def updateOrderStatus():
     if not loggedIn():

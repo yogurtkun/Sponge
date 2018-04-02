@@ -41,6 +41,13 @@ def getPost(postId, postType):#
     return None
 
 
+def deletePost(postType, postId):
+    if postType == "Seller":
+        return deleteSellerPositById(postId)
+    if postType == "Buyer":
+        return deleteBuyerPostById(postId)
+
+
 def deleteSellerPositById(postId):
     try:
         SellerPost.query.filter_by(postId = postId).delete()
