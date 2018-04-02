@@ -274,7 +274,7 @@ def getPost(postId, flag):
             return redirect('/NewSellerPost')
         if isBuyer:
             return redirect('/NewBuyerPost')
-    return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData)
+    return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData, username=session['username'])
 
 
 @app.route('/buypostlist',methods=["POST"])
@@ -508,7 +508,6 @@ def orderDetail():
         address = json.loads(address)
     orderDetail["receiverAddress"] = address
     return render_template("orderdetail.html", order=orderDetail, username=session['username'])
-
 
 
 @app.route('/updateOrderStatus', methods=['POST'])

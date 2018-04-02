@@ -119,6 +119,7 @@ class Order(db.Model):
     transactionType = db.Column(db.String(32))
     senderAddress = db.Column(db.Text)
     receiverAddress = db.Column(db.Text)
+    Carrier  =db.Column(db.Enum())
 
     def __repr__(self):
         return '<Order %r>' % self.orderId
