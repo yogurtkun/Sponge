@@ -404,7 +404,7 @@ var postlist = new Vue({
       if(filter_price_sorting == 0 && filter_loc == "0" &&
         filter_post_time == 0 && filter_category == "all"){
         filter_items = this.sortWithTime(filter_items, filter_items.length)
-        filter_items = this._remove_ordered_item(filter_items)
+        //filter_items = this._remove_ordered_item(filter_items)
       }
       else{
         filter_items = this.filter_price(filter_items, filter_price_sorting)
@@ -412,7 +412,7 @@ var postlist = new Vue({
         filter_items = this.filter_time(filter_items, filter_post_time)
         filter_items = this.filter_category(filter_items, filter_category)
         filter_items = this.filter_type(filter_items, filter_type)
-        filter_items = this._remove_ordered_item(filter_items)
+        //filter_items = this._remove_ordered_item(filter_items)
       }
 
       filter_search_items.push(this.filter_posts(filter_items, filter_search))

@@ -26,7 +26,7 @@ var userinfo = new Vue({
           this.check_username = this.get_check_username()
           this.on_sell_items = this.get_on_sell_items(this.all_selling_items, this.check_username)
           this.on_sell_items = this.sortWithTime(this.on_sell_items, this.on_sell_items.length)
-          this.on_sell_items = this._remove_ordered_item(this.on_sell_items)
+          //this.on_sell_items = this._remove_ordered_item(this.on_sell_items)
 
           if(this.on_sell_items !== undefined)
           {
@@ -64,7 +64,7 @@ var userinfo = new Vue({
                   this.check_username = this.get_check_username()
                   this.in_need_items = this.get_in_need_items(this.all_buying_items, this.check_username)
                   this.in_need_items = this.sortWithTime(this.in_need_items, this.in_need_items.length)
-                  this.in_need_items = this._remove_ordered_item(this.in_need_items)
+                  //this.in_need_items = this._remove_ordered_item(this.in_need_items)
              
                   if(this.in_need_items !== undefined)
                   {

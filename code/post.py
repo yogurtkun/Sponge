@@ -87,14 +87,16 @@ def searchSellerPosts(postId=None, category=None, username=None):
             post = SellerPost.query.get(postId)
             return schema.from_sql(post)
         else:
-            query = SellerPost.query
+            query = SellerPost.query.filter_by(valid=True)
             if category is not None:
                 query = query.filter_by(category=category)
             if username is not None:
                 query = query.filter_by(sellerName=username)
             posts = []
+            print "Search Seller Posts:"
             for post in query.all():
                 posts.append(schema.from_sql(post))
+                print post.title
             return posts
     except:
         return None

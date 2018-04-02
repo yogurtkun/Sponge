@@ -211,9 +211,6 @@ Post List Page
 '''
 @app.route('/postlist')
 def postList():
-    #posts = {}
-    #posts['SellerPosts'] = post.searchSellerPosts()
-    #posts['BuyerPosts'] = post.searchBuyerPosts()
     categories = ['Beauty','Books','Electronics','Clothing','Accessories','Health','Kitchen','Music','Software','Outdoor','Furniture']
     return render_template("postlist.html", categories=categories)
 
@@ -247,10 +244,6 @@ def postListContent(role):
                 item['favorite'] = True
             else:
                 item['favorite'] = False
-
-    for item in posts:
-        item['order'] = order.checkOrderByPost(item['postId'])
-
     return json.dumps(posts)
 
 
