@@ -58,13 +58,6 @@ function newMessage(person) {
 //     return false;
 // });
 
-$(window).on('keydown', function (e) {
-    if (e.which == 13) {
-        newMessage();
-        return false;
-    }
-});
-
 
 $(document).ready(function () {
     Vue.component('listuser', {
@@ -92,12 +85,15 @@ $(document).ready(function () {
         el: "#frame",
         data: {
             currentUser: '',
+            currentTime: '0',
             chatMessage: [],
             users: [],
             addErrorMessage: null
         },
         created() {
             var self = this;
+            var urlParams = new URLSearchParams(window.location.search);
+            var startContact = urlParams.get("contact");
             $.ajax({
                 url: 'messageTable',
                 type: 'POST',
@@ -108,29 +104,73 @@ $(document).ready(function () {
                     }
                     self.$nextTick(function () {
                         self.users = data;
-                        self.currentUser = data[0]['username'];
-                        self.loadMessge();
+                        if(startContact === null){
+                            self.currentUser = data[0]['username'];
+                            self.loadMessge();
+                        }else{
+                            self.currentUser = startContact;
+                            self.parentNewUser(startContact);
+                            $('#start-tab').removeClass('active');
+                            $('#info-tab').removeClass('active');
+                            $('#info-tab').removeClass('in');
+                            $('#info-tab').addClass('fade');
+                            $('#jump-tab').addClass('active');
+                            $('#message-tab').removeClass('fade');
+                            $('#message-tab').addClass('in active');
+                        }
                     });
+
+                    setInterval(function(){
+                        self.loadNewMessage();
+                    },1000);
+                }
+            });
+
+            $(window).on('keydown', function (e) {
+                if (e.which == 13) {
+                    newMessage(self.currentUser);
+                    return false;
                 }
             });
         },
         methods: {
+            loadNewMessage: function(){
+                var person = this.currentUser;
+                var time = this.currentTime;
+                var self = this;
+
+                $.ajax({
+                    url: 'getUpdateMessage',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {"time":time,"receiver": person},
+                    success: function(data){
+                        data.forEach(function (subMessage) {
+                            if (subMessage["senderUsername"] === person){
+                                self.currentTime = subMessage['time'];
+                                addNewSent(subMessage["content"]);
+                            }
+                        });
+                    }
+                });
+            },
             loadMessge: function () {
                 var person = this.currentUser;
+                var self = this;
                 $.ajax({
                     url: 'getAllMessage',
                     type: 'POST',
                     dataType: 'json',
                     data: { "receiver": person },
                     success: function (data) {
-                        console.log(data)
                         data.forEach(function (subMessage) {
+                            self.currentTime = subMessage['time'];
                             if (subMessage["senderUsername"] === person) {
                                 addNewSent(subMessage["content"]);
                             } else {
                                 addNewrReplies(subMessage["content"]);
                             }
-                        })
+                        });
                     }
                 });
             },
@@ -143,7 +183,6 @@ $(document).ready(function () {
             parentNewUser: function (contactName) {
                 var self = this;
                 var myname = $('#myUserName').text();
-                console.log(myname);
                 $.ajax({
                     url: 'userExist',
                     type: 'POST',

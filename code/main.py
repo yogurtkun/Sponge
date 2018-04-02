@@ -421,6 +421,7 @@ def messageTable():
 def newMessage():
     if not loggedIn():
         return json.dumps('fail')
+    print request.form
     content = str(request.form['content'])
     receiver = str(request.form['receiverUsername'])
     messageId = message.sendMessage(sender=session['username'], receiver=receiver, title='', content=content)
@@ -432,6 +433,15 @@ def getAllMessage():
     messages = message.getMessages(sender=session['username'], receiver=receiver) + message.getMessages(sender=receiver, receiver=session['username'])
     messages = sorted(messages, key=lambda k : k['time'])
     return json.dumps(messages)
+
+@app.route('/getUpdateMessage',methods=['POST'])
+def getUpdateMessage():
+    receiver = request.form['receiver']
+    time = request.form['time']
+    messages = message.getMessages(sender=session['username'], receiver=receiver) + message.getMessages(sender=receiver, receiver=session['username'])
+    messages = sorted(messages, key=lambda k : k['time'])
+    messages = list(filter(lambda x:x['time']>time,messages))
+    return json.dumps(messages)    
     
 
 '''
