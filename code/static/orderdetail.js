@@ -1,5 +1,5 @@
 var userinfo = new Vue({
-    el: '#status-buttons',
+    el: '#buttons',
     data: {
         review: undefined,
         rating: 0,
@@ -64,7 +64,28 @@ var userinfo = new Vue({
                 data: udata,
                 dataType: 'json',
                 success: (data) => {
-                    window.location.reload(true)
+                    window.location.reload(true);
+                }
+            }).fail(function($xhr) {
+                var data = $xhr.responseJSON;
+            });
+        },
+
+        cancelOrder: function(){
+            console.log('cancel order')
+            var orderId = this.get_order_id();
+            var udata = {'orderId': orderId}
+            $.ajax({
+                url: '/cancelOrder',
+                type: 'POST',
+                data: udata,
+                dataType: 'json',
+                success: (data) => {
+                    console.log(data);
+                    if (data === "Succeeded!") {
+                        alert('Order is canceled!');
+                        window.location.href = "/";
+                    }
                 }
             }).fail(function($xhr) {
                 var data = $xhr.responseJSON;

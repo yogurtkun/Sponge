@@ -64,8 +64,9 @@
 
       <hr>
       <strong>Status : </strong>{{order.status}}
-
-      <div id="status-buttons">
+    </div>
+    
+    <div id="status-buttons">
       <div id="buttons">
         {% if order.status == 'In progress'%}
           {% if username == order.sellerName %}
@@ -152,8 +153,6 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
