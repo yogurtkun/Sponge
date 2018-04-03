@@ -1,11 +1,9 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
-<body>
-
 
 <h1 class="mt-4">Order Details</h1>
 <hr>
 
-<div class="container mt-5">
+<div class="container">
   <div class="row">
     <div class="col-sm-6 text-left" style="width:500px; height:500px">
         <!-- Preview Image -->
@@ -54,7 +52,7 @@
       <p><strong>Category : </strong>{{order.category}}</p>
 
       <p><strong>Description : </strong></p>
-      <textarea readonly class="form-control-plaintext unwriteable-text text-left">{{order.description}}</textarea>
+      <p  class="form-control-plaintext unwriteable-text text-left">{{order.description}}</p>
 
       <hr>
       <p><strong>Transaction Type : </strong>{{order.transactionType}}</p>
@@ -66,18 +64,28 @@
 
       <hr>
       <strong>Status : </strong>{{order.status}}
-
+    </div>
+    
+    <div id="status-buttons">
       <div id="buttons">
-        {% if order.status == 'In progress' and username == order.sellerName%}
-        <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
+        {% if order.status == 'In progress'%}
+          {% if username == order.sellerName %}
+            <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
+            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
+          {% endif %}
+          {% if username == order.buyerName %}
+            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
+          {% endif %}
         {% endif %}
         {% if order.status == 'Confirmed' and username == order.sellerName%}
-        <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>
+          {% if order.transactionType == 'Online'%}
+          <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>
+          {% endif %}
         {% endif %}
-      
+      </div>
 
       
-      {% if order.status == 'Shipped' and username == order.buyerName%}
+      {% if ( (order.transactionType == 'Online' and order.status == 'Shipped') or (order.transactionType == 'Face to Face' and order.status == 'Confirmed') ) and username == order.buyerName%}
       {%raw%}
 
       <div class="modal fade" id="review_window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -145,32 +153,19 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
-
-
-          </div>
         </div>
       </div>
-      <div>
-        <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
-      </div>
-      {%endraw%}
-      {% endif %}
-      </div>
+    </div>
+    
+    <div>
+      <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
+    </div>
+    {%endraw%}
+    {% endif %}
+    </div>
   </div>
 </div>
 
-
-
-<div id="toTop">
-  <backtotop></backtotop>
-  </div>
-</body>
-
-<script type="text/x-template" id="backtotop">
-  <button class="goTop" v-if="isVisible" @click="backToTop">
-    <i class="fa fa-angle-up" aria-hidden="true"></i>
-  </button>
-</script>
 <script src="static/orderdetail.js"></script>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 {% endblock %} {# [END form] #}

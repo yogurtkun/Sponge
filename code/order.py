@@ -1,6 +1,6 @@
 from main import schema
 from schema import Order, from_sql
-from post import searchSellerPosts, getPost, invalidSellerPost
+from post import searchSellerPosts, getPost, invalidSellerPost, validSellerPost
 import account
 import datetime
 
@@ -29,7 +29,24 @@ def createOrder(postId, buyerName, transactionType, rcvAddress):
         return None
 
 
+def cancelOrder(orderId):
+    try:
+        order = from_sql(Order.query.get(orderId))
+        postId = order['postId']
+        if not validSellerPost(postId):
+            return False
+        Order.query.filter_by(orderId=orderId).delete()
+        db.session.commit()
+        return True
+    except Exception as e:
+        print e
+        db.session.rollback()
+        return False
+
+
 def getDetail(orderId):
+    if Order.query.get(orderId) is None:
+        return None
     order = from_sql(Order.query.get(orderId))
     postId = order['postId']
     post = searchSellerPosts(postId)

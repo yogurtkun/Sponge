@@ -274,7 +274,7 @@ def getPost(postId, flag):
             return redirect('/NewSellerPost')
         if isBuyer:
             return redirect('/NewBuyerPost')
-    return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData)
+    return render_template("postdetail.html", seller=isSeller, buyer=isBuyer, post=postData, username=session['username'])
 
 
 @app.route('/buypostlist',methods=["POST"])
@@ -441,8 +441,8 @@ def getUpdateMessage():
     messages = message.getMessages(sender=session['username'], receiver=receiver) + message.getMessages(sender=receiver, receiver=session['username'])
     messages = sorted(messages, key=lambda k : k['time'])
     messages = list(filter(lambda x:x['time']>time,messages))
-    return json.dumps(messages)    
-    
+    return json.dumps(messages)
+
 
 '''
 Add review on users
@@ -500,15 +500,16 @@ Order detail page
 @app.route('/OrderDetail', methods=['GET'])
 def orderDetail():
     if not loggedIn():
-        return json.dumps('')
+        return render_template('login.html', error='Please login first')
     orderId = int(request.args['orderId'])
     orderDetail = order.getDetail(orderId)
+    if orderDetail is None:
+        return redirect('/')
     address = orderDetail.get("receiverAddress")
     if address is not None:
         address = json.loads(address)
     orderDetail["receiverAddress"] = address
     return render_template("orderdetail.html", order=orderDetail, username=session['username'])
-
 
 
 @app.route('/updateOrderStatus', methods=['POST'])
@@ -519,6 +520,74 @@ def updateOrderStatus():
     status = str(request.form['status'])
     order.updateStatus(orderId, status)
     return json.dumps('success')
+
+
+
+'''
+Cancel order
+'''
+@app.route('/cancelOrder', methods=['POST'])
+def cancelOrder():
+    if not loggedIn():
+        return json.dumps('Failed!')
+    orderId = int(request.form['orderId'])
+    if order.cancelOrder(orderId):
+        return json.dumps("Succeeded!")
+    return json.dumps("Failed!")
+
+
+
+'''
+Delete post
+'''
+@app.route('/deletepost', methods=['POST'])
+def deletePost():
+    if not loggedIn():
+        return json.dumps('')
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    if post.deletePost(postType, postId):
+        return json.dumps("Deleting post succeeded!")
+    return json.dumps("Deleting post failed!")
+
+
+'''
+Edit post page
+'''
+@app.route('/editpost', methods=['GET'])
+def editPost():
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    postType = str(request.args['postType'])
+    postId = int(request.args['postId'])
+    postData = post.getPost(postId, postType)
+    role = postType.lower() + "Name"
+    if postData[role] != session['username']:
+        return render_template('notFound.html'), 404
+    return render_template("editpost.html", post=postData)
+
+
+'''
+Edit post action
+'''
+@app.route('/updatepost', methods=['POST'])
+def updatePost():
+    if not loggedIn():
+        return json.dumps("Please login first")
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    updateData = {key : request.form[key] for key in ('title', 'description', 'category', 'price','location') if key in request.form}
+    image = request.files.get('image') # None if no such file
+    if image == None or image.filename == '':
+        image = None
+    else:
+        image = image.read() # to binary file
+        updateData['image'] = image
+    if post.updatePost(postType, postId, updateData):
+        return json.dumps("Updating post succeeded!")
+    return json.dumps("Updating post failed!")
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

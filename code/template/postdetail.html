@@ -71,10 +71,12 @@
       <hr>
       <strong>Description : </strong>
       <textarea readonly class="form-control-plaintext unwriteable-text text-left" style=" resize: none;min-height:300px;">{{post.description}}</textarea>
-
+      
       {% if seller %}
+      {% if username != post.sellerName %}
       <div id="checkbutton" class="btn btn-primary btn-lg float-center" v-on:click="checkout" role="button" style="position:absolute; bottom: 0px; width: 40%; margin-left: 30%;margin-right: 30%">Buy
       </div>
+      {% endif %} 
       {% endif %} 
 
       {% if seller %}
@@ -128,16 +130,4 @@
     </div>
   </div>
 </div>
-
-
-<div id="toTop">
-  <backtotop></backtotop>
-  </div>
-</body>
-
-<script type="text/x-template" id="backtotop">
-  <button class="goTop" v-if="isVisible" @click="backToTop">
-    <i class="fa fa-angle-up" aria-hidden="true"></i>
-  </button>
-</script>
 {% endblock %} {# [END form] #}
