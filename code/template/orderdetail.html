@@ -65,6 +65,7 @@
       <hr>
       <strong>Status : </strong>{{order.status}}
 
+      <div id="status-buttons">
       <div id="buttons">
         {% if order.status == 'In progress'%}
           {% if username == order.sellerName %}
