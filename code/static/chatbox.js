@@ -94,7 +94,7 @@ $(document).ready(function () {
             chatMessage: [],
             users: [],
             addErrorMessage: null,
-            tabList: ['message', 'buy', 'sell', 'order', 'message'],
+            tabList: ['info', 'buy', 'sell', 'order', 'message'],
         },
         created() {
             var self = this;
