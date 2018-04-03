@@ -103,31 +103,6 @@ class MainTest(unittest.TestCase):
             print "user portal pass\n"
 
 
-    def test_createPost_getPost_delPost(self):
-        with main.app.app_context():
-            account.registerUser("testUser", "test@domain.com", "1234", "10025")
-            user = {"username":"testUser", "password":"1234"}
-            self.app.post("/loginUser", data=user, follow_redirects=True)
-            postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
-            rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
-            res = re.findall("postId=\d+#", rv.data)
-            assert len(res) == 1
-            postId = res[0][7:-1]
-            postdata = {"postType":"Seller", "postId":postId}
-            rv = self.app.post("/deletepost", data=postdata, follow_redirects=True)
-            assert "Deleting post succeeded!" == rv.data
-
-            postdata = {"title":"test", "description":"wanna buy test", "category":"Books"}
-            rv = self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
-            res = re.findall("postId=\d+#", rv.data)
-            assert len(res) == 1
-            postId = res[0][7:-1]
-            postdata = {"postType":"Buyer", "postId":postId}
-            rv = self.app.post("/deletepost", data=postdata, follow_redirects=True)
-            assert "Deleting post succeeded!" == rv.data
-            print "seller and buyer post creating and viewing details and deleting pass\n"
-
-
     def test_postList(self):
         with main.app.app_context():
             account.registerUser("testUser", "test@domain.com", "1234", "10025")
@@ -224,7 +199,38 @@ class MainTest(unittest.TestCase):
             assert "Good seller" in rv.data
 
             account.deleteUser("testReviewer")
-            print "user review test pass"
+            print "user review test pass" 
+
+
+    def test_post(self):
+        with main.app.app_context():
+            account.registerUser("testUser", "test@domain.com", "1234", "10025")
+            user = {"username":"testUser", "password":"1234"}
+            self.app.post("/loginUser", data=user, follow_redirects=True)
+            postdata = {"title":"test", "description":"wanna sell test", "category":"Books"}
+            rv = self.app.post("/NewSellerPost", data=postdata, follow_redirects=True)
+            res = re.findall("postId=\d+#", rv.data)
+            assert len(res) == 1
+            postId = res[0][7:-1]
+            postdata = {"postType":"Seller", "postId":postId, "title":"test NEW", "description":"wanna sell test NEW", "category":"Beauty"}
+            rv = self.app.post("/updatepost", data=postdata, follow_redirects=True)
+            assert "Updating post succeeded!" == rv.data
+            postdata = {"postType":"Buyer", "postId":postId}
+            rv = self.app.post("/deletepost", data=postdata, follow_redirects=True)
+            assert "Deleting post succeeded!" == rv.data
+
+            postdata = {"title":"test", "description":"wanna buy test", "category":"Books"}
+            rv = self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
+            res = re.findall("postId=\d+#", rv.data)
+            assert len(res) == 1
+            postId = res[0][7:-1]
+            postdata = {"postType":"Buyer", "postId":postId, "title":"test NEW", "description":"wanna buy test NEW", "category":"Beauty"}
+            rv = self.app.post("/updatepost", data=postdata, follow_redirects=True)
+            assert "Updating post succeeded!" == rv.data
+            postdata = {"postType":"Buyer", "postId":postId}
+            rv = self.app.post("/deletepost", data=postdata, follow_redirects=True)
+            assert "Deleting post succeeded!" == rv.data
+            print "Post: create, update and delete pass\n"
 
 
 

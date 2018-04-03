@@ -124,3 +124,20 @@ def searchBuyerPosts(postId=None, category=None, username=None):
             return posts
     except:
         return None
+
+
+def updatePost(postType, postId, updateData):
+    try:
+        if postType == "Seller":
+            postData = SellerPost.query.get(postId)
+        if postType == "Buyer":
+            postData = BuyerPost.query.get(postId)
+        for k, v in updateData.items():
+            setattr(postData, k, v)
+        db.session.commit()
+        return True
+    except Exception as e:
+        print e
+        db.session.rollback()
+        return False
+

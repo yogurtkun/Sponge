@@ -441,8 +441,8 @@ def getUpdateMessage():
     messages = message.getMessages(sender=session['username'], receiver=receiver) + message.getMessages(sender=receiver, receiver=session['username'])
     messages = sorted(messages, key=lambda k : k['time'])
     messages = list(filter(lambda x:x['time']>time,messages))
-    return json.dumps(messages)    
-    
+    return json.dumps(messages)
+
 
 '''
 Add review on users
@@ -510,6 +510,16 @@ def orderDetail():
     return render_template("orderdetail.html", order=orderDetail, username=session['username'])
 
 
+@app.route('/updateOrderStatus', methods=['POST'])
+def updateOrderStatus():
+    if not loggedIn():
+        return json.dumps('fail')
+    orderId = str(request.form['orderId'])
+    status = str(request.form['status'])
+    order.updateStatus(orderId, status)
+    return json.dumps('success')
+
+
 '''
 Delete post
 '''
@@ -524,16 +534,43 @@ def deletePost():
     return "Deleting post failed!"
 
 
-
-
-@app.route('/updateOrderStatus', methods=['POST'])
-def updateOrderStatus():
+'''
+Edit post page
+'''
+@app.route('/editpost', methods=['GET'])
+def editPost():
     if not loggedIn():
-        return json.dumps('fail')
-    orderId = str(request.form['orderId'])
-    status = str(request.form['status'])
-    order.updateStatus(orderId, status)
-    return json.dumps('success')
+        return render_template('login.html', error='Please login first')
+    postType = str(request.args['postType'])
+    postId = int(request.args['postId'])
+    postData = post.getPost(postId, postType)
+    role = postType.lower() + "Name"
+    if postData[role] != session['username']:
+        return render_template('notFound.html'), 404
+    return render_template("editpost.html", post=postData)
+
+
+'''
+Edit post action
+'''
+@app.route('/updatepost', methods=['POST'])
+def updatePost():
+    if not loggedIn():
+        return json.dumps('')
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    updateData = {key : request.form[key] for key in ('title', 'description', 'category', 'price','location') if key in request.form}
+    image = request.files.get('image') # None if no such file
+    if image == None or image.filename == '':
+        image = None
+    else:
+        image = image.read() # to binary file
+        updateData['image'] = image
+    if post.updatePost(postType, postId, updateData):
+        return "Updating post succeeded!"
+    return "Updating post failed!"
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
