@@ -68,8 +68,14 @@
       <strong>Status : </strong>{{order.status}}
 
       <div id="buttons">
-        {% if order.status == 'In progress' and username == order.sellerName%}
-        <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
+        {% if order.status == 'In progress'%}
+          {% if username == order.sellerName %}
+            <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
+            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
+          {% endif %}
+          {% if username == order.buyerName %}
+            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
+          {% endif %}
         {% endif %}
         {% if order.status == 'Confirmed' and username == order.sellerName%}
         <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>

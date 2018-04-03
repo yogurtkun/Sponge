@@ -214,10 +214,10 @@ class MainTest(unittest.TestCase):
             postId = res[0][7:-1]
             postdata = {"postType":"Seller", "postId":postId, "title":"test NEW", "description":"wanna sell test NEW", "category":"Beauty"}
             rv = self.app.post("/updatepost", data=postdata, follow_redirects=True)
-            assert "Updating post succeeded!" == rv.data
+            assert "Updating post succeeded!" in rv.data
             postdata = {"postType":"Buyer", "postId":postId}
             rv = self.app.post("/deletepost", data=postdata, follow_redirects=True)
-            assert "Deleting post succeeded!" == rv.data
+            assert "Deleting post succeeded!" in rv.data
 
             postdata = {"title":"test", "description":"wanna buy test", "category":"Books"}
             rv = self.app.post("/NewBuyerPost", data=postdata, follow_redirects=True)
@@ -226,10 +226,10 @@ class MainTest(unittest.TestCase):
             postId = res[0][7:-1]
             postdata = {"postType":"Buyer", "postId":postId, "title":"test NEW", "description":"wanna buy test NEW", "category":"Beauty"}
             rv = self.app.post("/updatepost", data=postdata, follow_redirects=True)
-            assert "Updating post succeeded!" == rv.data
+            assert "Updating post succeeded!" in rv.data
             postdata = {"postType":"Buyer", "postId":postId}
             rv = self.app.post("/deletepost", data=postdata, follow_redirects=True)
-            assert "Deleting post succeeded!" == rv.data
+            assert "Deleting post succeeded!" in rv.data
             print "Post: create, update and delete pass\n"
 
 

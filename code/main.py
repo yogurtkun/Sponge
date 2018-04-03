@@ -500,9 +500,11 @@ Order detail page
 @app.route('/OrderDetail', methods=['GET'])
 def orderDetail():
     if not loggedIn():
-        return json.dumps('')
+        return render_template('login.html', error='Please login first')
     orderId = int(request.args['orderId'])
     orderDetail = order.getDetail(orderId)
+    if orderDetail is None:
+        return redirect('/')
     address = orderDetail.get("receiverAddress")
     if address is not None:
         address = json.loads(address)
@@ -520,6 +522,21 @@ def updateOrderStatus():
     return json.dumps('success')
 
 
+
+'''
+Cancel order
+'''
+@app.route('/cancelOrder', methods=['POST'])
+def cancelOrder():
+    if not loggedIn():
+        return json.dumps('Failed!')
+    orderId = int(request.form['orderId'])
+    if order.cancelOrder(orderId):
+        return json.dumps("Succeeded!")
+    return json.dumps("Failed!")
+
+
+
 '''
 Delete post
 '''
@@ -530,8 +547,8 @@ def deletePost():
     postType = str(request.form['postType'])
     postId = int(request.form['postId'])
     if post.deletePost(postType, postId):
-        return "Deleting post succeeded!"
-    return "Deleting post failed!"
+        return json.dumps("Deleting post succeeded!")
+    return json.dumps("Deleting post failed!")
 
 
 '''
@@ -556,7 +573,7 @@ Edit post action
 @app.route('/updatepost', methods=['POST'])
 def updatePost():
     if not loggedIn():
-        return json.dumps('')
+        return json.dumps("Please login first")
     postType = str(request.form['postType'])
     postId = int(request.form['postId'])
     updateData = {key : request.form[key] for key in ('title', 'description', 'category', 'price','location') if key in request.form}
@@ -567,8 +584,8 @@ def updatePost():
         image = image.read() # to binary file
         updateData['image'] = image
     if post.updatePost(postType, postId, updateData):
-        return "Updating post succeeded!"
-    return "Updating post failed!"
+        return json.dumps("Updating post succeeded!")
+    return json.dumps("Updating post failed!")
 
 
 

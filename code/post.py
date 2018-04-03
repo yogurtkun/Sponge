@@ -33,6 +33,17 @@ def invalidSellerPost(postId):
         return False
 
 
+def validSellerPost(postId):
+    post = SellerPost.query.get(postId)
+    try:
+        post.valid = True
+        db.session.commit()
+        return True
+    except:
+        db.session.rollback()
+        return False
+
+
 def getPost(postId, postType):#
     if postType == "Seller":
         return searchSellerPosts(postId)
