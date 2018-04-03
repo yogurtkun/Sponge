@@ -6,6 +6,9 @@ var userinfo = new Vue({
         reviewee: 'null',
         orderId: undefined,
         review_submit: false,
+        trackNo: undefined,
+        carrier: undefined,
+        ship_submit: false,
         text_max: 150,
         text_length: 0,
     },
@@ -47,6 +50,31 @@ var userinfo = new Vue({
             dataType : 'json',
             success: (data) => {
                 this.updateOrderStatus('Completed')
+            },
+            }).fail(function($xhr) {
+              var data = $xhr.responseJSON;
+            });
+
+        },
+
+        ShipOrder:function(){
+            console.log('ShipOrder')
+            this.orderId = this.get_order_id()
+
+            var tdata = {'carrier':this.carrier, 'trackNo':this.trackNo, 'orderId':this.orderId}
+
+            this.ship_submit = true
+
+            $.ajax({
+            url: '/shipOrder',
+            type: 'POST',
+            data: tdata,
+            dataType : 'json',
+            success: (data) => {
+                console.log(data);
+                if (data === "succeeded") {
+                    this.updateOrderStatus('Shipped');
+                }
             },
             }).fail(function($xhr) {
               var data = $xhr.responseJSON;

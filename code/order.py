@@ -92,3 +92,24 @@ def updateStatus(orderId, status):
     except Exception as e:
         print e
         db.session.rollback()
+
+
+def ship(orderId, carrier, trackNo):
+    order = Order.query.get(orderId)
+    try:
+        order.carrier = carrier
+        order.trackNo = trackNo
+        db.session.commit()
+        return True
+    except Exception as e:
+        print e
+        db.session.rollback()
+        return False
+
+
+
+
+
+
+
+

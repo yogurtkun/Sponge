@@ -522,6 +522,22 @@ def updateOrderStatus():
     return json.dumps('success')
 
 
+'''
+Ship order
+'''
+@app.route('/shipOrder', methods=['POST'])
+def shipOrder():
+    if not loggedIn():
+        return json.dumps('failed')
+    print request.form
+    orderId = str(request.form['orderId'])
+    carrier = str(request.form['carrier'])
+    trackNo = str(request.form['trackNo'])
+    if order.ship(orderId, carrier, trackNo):
+        return json.dumps('succeeded')
+    return json.dumps('failed')
+
+
 
 '''
 Cancel order
