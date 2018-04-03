@@ -76,12 +76,14 @@
           {% endif %}
         {% endif %}
         {% if order.status == 'Confirmed' and username == order.sellerName%}
-        <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>
+          {% if order.transactionType == 'Online'%}
+          <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>
+          {% endif %}
         {% endif %}
       </div>
 
       
-      {% if order.status == 'Shipped' and username == order.buyerName%}
+      {% if ( (order.transactionType == 'Online' and order.status == 'Shipped') or (order.transactionType == 'Face to Face' and order.status == 'Confirmed') ) and username == order.buyerName%}
       {%raw%}
 
       <div class="modal fade" id="review_window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
