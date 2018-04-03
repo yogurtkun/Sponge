@@ -65,14 +65,13 @@
       <hr>
       <strong>Status : </strong>{{order.status}}
 
-      <div id="buttons">
-        {% if order.status == 'In progress'%}
-          {% if username == order.sellerName %}
-            <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
-            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
+      <div id="status-buttons">
+        <div id="buttons">
+          {% if order.status == 'In progress' and username == order.sellerName%}
+          <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
           {% endif %}
-          {% if username == order.buyerName %}
-            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
+          {% if order.status == 'Confirmed' and username == order.sellerName%}
+          <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>
           {% endif %}
         {% endif %}
         {% if order.status == 'Confirmed' and username == order.sellerName%}
@@ -85,80 +84,86 @@
       
       {% if ( (order.transactionType == 'Online' and order.status == 'Shipped') or (order.transactionType == 'Face to Face' and order.status == 'Confirmed') ) and username == order.buyerName%}
       {%raw%}
+        </div>
 
-      <div class="modal fade" id="review_window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div v-if="review_submit === false" class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add Review</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+      
+        {% if order.status == 'Shipped' and username == order.buyerName%}
+        {%raw%}
+
+        <div class="modal fade" id="review_window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div v-if="review_submit === false" class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" style="padding-bottom: 0px">
+                <form>
+                  <div class="form-group">
+                    <textarea class="form-control" id="text" name="text" maxlength="150" rows="5" style="resize: none;" placeholder="Write your review here..." v-model="review" required></textarea>
+                    <span class="pull-right badge badge-secondary float-right" id="count_message">{{text_length}} / {{text_max}}</span>
+                  </div>
+                  <div class="form-group float-right">
+                    <span class="stars" style="font-size: 6px">
+                      <form action="">
+                        <input class="star star-5" id="star-5" type="radio" name="star" v-model="rating" v-bind:value=5  />
+                        <label class="star star-5" for="star-5"></label>
+                        <input class="star star-4" id="star-4" type="radio" name="star" v-model="rating" v-bind:value=4  />
+                        <label class="star star-4" for="star-4"></label>
+                        <input class="star star-3" id="star-3" type="radio" name="star" v-model="rating" v-bind:value=3  />
+                        <label class="star star-3" for="star-3"></label>
+                        <input class="star star-2" id="star-2" type="radio" name="star" v-model="rating" v-bind:value=2  />
+                        <label class="star star-2" for="star-2"></label>
+                        <input class="star star-1" id="star-1" type="radio" name="star" v-model="rating" v-bind:value=1  />
+                        <label class="star star-1" for="star-1" ></label>
+                      </form>
+                    </span>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" v-on:click="AddReview" class="btn btn-primary">Submit</button>
+              </div>
             </div>
-            <div class="modal-body" style="padding-bottom: 0px">
-              <form>
-                <div class="form-group">
-                  <textarea class="form-control" id="text" name="text" maxlength="150" rows="5" style="resize: none;" placeholder="Write your review here..." v-model="review" required></textarea>
-                  <span class="pull-right badge badge-secondary float-right" id="count_message">{{text_length}} / {{text_max}}</span>
-                </div>
-                <div class="form-group float-right">
-                  <span class="stars" style="font-size: 6px">
-                    <form action="">
-                      <input class="star star-5" id="star-5" type="radio" name="star" v-model="rating" v-bind:value=5  />
-                      <label class="star star-5" for="star-5"></label>
-                      <input class="star star-4" id="star-4" type="radio" name="star" v-model="rating" v-bind:value=4  />
-                      <label class="star star-4" for="star-4"></label>
-                      <input class="star star-3" id="star-3" type="radio" name="star" v-model="rating" v-bind:value=3  />
-                      <label class="star star-3" for="star-3"></label>
-                      <input class="star star-2" id="star-2" type="radio" name="star" v-model="rating" v-bind:value=2  />
-                      <label class="star star-2" for="star-2"></label>
-                      <input class="star star-1" id="star-1" type="radio" name="star" v-model="rating" v-bind:value=1  />
-                      <label class="star star-1" for="star-1" ></label>
-                    </form>
-                  </span>
-                </div>
-              </form>
+
+
+            <div v-else class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Review Success!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" style="padding-bottom: 0px;">
+                  <div class="check-box">
+                    <label>
+                      <input id="checkbox" type="checkbox" name="item_1" value="item 1" />
+                      <svg class="checkmark " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                        <path class="checkmark__check " fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                      </svg>
+                    <span class="mx-3" style="font-size:20px;"> 
+                      Thank you for your review!
+                    </span>
+                    </label>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" v-on:click="AddReview" class="btn btn-primary">Submit</button>
-            </div>
+
+
           </div>
-
-
-          <div v-else class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Review Success!</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" style="padding-bottom: 0px;">
-                <div class="check-box">
-                  <label>
-                    <input id="checkbox" type="checkbox" name="item_1" value="item 1" />
-                    <svg class="checkmark " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
-                      <path class="checkmark__check " fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                    </svg>
-                  <span class="mx-3" style="font-size:20px;"> 
-                    Thank you for your review!
-                  </span>
-                  </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-
-
+        </div>
+    
+        <div>
+          <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
         </div>
       </div>
-    </div>
-    
-    <div>
-      <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
     </div>
     {%endraw%}
     {% endif %}
