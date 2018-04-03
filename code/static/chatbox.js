@@ -36,6 +36,11 @@ function newMessage(person) {
         return false;
     }
 
+    if (person === "") {
+        alert("Please add contact person");
+        return false;
+    }
+
     addNewrReplies(message);
 
     mess = { "content": message, "receiverUsername": person }
@@ -70,10 +75,10 @@ $(document).ready(function () {
         }
     });
     Vue.component('newuser', {
-        props:[
+        props: [
             'errormessage'
         ],
-        template: '<div id="user_modal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Add new contact</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form class="form-horizontal" role="form"><div class="form-group row"><label class="col-sm-4 col-form-label">User Name</label><div class="col-sm-6"><input type="text" class="form-control" id="sub_new_user" placeholder="User Name"></div></div><div class="form-group" style="color:red"'+ 'v-if="errormessage">'+'{{errormessage}}</div></form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary" data-toggle="modal" v-on:click="createNewTalk">Create</button></div></div></div></div>',
+        template: '<div id="user_modal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Add new contact</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form class="form-horizontal" role="form"><div class="form-group row"><label class="col-sm-4 col-form-label">User Name</label><div class="col-sm-6"><input type="text" class="form-control" id="sub_new_user" placeholder="User Name"></div></div><div class="form-group" style="color:red"' + 'v-if="errormessage">' + '{{errormessage}}</div></form></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary" data-toggle="modal" v-on:click="createNewTalk">Create</button></div></div></div></div>',
         methods: {
             createNewTalk: function () {
                 contactName = $('#sub_new_user').val();
@@ -88,41 +93,37 @@ $(document).ready(function () {
             currentTime: '0',
             chatMessage: [],
             users: [],
-            addErrorMessage: null
+            addErrorMessage: null,
+            tabList: ['message', 'buy', 'sell', 'order', 'message'],
         },
         created() {
             var self = this;
             var urlParams = new URLSearchParams(window.location.search);
+            var startSection = urlParams.get("section");
             var startContact = urlParams.get("contact");
+            self.changeSection(startSection);
             $.ajax({
                 url: 'messageTable',
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
-                    if (data.length == 0) {
-                        return;
-                    }
                     self.$nextTick(function () {
                         self.users = data;
-                        if(startContact === null){
-                            self.currentUser = data[0]['username'];
-                            self.loadMessge();
-                        }else{
+                        if (startContact === null) {
+                            if (data.length !== 0) {
+                                self.currentUser = data[0]['username'];
+                                self.loadMessge();
+                            }
+                        } else {
                             self.currentUser = startContact;
                             self.parentNewUser(startContact);
-                            $('#start-tab').removeClass('active');
-                            $('#info-tab').removeClass('active');
-                            $('#info-tab').removeClass('in');
-                            $('#info-tab').addClass('fade');
-                            $('#jump-tab').addClass('active');
-                            $('#message-tab').removeClass('fade');
-                            $('#message-tab').addClass('in active');
                         }
                     });
 
-                    setInterval(function(){
+                    setTimeout(function () {
                         self.loadNewMessage();
-                    },1000);
+                    }, 1000);
+
                 }
             });
 
@@ -134,7 +135,19 @@ $(document).ready(function () {
             });
         },
         methods: {
-            loadNewMessage: function(){
+            changeSection: function (section) {
+                if (section === null) {
+                    return;
+                }
+                $('#info').removeClass('active');
+                $('#info-tab').removeClass('active');
+                $('#info-tab').removeClass('in');
+                $('#info-tab').addClass('fade');
+                $('#' + section).addClass('active');
+                $('#' + section + '-tab').removeClass('fade');
+                $('#' + section + '-tab').addClass('in active');
+            },
+            loadNewMessage: function () {
                 var person = this.currentUser;
                 var time = this.currentTime;
                 var self = this;
@@ -143,18 +156,23 @@ $(document).ready(function () {
                     url: 'getUpdateMessage',
                     type: 'POST',
                     dataType: 'json',
-                    data: {"time":time,"receiver": person},
-                    success: function(data){
+                    data: { "time": time, "receiver": person },
+                    success: function (data) {
                         data.forEach(function (subMessage) {
-                            if (subMessage["senderUsername"] === person){
+                            if (subMessage["senderUsername"] === person) {
                                 self.currentTime = subMessage['time'];
                                 addNewSent(subMessage["content"]);
                             }
                         });
+
+                        setTimeout(function () {
+                            self.loadNewMessage();
+                        }, 1000);
                     }
                 });
             },
             loadMessge: function () {
+
                 var person = this.currentUser;
                 var self = this;
                 $.ajax({
@@ -201,12 +219,12 @@ $(document).ready(function () {
                                 }
                             });
                             $('#user_modal').modal('hide');
-                        } else if(contactName === myname){
-                            self.$nextTick(function(){
+                        } else if (contactName === myname) {
+                            self.$nextTick(function () {
                                 self.addErrorMessage = "Please Add a New User";
                             });
                         } else {
-                            self.$nextTick(function(){
+                            self.$nextTick(function () {
                                 self.addErrorMessage = "User Not Exists";
                             });
                         }
