@@ -1,11 +1,9 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
-<body>
-
 
 <h1 class="mt-4">Order Details</h1>
 <hr>
 
-<div class="container mt-5">
+<div class="container">
   <div class="row">
     <div class="col-sm-6 text-left" style="width:500px; height:500px">
         <!-- Preview Image -->
@@ -74,7 +72,7 @@
         {% if order.status == 'Confirmed' and username == order.sellerName%}
         <button type="button" id="ship" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Shipped')">Ship</button>
         {% endif %}
-      
+      </div>
 
       
       {% if order.status == 'Shipped' and username == order.buyerName%}
@@ -147,30 +145,19 @@
           </div>
 
 
-          </div>
         </div>
       </div>
-      <div>
-        <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
-      </div>
-      {%endraw%}
-      {% endif %}
-      </div>
+    </div>
+    
+    <div>
+      <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
+    </div>
+    {%endraw%}
+    {% endif %}
+    </div>
   </div>
 </div>
 
-
-
-<div id="toTop">
-  <backtotop></backtotop>
-  </div>
-</body>
-
-<script type="text/x-template" id="backtotop">
-  <button class="goTop" v-if="isVisible" @click="backToTop">
-    <i class="fa fa-angle-up" aria-hidden="true"></i>
-  </button>
-</script>
 <script src="static/orderdetail.js"></script>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 {% endblock %} {# [END form] #}
