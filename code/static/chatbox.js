@@ -95,12 +95,16 @@ $(document).ready(function () {
             users: [],
             addErrorMessage: null,
             tabList: ['info', 'buy', 'sell', 'order', 'message'],
+            myname: '',
         },
         created() {
             var self = this;
             var urlParams = new URLSearchParams(window.location.search);
             var startSection = urlParams.get("section");
             var startContact = urlParams.get("contact");
+
+            this.myname = $('#myname').html();
+
             self.changeSection(startSection);
             $.ajax({
                 url: 'messageTable',
@@ -109,7 +113,7 @@ $(document).ready(function () {
                 success: function (data) {
                     self.$nextTick(function () {
                         self.users = data;
-                        if (startContact === null) {
+                        if (startContact === null || startContact === self.myname) {
                             if (data.length !== 0) {
                                 self.currentUser = data[0]['username'];
                                 self.loadMessge();

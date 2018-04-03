@@ -354,12 +354,11 @@
     padding: 10px 0 10px 0;
     font-size: 0.9em;
     cursor: pointer;
-    border-bottom: solid 1px #243140;
+    border-bottom: solid 1px #aeb2b9;
   }
 
   #frame #sidepanel #contacts ul li.contact .name {
     font-size: 1.5em;
-    font-style:italic;
   }
 
   @media screen and (max-width: 735px) {
