@@ -5,12 +5,16 @@
   <title>Sponge - secondhand market</title>
   <meta charset="utf-8"></meta>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
   <script src="static/vue.js"></script>
   <script src="static/jquery-3.3.1.js"></script>
   <script src="static/bootstrap.min-4.0.0.js"></script>
   <script src="static/font-awesome-5.0.7.js"></script>
+  
   <link rel="stylesheet" href="static/bootstrap.min-4.0.0.css">
   <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/fontawesome/fontawesome-all.css">
+  <link rel="stylesheet" href="static/notification-bell.css">
 
   <style>
     html {
@@ -110,6 +114,7 @@
     {% if session.logged_in %}
     <div>
       <a href="/portal"><i class="fas fa-user mx-1"></i> {{session.username}}</a>
+      <a href="/portal?secion=message"><span id="notification" class="notification-bell"></span></a>
       <a class="btn btn-outline-primary my-2 my-sm-0 mx-1" href="/logout">Log Out</a>
     </div>
 
@@ -148,6 +153,20 @@
 
       return false;
     });
+
+    var el = document.querySelector('#notification');
+
+    (function() {
+        // get new message count
+        var count = Number(el.getAttribute('data-count')) || 0;
+        el.setAttribute('data-count', 5);
+        el.classList.remove('notify');
+        el.offsetWidth = el.offsetWidth;
+        el.classList.add('notify');
+        if(count === 0){
+            el.classList.add('show-count');
+        }
+    })();
 
   </script>
 
