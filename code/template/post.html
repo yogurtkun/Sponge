@@ -2,20 +2,20 @@
 <script src="{{ url_for('static', filename='buyer-post.js')}}"></script>
 
 <div>
-    <div class="container" style="max-width:75%">
+    <div class="container my-5" style="max-width:75%">
         {% if buyer %}
         <form method="POST" class="needs-validation container-fluid formObj" enctype="multipart/form-data" novalidate action="/NewBuyerPost">
             {% endif %} {% if seller %}
             <form method="POST" class="needs-validation container-fluid formObj" enctype="multipart/form-data" novalidate action="/NewSellerPost" >
                 {% endif %} {% if buyer %}
-                <h1 class="section-header">The thing you want to buy</h1>
+                <h1 class="section-header">Create a Buying Post</h1>
                 {% endif %} {% if seller %}
-                <h1 class="section-header">The thing you want to sell</h1>
+                <h1 class="section-header">Create a Selling Post</h1>
                 {% endif %} {% if error %}
                 <div class="alert alert-danger" role="alert">{{error}}</div>
                 {% endif %}
                 <div class="form-group">
-                    <label> *Title: </label>
+                    <label> *Title</label>
                     {% if buyer %}
                     <input type="text" class="form-control" placeholder="Title for what you want to buy" required name="title"> {% endif %} {% if seller %}
                     <input type="text" class="form-control" placeholder="Title for what you want to sell" required name="title"> {% endif %}
@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="category">Category:</label>
+                    <label for="category">Category</label>
                     <select name="category" class="form-control">
                         <option>Beauty</option>
                         <option>Books</option>
@@ -50,8 +50,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description">*Decription</label>
-                    <textarea class="form-control" id="description" placeholder="Enter Your Description" name="description" required></textarea>
+                    <label for="description">*Description</label>
+                    <textarea class="form-control" id="description" placeholder="Enter Your Description" name="description" style="resize: none;min-height:150px;max-height: 150px" required></textarea>
                     <div class="invalid-feedback">
                         Description should not be empty
                     </div>
