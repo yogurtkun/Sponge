@@ -248,6 +248,34 @@ def postListContent(role):
 
 
 '''
+Get all the favorite data
+'''
+@app.route('/favoriteList',methods=['POST'])
+def favoriteList():
+    print "called"
+    userName = session['username']
+    sellerFavorite, buyerFavorite = account.getFavorite(userName)
+    retList = []
+
+    print sellerFavorite, buyerFavorite
+
+    if sellerFavorite != [""]:
+        for f in sellerFavorite:
+            tempf = post.searchSellerPosts(postId=int(f))
+            del tempf['image']
+            tempf['type'] = "Seller"
+            retList.append(tempf)
+    
+    if buyerFavorite != [""]:
+        for f in buyerFavorite:
+            tempf = post.searchBuyerPosts(postId=int(f))
+            del tempf['image']
+            tempf['type'] = "Buyer"
+            retList.append(tempf)
+
+    return json.dumps(retList) 
+
+'''
 Post Detail Page
 '''
 @app.route('/SellerPost', methods=['GET'])

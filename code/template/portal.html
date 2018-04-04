@@ -19,6 +19,9 @@
             <a id="sell" class="nav-link" href="#sell-tab" data-toggle="tab">Sell Posts</a>
           </li>
           <li class="nav-item">
+            <a id="favorite" class="nav-link" href="#favorite-tab" data-toggle="tab">Favorite</a>
+          </li>
+          <li class="nav-item">
             <a id="order" class="nav-link" href="#order-tab" data-toggle="tab">Orders</a>
           </li>
           <li class="nav-item">
@@ -354,26 +357,15 @@
           </div>
 
           <div id="message-tab" class="tab-pane fade">
-            <!-- <div>
-              <h3 style="margin-top:2vh">Send message</h3>
-              <div id="newMessageCreate" class="form-group row " style="margin-top:2vh">
-                <div class="form-group col-md-9">
-                  <input id="new-user" class="form-control" placeholder="Input the user name">
-                </div>
-                <div class="form-group col-md-3">
-                  <a class="btn btn-primary mb-3" style="text-align:center;color:white" v-on:click="newchat">Send</a>
-                </div>
-              </div>
-            </div>
-            <hr>
-            <h3>History Message</h3>
-            <table id="message-table"></table>
-          </div> -->
             {% block message %}{% endblock%}
           </div>
 
           <div id="order-tab" class="tab-pane fade">
             <table id="order-table"></table>
+          </div>
+
+          <div id="favorite-tab" class="tab-pane fade">
+            <table id="favorite-table"></table>
           </div>
 
         </div>

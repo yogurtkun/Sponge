@@ -50,6 +50,7 @@ function newMessage(person) {
         data: mess,
         type: 'POST',
         success: function (ret) {
+            console.log("!!!")
             console.log(ret);
         }
     });
@@ -94,7 +95,7 @@ $(document).ready(function () {
             chatMessage: [],
             users: [],
             addErrorMessage: null,
-            tabList: ['info', 'buy', 'sell', 'order', 'message'],
+            tabList: ['info', 'buy', 'sell', 'order', 'message','favorite'],
             myname: '',
         },
         created() {
