@@ -80,7 +80,7 @@ var showmore = new Vue({
                 success: (data) => {
                     console.log("success!")
                 }
-              })
+            })
         },
     },
 });
