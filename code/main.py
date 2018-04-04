@@ -584,6 +584,20 @@ def editPost():
     return render_template("editpost.html", post=postData)
 
 
+@app.route('/getPostData', methods=['POST'])
+def getPostData():
+    if not loggedIn():
+        return json.dumps("not logged in")
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    postData = post.getPost(postId, postType)
+    role = postType.lower() + "Name"
+    if postData[role] != session['username']:
+        return json.dumps("error")
+    postData['postType'] = postType
+    return json.dumps(postData)
+
+
 '''
 Edit post action
 '''
