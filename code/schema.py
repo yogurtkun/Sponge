@@ -135,7 +135,7 @@ class Message(db.Model):
     title = db.Column(db.String(64), nullable=False)
     content = db.Column(db.Text, nullable=False)
     time = db.Column(db.DateTime)
-    db.Column(db.Boolean, default=False)
+    seen = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return '<Message %r>' % messageId
