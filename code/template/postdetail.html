@@ -23,14 +23,15 @@
     <div class="col-sm-6">
       <div class="row">
 
-          <p hidden>postId={{post.postId}}#</p>
+        <p hidden>postId={{post.postId}}#</p>
         <div class="col-sm-8">
           <h1 id="post-title" style="display:inline-block;" >{{post.title}}</h1>
             <b-dropdown id="more-button" variant="link" size="lg" style="vertical-align: Top; padding-top: 0px" no-caret>
               <template slot="button-content">
-                &#x1f50d;<span class="sr-only">Search</span>
+                <!-- &#x1f50d; -->
+                <i class="fas fa-ellipsis-h"></i>
               </template>
-              {% if post.buyerName %}/buyorder?postId="+postId
+              {% if post.buyerName %}
               <b-dropdown-item href="/editpost?postType=Buyer&postId={{post.postId}}">Edit</b-dropdown-item>
               {% endif %}
               {% if post.sellerName %}
@@ -110,12 +111,12 @@
               </div>
               <div class="modal-footer">
               {% if post.buyerName %}
-              <a href="#" v-on:click="delete_post('Buyer', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</a>
+              <button v-on:click="delete_post('Buyer', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
               {% endif %}
               {% if post.sellerName %}
-              <a href="#" v-on:click="delete_post('Seller', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</a>
+              <button v-on:click="delete_post('Seller', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
               {% endif %}
-              <a href="#" data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</a>
+              <button data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</button>
               </div>
             </div>
           </div>
