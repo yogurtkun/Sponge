@@ -64,10 +64,20 @@
         </div>
     </div>
 
-    <div class="form-group float-right">
+    <div style="vertical-align: center">
+      <span v-if="is_update_success == false" style="padding: 7px 7.25rem" class="float-left alert alert-danger" role="alert">
+        Update failed!
+      </span>
+
+      <span v-if="is_update_success == true" style="padding: 7px 7.25rem"  class="float-left alert alert-success" role="alert">
+        Update success!
+      </span>
+
+      <span class="form-group float-right">
         <button id="saveBtn" class="btn btn-primary" style="width:80px;" v-on:click="save_post()">Save</button>
+      </span>
     </div>
-    </div>
+  </div>
 </div>
 
 <script src="{{ url_for('static', filename='editpost.js')}}"></script>

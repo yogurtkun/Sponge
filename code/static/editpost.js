@@ -9,7 +9,9 @@ var save = new Vue({
   	price: undefined,
   	sellerName: undefined,
   	description: undefined,
-    imageName:"Select file..."
+    imageName:"Select file...",
+
+    is_update_success:undefined,
   },
   mounted(){
   	this.query_post_info()
@@ -51,6 +53,12 @@ var save = new Vue({
 	  },
 
   	save_post: function(){
+
+  		if(this.title.length == 0 || this.description.length == 0){
+  			this.is_update_success = false
+  			return
+  		}
+
   		tdata={"postType":this.postType, "postId":this.postId,
   					 "title": this.title, "category": this.category,
   					 "location": this.location, "price": this.price,
@@ -65,10 +73,12 @@ var save = new Vue({
 
 	    success: (json)=>{
 	      console.log(json);
+	      this.is_update_success = true
 	    },
 	    }).fail(function($xhr) {
 	      var data = $xhr.responseJSON;
 	      console.log(data);
+	      this.is_update_success = false
 	    });
     },
 
