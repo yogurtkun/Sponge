@@ -580,6 +580,7 @@ def editPost():
     role = postType.lower() + "Name"
     if postData[role] != session['username']:
         return render_template('notFound.html'), 404
+    postData['postType'] = postType
     return render_template("editpost.html", post=postData)
 
 
