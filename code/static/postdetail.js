@@ -69,9 +69,18 @@ var showmore = new Vue({
                 }
               }) 
         },
+    },
+});
 
+var delete_post = new Vue({
+    el: "#delete_window",
+    data: {
+
+    },
+    methods:{
         delete_post: function(postType, postId){
             console.log("delete_post")
+            
             tdata = {"postType": postType, 'postId': postId}
             $.ajax({
                 url: '/deletepost',
@@ -79,6 +88,7 @@ var showmore = new Vue({
                 data: tdata,
                 success: (data) => {
                     console.log("success!")
+                    window.location = "/";
                 }
             })
         },

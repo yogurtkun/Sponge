@@ -283,7 +283,7 @@ ul.product_list {
 .product_buttons_favorite {
   position: absolute;
   bottom: -40%;
-  left: 0;
+  left: -2px;
   width: 100%;
   text-align: center;
   -webkit-transition: all .35s ease;
@@ -294,42 +294,38 @@ ul.product_list {
 .product_buttons button {
   color: #fff;
   border: none;
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 1em;
+  background: rgba(100, 100, 100, 0.8);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
 }
 
 .product_buttons_favorite button {
   color: #DF0404;
   border: none;
-  background: rgba(255, 255, 255, 0.5);
-  font-size: 1em;
+  background: rgba(100, 100, 100, 0.8);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
 }
 
 
 .buttons_favorite button {
   color: #DF0404;
   border: none;
-  background: rgba(150, 150, 150, 0.5);
-  font-size: 1em;
+  background: rgba(100, 100, 100, 0.8);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
 }
 
 .buttons_not_favorite button {
   color: #fff;
   border: none;
-  background: rgba(150, 150, 150, 0.5);
-  font-size: 1em;
+  background: rgba(100, 100, 100, 0.8);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
 }
 
 .product_price a {
