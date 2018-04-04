@@ -1,6 +1,5 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
-<script src="static/postdetail.js"></script>
-<body>
+
 
 {% if buyer %}
 <h1 class="mt-4">Buyer Post Details</h1>      
@@ -26,7 +25,24 @@
 
           <p hidden>postId={{post.postId}}#</p>
         <div class="col-sm-8">
-          <h1 id="post-title">{{post.title}}</h1>
+          <h1 id="post-title" style="display:inline-block;" >{{post.title}}</h1>
+            <b-dropdown id="more-button" variant="link" size="lg" style="vertical-align: Top; padding-top: 0px" no-caret>
+              <template slot="button-content">
+                &#x1f50d;<span class="sr-only">Search</span>
+              </template>
+              {% if post.buyerName %}/buyorder?postId="+postId
+              <b-dropdown-item href="/editpost?postType=Buyer&postId={{post.postId}}">Edit</b-dropdown-item>
+              {% endif %}
+              {% if post.sellerName %}
+              <b-dropdown-item href="/editpost?postType=Seller&postId={{post.postId}}">Edit</b-dropdown-item>
+              {% endif %}
+              {% if post.buyerName %}
+              <b-dropdown-item v-on:click="delete_post('Buyer', {{post.postId}})" href="#">Delete</b-dropdown-item>
+              {% endif %}
+              {% if post.sellerName %}
+              <b-dropdown-item v-on:click="delete_post('Seller', {{post.postId}})" href="#">Delete</b-dropdown-item>
+              {% endif %}
+            </b-dropdown>
         </div>
         <div class="col-sm-4">
           {% if post.price %}
@@ -77,6 +93,7 @@
       <div id="checkbutton" class="btn btn-primary btn-lg float-center" v-on:click="checkout" role="button" style="position:absolute; bottom: 0px; width: 40%; margin-left: 30%;margin-right: 30%">Buy
       </div>
       {% endif %} 
+      <div id="checkbutton"></div>
       {% endif %} 
 
       {% if seller %}
@@ -125,9 +142,18 @@
             {% endif %}
           </div>
         </div>
+
+
+
       </div>
 
     </div>
   </div>
 </div>
+
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+<script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+<script src="static/postdetail.js"></script>
 {% endblock %} {# [END form] #}

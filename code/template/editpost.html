@@ -1,0 +1,74 @@
+{# [START form] #} {% extends "header.html"%} {% block content %}
+
+<div class="container my-3" style="max-width:75%">
+
+    <div id="post_info" class="needs-validation container-fluid formObj">
+
+    <h1 class="section-header">Edit Post</h1>
+    <hr>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+    {% endif %}
+    
+    <div class="form-group">
+        <label>Title*</label>
+        <input v-model="title" type="text" class="form-control" required >
+       
+        <div class="invalid-feedback">
+            Title should not be empty
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="category">Category</label>
+        <select v-model="category" name="category" class="form-control" >
+            <option>Beauty</option>
+            <option>Books</option>
+            <option>Electronics</option>
+            <option>Clothing</option>
+            <option>Accessories</option>
+            <option>Health</option>
+            <option>Kitchen</option>
+            <option>Music</option>
+            <option>Software</option>
+            <option>Outdoor</option>
+            <option>Furniture</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <input v-model="price" class="form-control" name="price">
+    </div>
+    <div class="form-group">
+        <label for="location">Location</label>
+        <input v-model="location" type="location" class="form-control" id="location" name="location">
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description*</label>
+        <textarea v-model="description" class="form-control" id="description" name="description" style="resize: none;min-height:150px;max-height: 150px" required></textarea>
+        <div class="invalid-feedback">
+            Description should not be empty
+        </div>
+    </div>
+
+    <div class="form-group" id="uploadImage">
+        <label for="image">Image</label>
+        <div class="custom-file" id="customFile" lang="es">
+            <input type="file" class="custom-file-input" id="InputImage" aria-describedby="fileHelp" name="image" @change="updateFile">
+            <label class="custom-file-label" for="exampleInputFile">
+                {% raw %}
+                {{imageName}}
+                {% endraw %}
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group float-right">
+        <button id="saveBtn" class="btn btn-primary" style="width:80px;" v-on:click="save_post()">Save</button>
+    </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='editpost.js')}}"></script>
+{% endblock %} {# [END form] #}
