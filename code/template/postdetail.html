@@ -43,6 +43,59 @@
               <b-dropdown-item data-toggle="modal" data-target="#delete_window" href="#">Delete</b-dropdown-item>
               {% endif %}
             </b-dropdown>
+
+
+
+
+            {% if seller %}
+            <span id="favoriteBtn" class="invisible">
+            {% else %}
+            <span id="favoriteBtn" class="invisible">
+            {% endif %}
+              <span v-if="is_favorite===undefined">
+                {% if post.favorite == true %}
+                <span  class="buttons_favorite">
+                  {% if buyer %}
+                  <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i style="width:13px;height:16px padding-top:0px" class="fa fa-heart"></i></button>
+                  {% endif %}
+                  {% if seller %}
+                  <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i style="width:13px;height:16px padding-top:0px" class="fa fa-heart"></i></button>
+                  {% endif %}
+                </span>
+                {% else %}
+                <span class="buttons_not_favorite">
+                  {% if buyer %}
+                  <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i style="width:13px;height:16px padding-top:0px" class="fa fa-heart"></i></button>
+                  {% endif %}
+                  {% if seller %}
+                  <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i style="width:13px;height:16px padding-top:0px" class="fa fa-heart"></i></button>
+                  {% endif %}
+                </span>
+                {% endif %}
+              </span>
+              <span v-else-if="is_favorite===true">
+                <span class="buttons_favorite">
+                  {% if buyer %}
+                  <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i style="width:13px;height:16px padding-top:0px" class="fa fa-heart" ></i></button>
+                  {% endif %}
+                  {% if seller %}
+                  <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i style="width:13px;height:16px padding-top:0px" class="fa fa-heart"></i></button>
+                  {% endif %}
+                </span>
+              </span>
+              <span v-else>
+                <span class="buttons_not_favorite">
+                  {% if buyer %}
+                  <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i style="width:13px;height:16px" class="fa fa-heart"></i></button>
+                  {% endif %}
+                  {% if seller %}
+                  <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i style="width:13px;height:16px" class="fa fa-heart"></i></button>
+                  {% endif %}
+                </span>
+              </span>
+            </span>
+          </span>
+
         </div>
 
         <div id="delete_window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -120,58 +173,6 @@
       <div id="checkbutton"></div>
       {% endif %} 
 
-      {% if seller %}
-      <div id="favoriteBtn" class="invisible" style="position:absolute; bottom: -5px; width: 40%; margin-left: 72%;">
-      {% else %}
-      <div id="favoriteBtn" class="invisible" style="position:absolute; bottom: -5px; width: 40%; margin-left: 50%;">
-      {% endif %}
-        <div v-if="is_favorite===undefined">
-          {% if post.favorite == true %}
-          <div  class="buttons_favorite my-2">
-            {% if buyer %}
-            <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </div>
-          {% else %}
-          <div class="buttons_not_favorite my-2">
-            {% if buyer %}
-            <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </div>
-          {% endif %}
-        </div>
-        <div v-else-if="is_favorite===true">
-          <div class="buttons_favorite my-2">
-            {% if buyer %}
-            <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </div>
-        </div>
-        <div v-else>
-          <div class="buttons_not_favorite my-2">
-            {% if buyer %}
-            <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </div>
-        </div>
-
-
-
-      </div>
-
-    </div>
   </div>
 </div>
 
