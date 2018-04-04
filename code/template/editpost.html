@@ -1,21 +1,10 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
 
 <div class="container my-3" style="max-width:75%">
-    {% if buyer %}
-    <form method="POST" class="needs-validation container-fluid formObj" enctype="multipart/form-data" novalidate action="/NewBuyerPost">
-    {% endif %}
-    {% if seller %}
-    <form method="POST" class="needs-validation container-fluid formObj" enctype="multipart/form-data" novalidate action="/NewSellerPost" >
-    {% endif %}
 
-    {% if buyer %}
-    <h1 class="section-header">Create a Buying Post</h1>
-    {% endif %}
+    <div id="post_info" class="needs-validation container-fluid formObj">
 
-    {% if seller %}
-    <h1 class="section-header">Create a Selling Post</h1>
-    {% endif %}
-
+    <h1 class="section-header">Edit Post</h1>
     <hr>
     {% if error %}
     <div class="alert alert-danger" role="alert">{{error}}</div>
@@ -23,13 +12,7 @@
     
     <div class="form-group">
         <label>Title*</label>
-        {% if buyer %}
-        <input type="text" class="form-control" placeholder="Title for what you want to buy" required name="title">
-        {% endif %}
-
-        {% if seller %}
-        <input type="text" class="form-control" placeholder="Title for what you want to sell" required name="title">
-        {% endif %}
+        <input v-model="title" type="text" class="form-control" required >
        
         <div class="invalid-feedback">
             Title should not be empty
@@ -38,7 +21,7 @@
 
     <div class="form-group">
         <label for="category">Category</label>
-        <select name="category" class="form-control">
+        <select v-model="category" name="category" class="form-control" >
             <option>Beauty</option>
             <option>Books</option>
             <option>Electronics</option>
@@ -54,16 +37,16 @@
     </div>
     <div class="form-group">
         <label for="Price">Price</label>
-        <input class="form-control" placeholder="0$" name="price">
+        <input v-model="price" class="form-control" name="price">
     </div>
     <div class="form-group">
         <label for="location">Location</label>
-        <input type="location" class="form-control" id="location" placeholder="Prefer deal location" name="location">
+        <input v-model="location" type="location" class="form-control" id="location" name="location">
     </div>
 
     <div class="form-group">
         <label for="description">Description*</label>
-        <textarea class="form-control" id="description" placeholder="Enter Your Description" name="description" style="resize: none;min-height:150px;max-height: 150px" required></textarea>
+        <textarea v-model="description" class="form-control" id="description" name="description" style="resize: none;min-height:150px;max-height: 150px" required></textarea>
         <div class="invalid-feedback">
             Description should not be empty
         </div>
@@ -81,11 +64,21 @@
         </div>
     </div>
 
-    <div class="form-group float-right">
-        <button class="btn btn-primary" style="width:80px;"  type="submit">Post</button>
+    <div style="vertical-align: center">
+      <span v-if="is_update_success == false" style="padding: 7px 7.25rem" class="float-left alert alert-danger" role="alert">
+        Update failed!
+      </span>
+
+      <span v-if="is_update_success == true" style="padding: 7px 7.25rem"  class="float-left alert alert-success" role="alert">
+        Update success!
+      </span>
+
+      <span class="form-group float-right">
+        <button id="saveBtn" class="btn btn-primary" style="width:80px;" v-on:click="save_post()">Save</button>
+      </span>
     </div>
-    </form>
+  </div>
 </div>
 
-<script src="{{ url_for('static', filename='buyer-post.js')}}"></script>
+<script src="{{ url_for('static', filename='editpost.js')}}"></script>
 {% endblock %} {# [END form] #}
