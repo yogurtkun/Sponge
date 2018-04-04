@@ -86,24 +86,25 @@
               <h1 id="post-title" style="display:inline-block;" >{{post.title}}</h1>
             </div>
             <div class="col-sm-1" style="margin-top: -10px; margin-left: -25px">
-                <b-dropdown id="more-button" variant="link" size="lg"  no-caret>
-                  <template slot="button-content">
-                    <!-- &#x1f50d; -->
-                    <i class="fas fa-ellipsis-h"></i>
-                  </template>
-                  {% if post.buyerName %}
-                  <b-dropdown-item href="/editpost?postType=Buyer&postId={{post.postId}}">Edit</b-dropdown-item>
-                  {% endif %}
-                  {% if post.sellerName %}
-                  <b-dropdown-item href="/editpost?postType=Seller&postId={{post.postId}}">Edit</b-dropdown-item>
-                  {% endif %}
-                  {% if post.buyerName %}
-                  <b-dropdown-item data-toggle="modal" data-target="#delete_window" href="#">Delete</b-dropdown-item>
-                  {% endif %}
-                  {% if post.sellerName %}
-                  <b-dropdown-item data-toggle="modal" data-target="#delete_window" href="#">Delete</b-dropdown-item>
-                  {% endif %}
-                </b-dropdown>
+              <b-dropdown id="more-button" variant="link" size="lg"  no-caret  >
+                <template slot="button-content">
+                  <!-- &#x1f50d; -->
+                  <i class="fas fa-ellipsis-h"></i>
+                </template>
+                {% if post.buyerName %}
+                <b-dropdown-item href="/editpost?postType=Buyer&postId={{post.postId}}" style="color:blue" class="float-left">
+                  <i class="fas fa-pencil-alt mx-2"></i>Edit</b-dropdown-item>
+                {% endif %}
+                {% if post.sellerName %}
+                <b-dropdown-item href="/editpost?postType=Seller&postId={{post.postId}}" style="color:blue" class="float-left"><i class="fas fa-pencil-alt mx-2"></i>Edit</b-dropdown-item>
+                {% endif %}
+                {% if post.buyerName %}
+                <b-dropdown-item data-toggle="modal" data-target="#delete_window" href="#" style="color:red" class="float-left"><i class="fas fa-trash-alt mx-2"></i>Delete</b-dropdown-item>
+                {% endif %}
+                {% if post.sellerName %}
+                <b-dropdown-item data-toggle="modal" data-target="#delete_window" href="#" style="color:red" class="float-left"><i class="fas fa-trash-alt mx-2"></i>Delete</b-dropdown-item>
+                {% endif %}
+              </b-dropdown>
             </div>
           </div>
         </div>
