@@ -68,7 +68,7 @@ function newMessage(person) {
 $(document).ready(function () {
     Vue.component('listuser', {
         props: ['user'],
-        template: '<li class="contact" v-on:click="userTop"><div class="wrap"><div class="meta"><p class="name">{{user.username}}</p><p class="preview">{{user.time}}</p></div></div></li>',
+        template: '<li class="contact" v-on:click="userTop"><div class="wrap"><div class="meta"><p class="name"><i class="fas fa-user"style="margin-right:1vh"></i>{{user.username}}</p><p class="preview">{{user.time}}</p></div></div></li>',
         methods: {
             userTop: function () {
                 this.$emit("move-top", this.user.username);

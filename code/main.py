@@ -262,14 +262,16 @@ def favoriteList():
     if sellerFavorite != [""]:
         for f in sellerFavorite:
             tempf = post.searchSellerPosts(postId=int(f))
-            del tempf['image']
+            if tempf is None:
+                break
             tempf['type'] = "Seller"
             retList.append(tempf)
     
     if buyerFavorite != [""]:
         for f in buyerFavorite:
             tempf = post.searchBuyerPosts(postId=int(f))
-            del tempf['image']
+            if tempf is None:
+                break
             tempf['type'] = "Buyer"
             retList.append(tempf)
 
