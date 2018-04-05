@@ -325,13 +325,13 @@ Place order page
 '''
 @app.route('/buyorder', methods=['GET'])
 def buyOrder():
-	if not loggedIn():
-		return render_template('login.html', error='Please login first')
-	postId = int(request.args['postId'])
-	postData = post.getPost(postId, "Seller")
-	if postData == None:
-		return render_template('notFound.html'), 404
-	return render_template("order.html", item=postData)
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    postId = int(request.args['postId'])
+    postData = post.getPost(postId, "Seller")
+    if postData == None:
+        return render_template('notFound.html'), 404
+    return render_template("order.html", item=postData)
 
 
 '''
@@ -339,16 +339,16 @@ Place order
 '''
 @app.route('/checkout', methods=['POST'])
 def checkout():
-	if not loggedIn():
-		return render_template('login.html', error='Please login first')
-	postId = int(request.form['postId'])
-	buyerName = session['username']
-	transactionType = str(request.form['transactionType'])
-	rcvAddress = str(request.form['rcvAddress']) if transactionType == "Online" else None
-	orderId = order.createOrder(postId, buyerName, transactionType, rcvAddress)
-	if orderId == None:
-		return "Placing order failed!"
-	return "Placing order succeeded! orderId=" + str(orderId)
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    postId = int(request.form['postId'])
+    buyerName = session['username']
+    transactionType = str(request.form['transactionType'])
+    rcvAddress = str(request.form['rcvAddress']) if transactionType == "Online" else None
+    orderId = order.createOrder(postId, buyerName, transactionType, rcvAddress)
+    if orderId == None:
+        return "Placing order failed!"
+    return "Placing order succeeded! orderId=" + str(orderId)
 
 
 '''
@@ -356,14 +356,15 @@ Favorite
 '''
 @app.route('/favorite', methods=['POST'])
 def addFavorite():
-	if not loggedIn():
-		return render_template('login.html', error='Please login first')
-	postType = str(request.form['postType'])
-	postId = int(request.form['postId'])
-	username = session['username']
-	if account.addFavorite(username, postId, postType):
-		return "Adding to favorites succeeded!"
-	return "Adding to favorites failed!"
+    if not loggedIn():
+        return render_template('login.html', error='Please login first')
+    postType = str(request.form['postType'])
+    postId = int(request.form['postId'])
+    username = session['username']
+    if account.addFavorite(username, postId, postType):
+        message.userFavoriteNotification(username, postId, postType)
+        return "Adding to favorites succeeded!"
+    return "Adding to favorites failed!"
 
 
 '''
@@ -372,7 +373,7 @@ Delete favorite
 @app.route('/deleteFavorite', methods=['POST'])
 def deleteFavorite():
     if not loggedIn():
-		return render_template('login.html', error='Please login first')
+        return render_template('login.html', error='Please login first')
     postType = str(request.form['postType'])
     postId = int(request.form['postId'])
     username = session['username']
@@ -549,6 +550,7 @@ def updateOrderStatus():
     orderId = str(request.form['orderId'])
     status = str(request.form['status'])
     order.updateStatus(orderId, status)
+    message.orderStatusNotification(orderId, status)
     return json.dumps('success')
 
 
@@ -648,6 +650,17 @@ def updatePost():
         return json.dumps("Updating post succeeded!")
     return json.dumps("Updating post failed!")
 
+
+
+'''
+Count unread message for user
+'''
+@app.route('/countUnreadMessage', methods=['POST'])
+def countUnreadMessage():
+    if not loggedIn():
+        return json.dumps("0")
+    messages = message.getMessages(receiver=session['username'], read=False)
+    return json.dumps(len(messages))
 
 
 if __name__ == '__main__':

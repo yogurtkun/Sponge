@@ -114,7 +114,7 @@
     {% if session.logged_in %}
     <div>
       <a href="/portal"><i class="fas fa-user mx-1"></i> {{session.username}}</a>
-      <a href="/portal?secion=message"><span id="notification" class="notification-bell"></span></a>
+      <a href="/portal?section=message"><span id="notification" class="notification-bell"></span></a>
       <a class="btn btn-outline-primary my-2 my-sm-0 mx-1" href="/logout">Log Out</a>
     </div>
 
@@ -157,15 +157,30 @@
     var el = document.querySelector('#notification');
 
     (function() {
-        // get new message count
-        var count = Number(el.getAttribute('data-count')) || 0;
-        el.setAttribute('data-count', 5);
+      var update = function (count) {
+        el.setAttribute('data-count', count);
         el.classList.remove('notify');
         el.offsetWidth = el.offsetWidth;
         el.classList.add('notify');
         if(count === 0){
-            el.classList.add('show-count');
+          el.classList.remove('show-count');
+        } else {
+          el.classList.add('show-count')
         }
+      }
+
+      // get new message count
+      $.ajax({
+        url: '/countUnreadMessage',
+        type: 'POST',
+        success: (data) => {
+         update(parseInt(data))
+        },
+      }).fail(function($xhr) {
+        var data = $xhr.responseJSON;
+      });
+        
+        
     })();
 
   </script>

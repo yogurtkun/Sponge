@@ -3,10 +3,10 @@
 .notification-bell {
     display: inline-block;
     position: relative;
-    padding: 0.3em 0.6em;
+    padding: 0.2em 0.65em 0.4em 0.65em;
     background: #3498db;
     border-radius: 0.2em;
-    font-size: 1.1em;
+    font-size: 1.2em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin:0 0.6em;
 }

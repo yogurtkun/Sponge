@@ -1,5 +1,6 @@
 from main import schema
 from schema import User, from_sql
+import message
 
 db = schema.db
 
