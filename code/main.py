@@ -252,12 +252,9 @@ Get all the favorite data
 '''
 @app.route('/favoriteList',methods=['POST'])
 def favoriteList():
-    print "called"
     userName = session['username']
     sellerFavorite, buyerFavorite = account.getFavorite(userName)
     retList = []
-
-    print sellerFavorite, buyerFavorite
 
     if sellerFavorite != [""]:
         for f in sellerFavorite:
@@ -316,7 +313,6 @@ def buypostlist():
 @app.route('/sellpostlist',methods=["POST"])
 def sellpostlist():
     posts = post.searchSellerPosts(username=session['username'])
-    print posts
     return json.dumps(posts)
 
 
@@ -445,14 +441,12 @@ def messageTable():
         res.append(temp_dict)
 
     res.sort(key=lambda x:x['time'],reverse=True)
-    print res
     return json.dumps(res)
 
 @app.route('/newMessage',methods=['POST'])
 def newMessage():
     if not loggedIn():
         return json.dumps('fail')
-    print request.form
     content = str(request.form['content'])
     receiver = str(request.form['receiverUsername'])
     messageId = message.sendMessage(sender=session['username'], receiver=receiver, title='', content=content)
@@ -561,7 +555,6 @@ Ship order
 def shipOrder():
     if not loggedIn():
         return json.dumps('failed')
-    print request.form
     orderId = str(request.form['orderId'])
     carrier = str(request.form['carrier'])
     trackNo = str(request.form['trackNo'])

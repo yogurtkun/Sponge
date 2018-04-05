@@ -70,7 +70,7 @@ $(document).ready(function () {
                     data: tdata,
                     success: (data) => {
                         if (data !== "Placing order failed!") {
-                            window.location = "/portal"
+                            window.location = "/portal?section=order"
                         }
                     }
                 })

@@ -88,7 +88,12 @@ var delete_post = new Vue({
                 data: tdata,
                 success: (data) => {
                     console.log("success!")
-                    window.location = "/";
+                    if (postType === 'Seller') {
+                        window.location = '/portal?section=sell'
+                    }
+                    if (postType === 'Buyer') {
+                        window.location = '/portal?section=buy'
+                    }
                 }
             })
         },

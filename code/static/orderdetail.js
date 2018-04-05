@@ -112,7 +112,7 @@ var userinfo = new Vue({
                     console.log(data);
                     if (data === "Succeeded!") {
                         alert('Order is canceled!');
-                        window.location.href = "/";
+                        window.location.href = "/portal?section=order";
                     }
                 }
             }).fail(function($xhr) {
