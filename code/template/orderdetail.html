@@ -68,11 +68,25 @@
         {% if order.status == 'In progress'%}
           {% if username == order.sellerName %}
             <button type="button" id="confirm" class="btn btn-primary my-2" v-on:click="updateOrderStatus('Confirmed')">Confirm</button>
-            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
           {% endif %}
-          {% if username == order.buyerName %}
-            <button type="button" id="cancel" class="btn btn-primary my-2" v-on:click="cancelOrder">Cancel</button>
-          {% endif %}
+          <button type="button" id="cancel" class="btn btn-primary my-2" data-toggle="modal" data-target="#delete_window">Cancel</button>
+
+          <div id="delete_window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                   <h3>Cancel Order</h3>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to cancel this order?</p>
+                </div>
+                <div class="modal-footer">
+                <button v-on:click="cancelOrder" id="btnYes" class="btn btn-danger">Yes</button>
+                <button data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
         {% endif %}
 
       

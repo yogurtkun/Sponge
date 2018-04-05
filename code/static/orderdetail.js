@@ -111,7 +111,6 @@ var userinfo = new Vue({
                 success: (data) => {
                     console.log(data);
                     if (data === "Succeeded!") {
-                        alert('Order is canceled!');
                         window.location.href = "/portal?section=order";
                     }
                 }
