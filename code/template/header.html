@@ -112,8 +112,8 @@
 
     {% else %}
     <div style="margin-left:10px">
-      <a class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign up</a>
-      <a class="btn btn-outline-primary my-2 my-sm-0" href="/login">Log in</a>
+      <a class="btn btn-outline-success my-2 my-sm-0" href="/signup" style="width:80px">Sign up</a>
+      <a class="btn btn-outline-primary my-2 my-sm-0" href="/login" style="width:80px">Log in</a>
     </div>
     {% endif %}
   </nav>
@@ -150,6 +150,9 @@
 
     (function() {
       var update = function (count) {
+        if (ell == null) {
+          return;
+        }
         el.setAttribute('data-count', count);
         el.classList.remove('notify');
         el.offsetWidth = el.offsetWidth;

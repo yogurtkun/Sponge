@@ -170,57 +170,7 @@ def _create_database():
     with app.app_context():
         db.drop_all()
         db.create_all()
-        _create_testdata()
     print("All tables created")  
-
-
-def registerUser(username, email, password, zipcode):
-    user = User(username=username, email=email, password=password, zipcode=zipcode)
-    try:
-        db.session.add(user)
-        db.session.commit()
-        return True
-    except Exception as e:
-        print e
-        db.session.rollback()
-        return False
-
-
-def createPost(title, description, category, price, location, image, username, postType):
-    time = datetime.datetime.now()
-    if postType == "Seller":
-        post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=username, time=time)
-    if postType == "Buyer":
-        post = BuyerPost(title=title, description=description, category=category, price=price, location=location, image=image, buyerName=username, time=time)
-    try:
-        db.session.add(post)
-        db.session.commit()
-        return post.postId
-    except Exception as e:
-        print e
-        db.session.rollback()
-        return None
-
-
-def _create_testdata():
-    categories = ['Beauty','Books','Electronics','Clothing','Accessories','Health','Kitchen','Music','Software','Outdoor','Furniture']
-    registerUser("JohnDoe", "johndoe@example.com", "1234", "10025")
-    registerUser("yjc", "yjc@Sponge.com", "1234", "10025")
-    registerUser("pf", "pf@Sponge.com", "1234", "10025")
-    registerUser("zy", "zy@Sponge.com", "1234", "10025")
-    registerUser("dzc", "dzc@Sponge.com", "1234", "10025")
-    for i in range(10):
-        title = "test " + str(i)
-        description = "test description " + str(i)
-        category = categories[i%len(categories)]
-        price = i*100
-        location = "New York"
-        filename = str(i%3) + ".jpg"
-        f = open(os.path.join("tmp", filename), "r")
-        image = f.read()
-        createPost(title, description, category, price, location, image, "JohnDoe", "Seller")
-        createPost(title, description, category, price, location, image, "JohnDoe", "Buyer")
-
 
 if __name__ == '__main__':
     _create_database()
