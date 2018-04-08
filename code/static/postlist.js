@@ -345,31 +345,41 @@ var postlist = new Vue({
 
 
     addFavorite: function(postType, postId){
+
+      for(var i = 0; i < this.items.length; i++)
+      {
+        if(this.items[i].postId === postId && this.items[i].favorite === false)
+        {
+          this.items[i].favorite = true
+        }
+      }
+
       tdata = {"postType": postType, 'postId': postId}
       $.ajax({
           url: '/favorite',
           type: 'POST',
           data: tdata,
           success: (data) => {
-              for(var i = 0; i < this.items.length; i++)
-                if(this.items[i].postId == postId){
-                  this.items[i].favorite = true
-                }
           }
       })
     },
 
     deleteFavorite: function(postType, postId){
+
+      for(var i = 0; i < this.items.length; i++)
+      {
+        if(this.items[i].postId === postId && this.items[i].favorite === true)
+        {
+          this.items[i].favorite = false
+        }
+      }
+
       tdata = {"postType": postType, 'postId': postId}
       $.ajax({
           url: '/deleteFavorite',
           type: 'POST',
           data: tdata,
           success: (data) => {
-              for(var i = 0; i < this.items.length; i++)
-                if(this.items[i].postId == postId){
-                  this.items[i].favorite = false
-                }
           }
       })
     },

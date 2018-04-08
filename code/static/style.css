@@ -283,7 +283,7 @@ ul.product_list {
 .product_buttons_favorite {
   position: absolute;
   bottom: -40%;
-  left: -2px;
+  left: 0px;
   width: 100%;
   text-align: center;
   -webkit-transition: all .35s ease;
@@ -294,46 +294,38 @@ ul.product_list {
 .product_buttons button {
   color: #fff;
   border: none;
-  background: rgba(100, 100, 100, 0.8);
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  background: rgba(190, 182, 182, 0.8);
+  width: 40px;
+  height: 40px;
 }
 
 .product_buttons_favorite button {
-  color: #DF0404;
+  color: #f10215;
   border: none;
-  background: rgba(100, 100, 100, 0.8);
+  background: rgba(190, 182, 182, 0.8);
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
 }
 
 
 .buttons_favorite button {
-  color: #DF0404;
+  color: #f10215;
   border: none;
-  background: rgba(100, 100, 100, 0.8);
+  background: rgba(190, 182, 182, 0.8);
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
 }
 
 .buttons_not_favorite button {
   color: #fff;
   border: none;
-  background: rgba(100, 100, 100, 0.8);
+  background: rgba(190, 182, 182, 0.8);
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
-}
-
-.product_price a {
-  color: #000;
-}
-.price_old {
-  color: #ea2e49;
-  text-decoration: line-through;
+  width: 40px;
+  height: 40px;
 }
 
 /*==========  Mobile First Method  ==========*/
