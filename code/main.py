@@ -463,7 +463,13 @@ def getAllMessage():
 def getUpdateMessage():
     receiver = request.form['receiver']
     time = request.form['time']
-    messages = message.getMessages(sender=session['username'], receiver=receiver) + message.getMessages(sender=receiver, receiver=session['username'])
+    messages = []
+    s_message = message.getMessages(sender=session['username'], receiver=receiver)
+    r_message = message.getMessages(sender=receiver, receiver=session['username'])
+    if s_message is not None:
+        messages += s_message
+    if r_message is not None:
+        messages += r_message
     messages = sorted(messages, key=lambda k : k['time'])
     messages = list(filter(lambda x:x['time']>time,messages))
     return json.dumps(messages)

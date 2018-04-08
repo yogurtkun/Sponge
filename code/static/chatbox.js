@@ -158,6 +158,24 @@ $(document).ready(function () {
                 var self = this;
 
                 $.ajax({
+                    url: 'messageTable',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        self.$nextTick(function () {
+                            self.users = [];
+                            for(d of data){
+                                if(d['username']!== person){
+                                    self.users.push(d);
+                                }else{
+                                    self.users.unshift(d);
+                                }
+                            }
+                        });
+                    }
+                });
+
+                $.ajax({
                     url: 'getUpdateMessage',
                     type: 'POST',
                     dataType: 'json',
