@@ -13,11 +13,11 @@
   <div class="col-sm-4 margin-top:35px">
     <div class="float-right" style="padding-top: 30px">
       {% if post.buyerName and post.buyerName == username%}
-      <button class="btn btn-light text-center" href="/editpost?postType=Buyer&postId={{post.postId}}" style="border: 1px solid #e1e2e5;width: 100px">
+      <button class="btn btn-light text-center" onClick="location.href='/editpost?postType=Buyer&postId={{post.postId}}'" style="border: 1px solid #e1e2e5;width: 100px">
         <i class="fas fa-pencil-alt mx-1" style="color:blue;"></i>Edit</button>
       {% endif %}
       {% if post.sellerName and post.sellerName == username%}
-      <button class="btn btn-light text-center"  href="/editpost?postType=Seller&postId={{post.postId}}" style="border: 1px solid #e1e2e5;width: 100px">
+      <button class="btn btn-light text-center" onClick="location.href='/editpost?postType=Seller&postId={{post.postId}}'" style="border: 1px solid #e1e2e5;width: 100px">
         <i class="fas fa-pencil-alt mx-1" style="color:blue;"></i>Edit</button>
       {% endif %}
       {% if post.buyerName  and post.buyerName == username %}
