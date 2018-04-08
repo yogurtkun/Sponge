@@ -764,9 +764,6 @@ label.star:before {
   }
 }
 
-input[type=checkbox] {
-  display: none;
-}
 
 input[type=checkbox] + svg {
   display: block;
