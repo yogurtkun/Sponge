@@ -109,16 +109,17 @@
                   <div class="form-group">
                     <label for="category">Shipping Carrier:</label>
                     <select v-model="carrier" class="form-control">
-                        <option disabled selected value> -- select an option -- </option>
-                        <option>USPS</option>
+                        <option selected>USPS</option>
                         <option>UPS</option>
                         <option>FedEx</option>
                         <option>DHL</option>
                     </select>
+                    <p id="error1" style="color:red;"></p>
                   </div>
                   <div class="form-group">
                     <label for="trackNo">Track Number</label>
-                    <input class="form-control" required="required" pattern="[A-Za-z0-9]{1,20}" v-model="trackNo">
+                    <input class="form-control" v-model="trackNo">
+                    <p id="error2" style="color:red;"></p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

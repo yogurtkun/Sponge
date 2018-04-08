@@ -59,26 +59,45 @@ var userinfo = new Vue({
 
         ShipOrder:function(){
             console.log('ShipOrder')
-            this.orderId = this.get_order_id()
+            console.log(this.carrier === undefined)
+            console.log(this.trackNo === undefined)
 
-            var tdata = {'carrier':this.carrier, 'trackNo':this.trackNo, 'orderId':this.orderId}
-
-            this.ship_submit = true
-
-            $.ajax({
-            url: '/shipOrder',
-            type: 'POST',
-            data: tdata,
-            dataType : 'json',
-            success: (data) => {
-                console.log(data);
-                if (data === "succeeded") {
-                    this.updateOrderStatus('Shipped');
+            if (this.carrier === undefined || this.trackNo === undefined) {
+                if (this.carrier === undefined) {
+                    document.getElementById("error1").innerHTML = "Please select a shipping carrier.";
+                } else {
+                    document.getElementById("error1").innerHTML = "";
                 }
-            },
-            }).fail(function($xhr) {
-              var data = $xhr.responseJSON;
-            });
+                if (this.trackNo === undefined) {
+                    document.getElementById("error2").innerHTML = "Please input a valid track number.";
+                } else {
+                    document.getElementById("error2").innerHTML = "";
+                }
+            }
+            else {
+
+                this.orderId = this.get_order_id()
+
+                var tdata = {'carrier':this.carrier, 'trackNo':this.trackNo, 'orderId':this.orderId}
+
+                this.ship_submit = true
+
+                $.ajax({
+                url: '/shipOrder',
+                type: 'POST',
+                data: tdata,
+                dataType : 'json',
+                success: (data) => {
+                    console.log(data);
+                    if (data === "succeeded") {
+                        this.updateOrderStatus('Shipped');
+                    }
+                },
+                }).fail(function($xhr) {
+                  var data = $xhr.responseJSON;
+                });
+
+            }
 
         },
 
