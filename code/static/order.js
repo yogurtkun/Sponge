@@ -7,8 +7,7 @@ $(document).ready(function () {
                 ad1: "",
                 ad2: "",
                 city: "",
-                region: "",
-                country: ""
+                state: ""
             },
             transactionType: "",
             ifCheck: false
@@ -48,8 +47,8 @@ $(document).ready(function () {
                     ispass = false;
                 }
 
-                if (this.rcvAddress.country === "") {
-                    this.errors.push("Country Required");
+                if (this.rcvAddress.state === "") {
+                    this.errors.push("State Required");
                     ispass = false;
                 }
                 return ispass;
