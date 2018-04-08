@@ -24,6 +24,7 @@ var postlist = new Vue({
   },
   mounted(){
     this.query_buyer_seller_post()
+    this.check_init_filter()
   },
   watch: {
     filter_price_sorting: function(){
@@ -97,6 +98,24 @@ var postlist = new Vue({
           var data = $xhr.responseJSON;
           console.log(data);
       });
+    },
+
+    check_init_filter:function(){
+      var urlParams = window.location.search.substr(1)
+      
+      var location_index = urlParams.indexOf("location");
+      var category_index = urlParams.indexOf("category");
+      if(location_index !== -1)
+      {
+        this.filter_loc = String(urlParams.substring(location_index + "location=".length, urlParams.length).replace(/%20/g, " "))
+      }
+      else if(category_index !== -1)
+      {
+        this.filter_category_index = String(urlParams.substring(category_index + "category=".length, urlParams.length).replace(/%20/g, " "))
+      }
+
+      console.log(this.filter_loc)
+      console.log(this.filter_category_index)
     },
 
     reset_filter: function(){
@@ -291,6 +310,10 @@ var postlist = new Vue({
 
     set_category: function(category){
       this.filter_category_index = category   
+    },
+
+    set_location: function(location){
+      this.filter_loc = location
     },
 
     sortWithIndeces: function(toSort, order) {

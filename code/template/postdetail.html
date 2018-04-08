@@ -81,7 +81,7 @@
 
         <div class="col-sm-8">
           <div class="row">
-            <div class="col-sm-">
+            <div class="col-sm-8">
               <h1 id="post-title" style="display:inline-block;" >{{post.title}}</h1>
             </div>
 
@@ -117,14 +117,14 @@
 
         {% if post.location %}
         <div class="col-sm-3">
-          <a href="#">{{post.location}}</a>
+          <a href="/postlist?location={{post.location}}">{{post.location}}</a>
         </div>
         <div class="col-sm-2">
-          <a class="float-right" href="#">{{post.category}}</a>
+          <a class="float-right" href="/postlist?category={{post.category}}">{{post.category}}</a>
         </div>
         {% else %}
         <div class="col-sm-5">
-          <a class="float-right" href="#">{{post.category}}</a>
+          <a class="float-right" href="/postlist?category={{post.category}}">{{post.category}}</a>
         </div>
         {% endif %}
       </div>

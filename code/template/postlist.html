@@ -182,10 +182,10 @@
               </div>
               <div class="col-3">
                 <p class="row text-left my-3">Category : &nbsp
-                  <a href="#"> {{item.category}}</a>
+                  <a href="javascript:void(0);" v-on:click="set_category(item.category)"> {{item.category}}</a>
                 </p> 
                 <p v-if="item.location" class="row text-left">Location : &nbsp
-                  <a href="#"> {{item.location}}</a>
+                  <a href="javascript:void(0);" v-on:click="set_location(item.location)"> {{item.location}}</a>
                 </p>
                 <p class="row text-left">{{item.time}}</p>
               </div>
