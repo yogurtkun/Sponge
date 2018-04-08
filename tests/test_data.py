@@ -22,6 +22,7 @@ messages = []
 users.append({"username": "MaxWilson", "email": "mw2333@sponge.com", "password": "1234", "zipcode":" 10001"})
 users.append({"username": "IreneNash", "email": "in2333@sponge.com", "password": "1234", "zipcode":" 10002"})
 users.append({"username": "CarlLyman", "email": "cl2333@sponge.com", "password": "1234", "zipcode":" 10003"})
+users.append({"username": "Jessica", "email": "jessica@sponge.com", "password": "1234", "zipcode":" 10025"})
 users.append({"username": "system", "email": "system@sponge.com", "password": "1234", "zipcode":" 10000"})
 
 sellerPosts.append({"title": "A brand new handbag", "category":"Beauty", "price":800, "location": "New York", "image": "bag.jpg", "description": "I just bought a handbag. But its color is different from what I expected. So I want to sell it to someone else. This bag is brand new and never used outside. its original price is $1000. I can give a discount. PM me if you want:)"})
