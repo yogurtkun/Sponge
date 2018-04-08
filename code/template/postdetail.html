@@ -1,7 +1,7 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
 
 <div class="row">
-  <div class="col-sm-">
+  <div class="col-sm-8">
     {% if buyer %}
     <h1 class="mt-4">Buyer Post Details</h1>      
     {% endif %}
@@ -9,64 +9,63 @@
     <h1 class="mt-4">Seller Post Details</h1>
     {% endif %}
   </div>
-  <div class="col-sm-1" style="margin-top: 35px;margin-bottom: 10px">
-    <div>
-      {% if seller %}
-      <span id="favoriteBtn" class="invisible">
-      {% else %}
-      <span id="favoriteBtn" class="invisible">
+
+  <div class="col-sm-4 margin-top:35px">
+    <div class="float-right" style="padding-top: 30px">
+      {% if post.buyerName and post.buyerName == username%}
+      <button class="btn btn-light text-center" onClick="location.href='/editpost?postType=Buyer&postId={{post.postId}}'" style="border: 1px solid #e1e2e5;width: 100px">
+        <i class="fas fa-pencil-alt mx-1" style="color:blue;"></i>Edit</button>
       {% endif %}
-        <span v-if="is_favorite===undefined">
-          {% if post.favorite == true %}
-          <span  class="buttons_favorite">
-            {% if buyer %}
-            <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite "><i class="fa fa-heart"></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </span>
-          {% else %}
-          <span class="buttons_not_favorite">
-            {% if buyer %}
-            <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </span>
-          {% endif %}
-        </span>
-        <span v-else-if="is_favorite===true">
-          <span class="buttons_favorite">
-            {% if buyer %}
-            <button v-on:click="deleteFavorite('Buyer', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart" ></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="deleteFavorite('Seller', {{post.postId}})" class="heart_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </span>
-        </span>
-        <span v-else>
-          <span class="buttons_not_favorite">
-            {% if buyer %}
-            <button v-on:click="addFavorite('Buyer', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-            {% if seller %}
-            <button v-on:click="addFavorite('Seller', {{post.postId}})" class="heart_not_favorite"><i class="fa fa-heart"></i></button>
-            {% endif %}
-          </span>
-        </span>
+      {% if post.sellerName and post.sellerName == username%}
+      <button class="btn btn-light text-center" onClick="location.href='/editpost?postType=Seller&postId={{post.postId}}'" style="border: 1px solid #e1e2e5;width: 100px">
+        <i class="fas fa-pencil-alt mx-1" style="color:blue;"></i>Edit</button>
+      {% endif %}
+      {% if post.buyerName  and post.buyerName == username %}
+      <button class="btn btn-light text-center"   data-toggle="modal" data-target="#delete_window" href="#" style="border: 1px solid #e1e2e5;width: 100px">
+        <i class="fas fa-trash-alt mx-1" style="color:red;"></i>Delete</button>
+      {% endif %}
+      {% if post.sellerName and post.sellerName == username%}
+      <button class="btn btn-light text-center"   data-toggle="modal" data-target="#delete_window" href="#" style="border: 1px solid #e1e2e5;width: 100px">
+        <i class="fas fa-trash-alt mx-1" style="color:red;"></i>Delete</button>
+      {% endif %}
+
+      <button id="favoriteBtn" class="btn btn-light text-center" v-on:click="favorite_decider()" style="border: 1px solid #e1e2e5;width: 100px">
+        <span v-bind:style="{color:is_favorite?color_favorite:color_not_favorite}"> 
+          <i class="fa fa-heart" ></i>
       </span>
+        Favorite
+      </button>
+    </div>
+    <div id="delete_window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+             <h3>Delete Post</h3>
+          </div>
+          <div class="modal-body">
+            <p>You are about to delete the post.</p>
+            <p>Do you want to proceed?</p>
+          </div>
+          <div class="modal-footer">
+          {% if post.buyerName %}
+          <button v-on:click="delete_post('Buyer', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
+          {% endif %}
+          {% if post.sellerName %}
+          <button v-on:click="delete_post('Seller', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
+          {% endif %}
+          <button data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <hr>
 
-<div class="container mt-5">
+<div class="container mt-5" >
   <div class="row">
-    <div class="col-sm-6 text-left" style="width:500px; height:500px">
+    <div class="col-sm-6 text-left" style="width:500px; height:500px; max-height: 100%;padding-left: 0px">
         <!-- Preview Image -->
         {% if post.image %}
         <img src="data:;base64,{{ post.image }}"  style="width:500px"/>
@@ -75,60 +74,17 @@
         {% endif %}
     </div>
       
-    <div class="col-sm-6">
+    <div class="col-sm-6 padding-right: 0px">
       <div class="row">
 
         <p hidden>postId={{post.postId}}#</p>
 
         <div class="col-sm-8">
           <div class="row">
-            <div class="col-sm-">
+            <div class="col-sm-8">
               <h1 id="post-title" style="display:inline-block;" >{{post.title}}</h1>
             </div>
-            <div class="col-sm-1" style="margin-top: -10px; margin-left: -25px">
-              <b-dropdown offset="10" id="more-button" variant="link" size="lg"  no-caret  >
-                <template slot="button-content">
-                  <!-- &#x1f50d; -->
-                  <i class="fas fa-ellipsis-h"></i>
-                </template>
-                {% if post.buyerName %}
-                <b-dropdown-item href="/editpost?postType=Buyer&postId={{post.postId}}" style="color:blue" class="float-left">
-                  <i class="fas fa-pencil-alt mx-2"></i>Edit</b-dropdown-item>
-                {% endif %}
-                {% if post.sellerName %}
-                <b-dropdown-item href="/editpost?postType=Seller&postId={{post.postId}}" style="color:blue" class="float-left"><i class="fas fa-pencil-alt mx-2"></i>Edit</b-dropdown-item>
-                {% endif %}
-                {% if post.buyerName %}
-                <b-dropdown-item data-toggle="modal" data-target="#delete_window" href="#" style="color:red" class="float-left"><i class="fas fa-trash-alt mx-2"></i>Delete</b-dropdown-item>
-                {% endif %}
-                {% if post.sellerName %}
-                <b-dropdown-item data-toggle="modal" data-target="#delete_window" href="#" style="color:red" class="float-left"><i class="fas fa-trash-alt mx-2"></i>Delete</b-dropdown-item>
-                {% endif %}
-              </b-dropdown>
-            </div>
-          </div>
-        </div>
 
-        <div id="delete_window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                 <h3>Delete Post</h3>
-              </div>
-              <div class="modal-body">
-                <p>You are about to delete the post.</p>
-                <p>Do you want to proceed?</p>
-              </div>
-              <div class="modal-footer">
-              {% if post.buyerName %}
-              <button v-on:click="delete_post('Buyer', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
-              {% endif %}
-              {% if post.sellerName %}
-              <button v-on:click="delete_post('Seller', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
-              {% endif %}
-              <button data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</button>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -161,24 +117,24 @@
 
         {% if post.location %}
         <div class="col-sm-3">
-          <a href="#">{{post.location}}</a>
+          <a href="/postlist?location={{post.location}}">{{post.location}}</a>
         </div>
         <div class="col-sm-2">
-          <a class="float-right" href="#">{{post.category}}</a>
+          <a class="float-right" href="/postlist?category={{post.category}}">{{post.category}}</a>
         </div>
         {% else %}
         <div class="col-sm-5">
-          <a class="float-right" href="#">{{post.category}}</a>
+          <a class="float-right" href="/postlist?category={{post.category}}">{{post.category}}</a>
         </div>
         {% endif %}
       </div>
       <hr>
       <strong>Description : </strong>
-      <textarea readonly class="form-control-plaintext unwriteable-text text-left" style=" resize: none;min-height:300px;">{{post.description}}</textarea>
+      <textarea readonly class="form-control-plaintext unwriteable-text text-left" style=" resize: none;">{{post.description}}</textarea>
       
       {% if seller %}
       {% if username != post.sellerName %}
-      <div id="checkbutton" class="btn btn-primary btn-lg float-center" v-on:click="checkout" role="button" style="position:absolute; bottom: 0px; width: 40%; margin-left: 30%;margin-right: 30%">Buy
+      <div id="checkbutton" class="btn btn-primary btn-lg float-center" v-on:click="checkout" role="button" style="position:absolute; bottom: 0px; width: 40%; margin-left: 30%;margin-right: 30%;">Buy
       </div>
       {% endif %} 
       <div id="checkbutton"></div>

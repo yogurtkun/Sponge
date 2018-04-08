@@ -24,6 +24,7 @@ var postlist = new Vue({
   },
   mounted(){
     this.query_buyer_seller_post()
+    this.check_init_filter()
   },
   watch: {
     filter_price_sorting: function(){
@@ -97,6 +98,24 @@ var postlist = new Vue({
           var data = $xhr.responseJSON;
           console.log(data);
       });
+    },
+
+    check_init_filter:function(){
+      var urlParams = window.location.search.substr(1)
+      
+      var location_index = urlParams.indexOf("location");
+      var category_index = urlParams.indexOf("category");
+      if(location_index !== -1)
+      {
+        this.filter_loc = String(urlParams.substring(location_index + "location=".length, urlParams.length).replace(/%20/g, " "))
+      }
+      else if(category_index !== -1)
+      {
+        this.filter_category_index = String(urlParams.substring(category_index + "category=".length, urlParams.length).replace(/%20/g, " "))
+      }
+
+      console.log(this.filter_loc)
+      console.log(this.filter_category_index)
     },
 
     reset_filter: function(){
@@ -293,6 +312,10 @@ var postlist = new Vue({
       this.filter_category_index = category   
     },
 
+    set_location: function(location){
+      this.filter_loc = location
+    },
+
     sortWithIndeces: function(toSort, order) {
       for (var i = 0; i < toSort.length; i++) {
         toSort[i] = [toSort[i], i];
@@ -345,31 +368,41 @@ var postlist = new Vue({
 
 
     addFavorite: function(postType, postId){
+
+      for(var i = 0; i < this.items.length; i++)
+      {
+        if(this.items[i].postId === postId && this.items[i].favorite === false)
+        {
+          this.items[i].favorite = true
+        }
+      }
+
       tdata = {"postType": postType, 'postId': postId}
       $.ajax({
           url: '/favorite',
           type: 'POST',
           data: tdata,
           success: (data) => {
-              for(var i = 0; i < this.items.length; i++)
-                if(this.items[i].postId == postId){
-                  this.items[i].favorite = true
-                }
           }
       })
     },
 
     deleteFavorite: function(postType, postId){
+
+      for(var i = 0; i < this.items.length; i++)
+      {
+        if(this.items[i].postId === postId && this.items[i].favorite === true)
+        {
+          this.items[i].favorite = false
+        }
+      }
+
       tdata = {"postType": postType, 'postId': postId}
       $.ajax({
           url: '/deleteFavorite',
           type: 'POST',
           data: tdata,
           success: (data) => {
-              for(var i = 0; i < this.items.length; i++)
-                if(this.items[i].postId == postId){
-                  this.items[i].favorite = false
-                }
           }
       })
     },

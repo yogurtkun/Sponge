@@ -65,7 +65,7 @@
     </button>
     <a class="navbar-brand" href="/">Sponge</a>
 
-    <div class="nav-item dropdown nav-margin">
+    <div class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Post
       </a>
@@ -112,8 +112,8 @@
 
     {% else %}
     <div style="margin-left:10px">
-      <a class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign up</a>
-      <a class="btn btn-outline-primary my-2 my-sm-0" href="/login">Log in</a>
+      <a class="btn btn-outline-success my-2 my-sm-0" href="/signup" style="width:80px">Sign up</a>
+      <a class="btn btn-outline-primary my-2 my-sm-0" href="/login" style="width:80px">Log in</a>
     </div>
     {% endif %}
   </nav>
@@ -150,6 +150,9 @@
 
     (function() {
       var update = function (count) {
+        if (el == null) {
+          return;
+        }
         el.setAttribute('data-count', count);
         el.classList.remove('notify');
         el.offsetWidth = el.offsetWidth;

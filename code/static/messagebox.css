@@ -358,7 +358,7 @@
   }
 
   #frame #sidepanel #contacts ul li.contact .name {
-    font-size: 1.5em;
+    font-size: 1em;
   }
 
   @media screen and (max-width: 735px) {
