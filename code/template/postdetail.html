@@ -63,14 +63,14 @@
 
 <hr>
 
-<div class="container mt-5" >
+<div class="container mt-5" style="margin-bottom: 100px">
   <div class="row">
     <div class="col-sm-6 text-left" style="width:500px; height:500px; max-height: 100%;padding-left: 0px">
         <!-- Preview Image -->
         {% if post.image %}
-        <img src="data:;base64,{{ post.image }}"  style="width:500px"/>
+        <img src="data:;base64,{{ post.image }}"  style="width:500px;height:100%;margin-bottom: 20px"/>
         {% else %}
-        <img src="http://via.placeholder.com/500"  style="width:500px"/>
+        <img src="http://via.placeholder.com/500"  style="width:500px;height:100%;margin-bottom: 20px"/>
         {% endif %}
     </div>
       
