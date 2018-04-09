@@ -23,7 +23,7 @@ def sendMessage(receiver, content, sender='system', title=''):
 
 
 
-def getMessages(sender=None, receiver=None, read=None):
+def getMessages(currentUser=None, sender=None, receiver=None, read=None):
     try:
         query = Message.query
         if sender is not None:
@@ -35,9 +35,13 @@ def getMessages(sender=None, receiver=None, read=None):
         messages = []
         for message in query.all():
             messages.append(from_sql(message))
+            if message.receiver == currentUser:
+                message.seen = True
+        db.session.commit()
         return messages
     except Exception as e:
         print e
+        db.session.rollback()
         return None
 
 

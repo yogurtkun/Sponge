@@ -1,5 +1,4 @@
 {# [START form] #} {% extends "header.html"%} {% block content %}
-<script src="static/order.js"></script>
 
 
     <div class="container" style="max-width:75%">
@@ -48,7 +47,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="transactionType" class="col-form-label">*Transaction Type</label>
+                    <label for="transactionType" class="col-form-label">Transaction Type*</label>
                     <select class="form-control" v-model="transactionType" v-on:change="checkType" v-bind:disabled="ifCheck?true:false">
                         <option>Face to Face</option>
                         <option>Online</option>
@@ -66,7 +65,7 @@
                 <!-- address-line1 input-->
                 <div class="form-group" id="addressmayhide">
                     <div class="form-group">
-                        <label class="col-form-label">*Address Line 1</label>
+                        <label class="col-form-label">Address Line 1*</label>
                         <input id="address-line1" name="address-line1" type="text" v-model="rcvAddress.ad1" class="form-control" v-bind:readonly="ifCheck?true:false">
                         <p class="help-block">Street address, P.O. box, company name, c/o</p>
 
@@ -80,18 +79,17 @@
                     </div>
                     <!-- city input-->
                     <div class="form-group">
-                        <label class="col-form-label">*City / Town</label>
+                        <label class="col-form-label">City / Town*</label>
                         <input id="city" name="city" type="text" v-model="rcvAddress.city" class="form-control" v-bind:readonly="ifCheck?true:false">
                         <p class="help-block"></p>
 
                     </div>
                     <!-- state select -->
                     <div class="form-group">
-                        <label class="col-form-label">*State</label>
+                        <label class="col-form-label">State*</label>
 
                         <select v-bind:disabled="ifCheck?true:false" v-model="rcvAddress.state" id="state" name="state" class="form-control">
                             <option value="" selected="selected">(please select a State)</option>
-                            <option value="">N/A</option>
                             <option value="Alaska">Alaska</option>
                             <option value="Alabama">Alabama</option>
                             <option value="Arkansas">Arkansas</option>
@@ -165,8 +163,8 @@
 
                     <div class="form-group col-md-2">
                         <a class="form-control btn btn-primary mb-2" v-on:click="checkout" style="text-align:center;color:white">Checkout</a>
-                        <div style="color:rgb(233, 59, 16);font-size:1.2vh">
-                            Please Click Again to Checkout!
+                        <div style="color:rgb(23, 233, 16);font-size:1.2vh">
+                            Click Again to Checkout!
                         </div>
                     </div>
 
@@ -181,4 +179,5 @@
         </div>
     </div>
 
+    <script src="static/order.js"></script>
     {% endblock %} {# [END form] #}

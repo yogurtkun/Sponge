@@ -1,4 +1,4 @@
-$(document).ready(function () {
+
     var checkoutInfo = new Vue({
         el: '#checkoutform',
         data: {
@@ -22,6 +22,7 @@ $(document).ready(function () {
                         newAddress = JSON.parse(retUser.address);
                         this.rcvAddress = newAddress;
                     }
+                    this.transactionType="Online";
                 }
             });
         },
@@ -46,8 +47,9 @@ $(document).ready(function () {
                     this.errors.push("City Required");
                     ispass = false;
                 }
-
-                if (this.rcvAddress.state === "") {
+                
+                console.log(this.rcvAddress.state)
+                if (this.rcvAddress.state === "" || typeof this.rcvAddress.state === 'undefined') {
                     this.errors.push("State Required");
                     ispass = false;
                 }
@@ -100,4 +102,3 @@ $(document).ready(function () {
             }
         }
     });
-});
