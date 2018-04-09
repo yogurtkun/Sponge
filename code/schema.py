@@ -150,7 +150,7 @@ class Review(db.Model):
     reviewee = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     revieweeUser = db.relationship("User", foreign_keys=[reviewee], lazy=True, cascade="all,delete")
     rating = db.Column(db.Integer)
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text)
     time = db.Column(db.DateTime)
     # a review must be related to an order
     orderId = db.Column(db.Integer, db.ForeignKey("order.orderId", ondelete='CASCADE'), nullable=False)

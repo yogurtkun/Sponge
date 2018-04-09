@@ -482,12 +482,14 @@ Add review on users
 def addReview():
     if not loggedIn():
         return "Please log in first!"
+    print request.form
     reviewer = session['username']
     reviewee = str(request.form['reviewee'])
     rating = int(request.form['rating'])
-    content = str(request.form['content'])
+    content = str(request.form['content']) if 'content' in request.form.keys() else None
     orderId = int(request.form['orderId'])
     reviewId = review.addReview(reviewer, reviewee, rating, content, orderId)
+    print reviewId
     if reviewId == None:
         return json.dumps("Review failed!")
     return json.dumps("Review succeeded!")
