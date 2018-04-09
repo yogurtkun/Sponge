@@ -33,6 +33,8 @@ buyerPosts.append({"title": "Need a cheap ipad air", "category": "Electronics", 
 with main.app.app_context():
     # add users
     for user in users:
+        if user['username'] == 'system':
+            users.remove(user)
         account.registerUser(user["username"], user["email"], user["password"], user["zipcode"])
         message.sendMessage(receiver=user["username"], content="Hello, "+user["username"] + ". Welcome to sponge!")
 
