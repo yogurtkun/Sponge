@@ -34,7 +34,9 @@ def getMessages(sender=None, receiver=None, read=None):
             query = query.filter_by(seen=read)
         messages = []
         for message in query.all():
-            messages.append(from_sql(message))
+            data = from_sql(message)
+            data['seen'] = True
+            messages.append(data)
         return messages
     except Exception as e:
         print e
