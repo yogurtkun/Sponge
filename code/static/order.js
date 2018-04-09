@@ -22,6 +22,7 @@
                         newAddress = JSON.parse(retUser.address);
                         this.rcvAddress = newAddress;
                     }
+                    this.transactionType="Online";
                 }
             });
         },
