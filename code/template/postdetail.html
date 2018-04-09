@@ -68,34 +68,31 @@
     <div class="col-sm-6 text-left" style="width:500px; height:500px; max-height: 100%;padding-left: 0px">
         <!-- Preview Image -->
         {% if post.image %}
-        <img src="data:;base64,{{ post.image }}"  style="width:500px;height:100%;margin-bottom: 20px"/>
+        <img src="data:;base64,{{ post.image }}"  style="width:500px;"/>
         {% else %}
-        <img src="http://via.placeholder.com/500"  style="width:500px;height:100%;margin-bottom: 20px"/>
+        <img src="http://via.placeholder.com/500"  style="width:500px;"/>
         {% endif %}
     </div>
       
     <div class="col-sm-6 padding-right: 0px">
       <div class="row">
-
         <p hidden>postId={{post.postId}}#</p>
-
-        <div class="col-sm-8">
-          <div class="row">
-            <div class="col-sm-8">
-              <h2 id="post-title" style="display:inline-block;" >{{post.title}}</h2>
-            </div>
-
-          </div>
+        <div class="col-sm-12">
+          <h2 id="post-title" style="display:inline-block;" >{{post.title}}</h2>
         </div>
+      </div>
 
-        <div class="col-sm-4">
+      <div class="row my-2">
+        <div class="col-sm-12">
+          <label class="my-2" style="font-size:25px;vertical-align: top;">Price:</label>
           {% if post.price %}
-          <h1 class="float-right text-danger">${{post.price}}</h1>
+          <h1 class="text-danger" style="display:inline;">${{post.price}}</h1>
           {% else %}
-          <h3 class="my-2 float-right text-danger">Not Specify</h3>
+          <h3 class="my-2 text-danger" style="display:inline;">Not Specify</h3>
           {% endif %}
         </div>
       </div>
+
       <div class="row">
         <div class="col-sm-7">
           <p id="post-date">

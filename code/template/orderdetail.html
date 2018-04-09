@@ -2,31 +2,35 @@
 
 <h1 class="mt-4">Order Details</h1>
 <hr>
-<div class="container">
+<div class="container" style="margin-bottom: 100px">
   <div class="row">
-    <div class="col-sm-6 text-left" style="width:500px; height:500px">
+    <div class="col-sm-6 text-left" style="width:500px; height:500px; max-height: 100%;padding-left: 0px">
         <!-- Preview Image -->
         {% if order.image %}
-        <img src="data:;base64,{{ order.image }}"  style="width:500px"/>
+        <img src="data:;base64,{{ order.image }}"  style="width:500px;"/>
         {% else %}
-        <img src="http://via.placeholder.com/500"  style="width:500px"/>
+        <img src="http://via.placeholder.com/500"  style="width:500px;"/>
         {% endif %}
     </div>
       
     <div class="col-sm-6">
       <div class="row">
-
-        <div class="col-sm-8">
-          <h1 id="order-title" style="display:inline-block">{{order.title}}</h1>
+        <div class="col-sm-12">
+          <h2 id="post-title" style="display:inline-block;" >{{order.title}}</h2>
         </div>
-        <div class="col-sm-4">
+      </div>
+  
+      <div class="row my-2">
+        <div class="col-sm-12">
+          <label class="my-2" style="font-size:25px;vertical-align: top;">Price:</label>
           {% if order.price %}
-          <h1 class="float-right text-danger">${{order.price}}</h1>
+          <h1 class="text-danger" style="display:inline;">${{order.price}}</h1>
           {% else %}
-          <h3 class="my-2 float-right text-danger">Not Specify</h3>
+          <h3 class="my-2 text-danger" style="display:inline;">Not Specify</h3>
           {% endif %}
         </div>
       </div>
+          
       <div class="row">
         <div class="col-sm-7">
           <p>
