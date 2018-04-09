@@ -85,13 +85,19 @@ def getOrderByUser(username):
 
 
 def updateStatus(orderId, status):
+    states = ['In progress', 'Confirmed', 'Shipped', 'Completed']
     order = Order.query.get(orderId)
-    order.status = status
+    if states.index(order.status) + 1 == states.index(status):
+        order.status = status
+    else:
+        return False
     try:
         db.session.commit()
+        return True
     except Exception as e:
         print e
         db.session.rollback()
+        return False
 
 
 def ship(orderId, carrier, trackNo):

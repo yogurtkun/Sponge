@@ -455,7 +455,7 @@ def newMessage():
 @app.route('/getAllMessage',methods=['POST'])
 def getAllMessage():
     receiver = request.form['receiver']
-    messages = message.getMessages(sender=session['username'], receiver=receiver) + message.getMessages(sender=receiver, receiver=session['username'])
+    messages = message.getMessages(sender=session['username'], receiver=receiver, currentUser=session['username']) + message.getMessages(sender=receiver, receiver=session['username'], currentUser=session['username'])
     messages = sorted(messages, key=lambda k : k['time'])
     return json.dumps(messages)
 
@@ -464,8 +464,8 @@ def getUpdateMessage():
     receiver = request.form['receiver']
     time = request.form['time']
     messages = []
-    s_message = message.getMessages(sender=session['username'], receiver=receiver)
-    r_message = message.getMessages(sender=receiver, receiver=session['username'])
+    s_message = message.getMessages(sender=session['username'], receiver=receiver, currentUser=session['username'])
+    r_message = message.getMessages(sender=receiver, receiver=session['username'], currentUser=session['username'])
     if s_message is not None:
         messages += s_message
     if r_message is not None:
@@ -549,9 +549,10 @@ def updateOrderStatus():
         return json.dumps('fail')
     orderId = str(request.form['orderId'])
     status = str(request.form['status'])
-    order.updateStatus(orderId, status)
-    message.orderStatusNotification(orderId, status)
-    return json.dumps('success')
+    if order.updateStatus(orderId, status):
+        message.orderStatusNotification(orderId, status)
+        return json.dumps('success')
+    return json.dumps('fail')
 
 
 '''

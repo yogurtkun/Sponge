@@ -26,9 +26,9 @@ users.append({"username": "Jessica", "email": "jessica@sponge.com", "password": 
 users.append({"username": "system", "email": "system@sponge.com", "password": "1234", "zipcode":" 10000"})
 
 sellerPosts.append({"title": "A brand new handbag", "category":"Beauty", "price":800, "location": "New York", "image": "bag.jpg", "description": "I just bought a handbag. But its color is different from what I expected. So I want to sell it to someone else. This bag is brand new and never used outside. its original price is $1000. I can give a discount. PM me if you want:)"})
-sellerPosts.append({"title": "Macbook pro 15 inch 2016", "category": "Electronics", "price" : 666, "location": "Seattle", "image": "mbp.jpg", "description": "This mbp has been used for two years but still in good condition. Not a good choice for gaming but enough for browsing websites and writing documents. Prefer local transaction. Online transaction is acceptable only if the buyer has good credit history."})
+sellerPosts.append({"title": "Macbook pro 15 inch 2016", "category": "Electronics", "price" : 666, "location": "Washington", "image": "mbp.jpg", "description": "This mbp has been used for two years but still in good condition. Not a good choice for gaming but enough for browsing websites and writing documents. Prefer local transaction. Online transaction is acceptable only if the buyer has good credit history."})
 
-buyerPosts.append({"title": "Need a cheap ipad air", "category": "Electronics", "price": 100, "location": "Los Angeles", "image": "ipad.jpg", "description": "I need a used ipad for studying. I don't want to bring laptop to school every day cuz it's too heavy. It's ok if your ipad is not in good condition as long as it can function well. PM me for detail if you are interested."})
+buyerPosts.append({"title": "Need a cheap ipad air", "category": "Electronics", "price": 100, "location": "California", "image": "ipad.jpg", "description": "I need a used ipad for studying. I don't want to bring laptop to school every day cuz it's too heavy. It's ok if your ipad is not in good condition as long as it can function well. PM me for detail if you are interested."})
 
 with main.app.app_context():
     # add users
