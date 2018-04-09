@@ -23,7 +23,7 @@ def sendMessage(receiver, content, sender='system', title=''):
 
 
 
-def getMessages(currentUser, sender=None, receiver=None, read=None):
+def getMessages(currentUser=None, sender=None, receiver=None, read=None):
     try:
         query = Message.query
         if sender is not None:
