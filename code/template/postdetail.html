@@ -82,7 +82,7 @@
         <div class="col-sm-8">
           <div class="row">
             <div class="col-sm-8">
-              <h1 id="post-title" style="display:inline-block;" >{{post.title}}</h1>
+              <h2 id="post-title" style="display:inline-block;" >{{post.title}}</h2>
             </div>
 
           </div>
@@ -130,11 +130,11 @@
       </div>
       <hr>
       <strong>Description : </strong>
-      <textarea readonly class="form-control-plaintext unwriteable-text text-left" style=" resize: none;">{{post.description}}</textarea>
+      <label class="form-control-plaintext text-left" >{{post.description}}</label>
       
       {% if seller %}
       {% if username != post.sellerName %}
-      <div id="checkbutton" class="btn btn-primary btn-lg float-center" v-on:click="checkout" role="button" style="position:absolute; bottom: 0px; width: 40%; margin-left: 30%;margin-right: 30%;">Buy
+      <div id="checkbutton" class="btn btn-primary btn-lg float-center my-5" v-on:click="checkout" role="button" style="width: 40%; margin-left: 30%;margin-right: 30%;">Buy
       </div>
       {% endif %} 
       <div id="checkbutton"></div>

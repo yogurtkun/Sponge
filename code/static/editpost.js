@@ -25,7 +25,7 @@ var save = new Vue({
 	    $.ajax({
 	    url: '/getPostData',
 	    dataType: 'json',
-      type: "POST",
+        type: "POST",
 	    data: tdata,
 
 	    success: (json)=>{
@@ -43,14 +43,14 @@ var save = new Vue({
 	    });
 	  },
 
-	  set_postType_postId(){
-		  var href = window.location.href;0
-      var postType = href.substr(href.indexOf("postType")+9, 6)
-      var postId = href.substr(href.indexOf("postId")+7, 9)
+    set_postType_postId(){
+	    var href = window.location.href;
+        var postType = href.substring(href.indexOf("postType")+9, href.indexOf("&"))
+        var postId = href.substr(href.indexOf("postId")+7, 9)
 
-      this.postType = postType
-      this.postId = postId
-	  },
+        this.postType = postType
+        this.postId = postId
+	},
 
   	save_post: function(){
 
@@ -60,20 +60,28 @@ var save = new Vue({
   		}
 
   		tdata={"postType":this.postType, "postId":this.postId,
-  					 "title": this.title, "category": this.category,
-  					 "location": this.location, "price": this.price,
-  					 "description": this.description,
-  					 "image":this.imageName}
+  				"title": this.title, "category": this.category,
+  				"location": this.location, "price": this.price,
+  				"description": this.description,
+  				"image":this.imageName}
 
 	    $.ajax({
 	    url: '/updatepost',
 	    dataType: 'json',
-      type: "POST",
+        type: "POST",
 	    data: tdata,
 
 	    success: (json)=>{
 	      console.log(json);
-	      this.is_update_success = true
+		  this.is_update_success = true
+		  
+	      console.log(this.postType);
+		  if (this.postType === 'Seller') {
+			window.location = '/SellerPost\?postId=' + this.postId
+		  }
+		  if (this.postType === 'Buyer') {
+			window.location = '/BuyerPost\?postId=' + this.postId
+		  }
 	    },
 	    }).fail(function($xhr) {
 	      var data = $xhr.responseJSON;
