@@ -10,6 +10,8 @@ var userinfo = new Vue({
         all_selling_items : "null",
         all_buying_items : "null",
         check_username : "null",
+        
+        DEFAULT_REVIEW_CONTENT : "<This review is blank>"
     },
     created(){
 
@@ -94,6 +96,17 @@ var userinfo = new Vue({
                 console.log(json)
 
                 this.all_reviews = json
+
+                if(this.all_reviews !== undefined)
+                {
+                  for(var i = 0; i < this.all_reviews.length; i++)
+                  {
+                    if(this.all_reviews[i].content === null)
+                    {
+                      this.all_reviews[i].content = this.DEFAULT_REVIEW_CONTENT
+                    }
+                  }
+                }
                 this.reviews = this.sortWithTime(this.all_reviews, this.all_reviews.length)
             },
             }).fail(function($xhr) {
