@@ -87,8 +87,10 @@ def getOrderByUser(username):
 def updateStatus(orderId, status):
     states = ['In progress', 'Confirmed', 'Shipped', 'Completed']
     order = Order.query.get(orderId)
+    if order.transactionType != 'Online':
+        states.remove('Shipped')
     if states.index(order.status) + 1 == states.index(status):
-        order.status = status
+        order.status = status.transa
     else:
         return False
     try:
