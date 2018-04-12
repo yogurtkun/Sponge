@@ -123,7 +123,6 @@ var postlist = new Vue({
       this.filter_loc = "0"
       this.filter_post_time = 0
       this.filter_search = ""
-      this.filter_category_index = "ALL"
       this.filter_post_type = "0"
     },
 
