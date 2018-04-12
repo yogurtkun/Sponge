@@ -90,7 +90,7 @@ def updateStatus(orderId, status):
     if order.transactionType != 'Online':
         states.remove('Shipped')
     if states.index(order.status) + 1 == states.index(status):
-        order.status = status.transa
+        order.status = status
     else:
         return False
     try:
