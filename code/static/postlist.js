@@ -128,7 +128,11 @@ var postlist = new Vue({
 
     filter_posts: function(filter_items, filter_search){
       return filter_items.filter((item) => {
-        var matched = item.title.match(filter_search)
+        var matched = ""
+
+        //var matched = item.title.match(/filter_search/i)
+        matched = item.title.match(new RegExp(filter_search, "i"));
+
         items = filter_items
         for (var i = 0; i < items.length; i++){
           if(matched !== null){
