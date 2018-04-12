@@ -35,8 +35,7 @@ def getMessages(currentUser=None, sender=None, receiver=None, read=None):
         messages = []
         for message in query.all():
             messages.append(from_sql(message))
-            if message.receiver == currentUser:
-                message.seen = True
+        query.filter_by(receiverUsername=currentUser).update(dict(seen=True))
         db.session.commit()
         return messages
     except Exception as e:
