@@ -139,18 +139,19 @@ body {
   bottom: 70px;
   right: 20px;
   z-index: 99;
-  font-size: 18px;
+  font-size: 27px;
   border: none;
   outline: none;
   background-color: black;
   color: white;
   cursor: pointer;
-  padding: 20px;
-  border-radius: 80%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 0.25rem;
 }
 
 .goTop:hover {
-  background-color: red;
+  background-color: #f10215;
 }
 
 .isVisible {
