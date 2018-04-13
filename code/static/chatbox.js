@@ -130,7 +130,6 @@ $(document).ready(function () {
                         if (startContact === null || startContact === self.myname) {
                             self.loadMessge();
                         } else {
-                            self.currentUser = startContact;
                             self.parentNewUser(startContact);
                         }
                     });
@@ -167,9 +166,10 @@ $(document).ready(function () {
                 var time = this.currentTime;
                 var self = this;
 
-                if(!self.update){
+                if (!self.update) {
                     return;
                 }
+
 
                 $.ajax({
                     url: 'messageTable',
@@ -252,7 +252,6 @@ $(document).ready(function () {
                                 self.addErrorMessage = null;
                                 if (!self.moveUserTop(contactName)) {
                                     self.currentUser = contactName;
-                                    self.loadMessge();
                                 }
                             });
                             $('#user_modal').modal('hide');
@@ -275,6 +274,38 @@ $(document).ready(function () {
                     self.currentUser = user;
                     self.loadMessge();
                 });
+
+                var el = document.querySelector('#notification');
+
+                (function () {
+                    var update = function (count) {
+                        if (el == null) {
+                            return;
+                        }
+                        el.setAttribute('data-count', count);
+                        el.classList.remove('notify');
+                        el.offsetWidth = el.offsetWidth;
+                        el.classList.add('notify');
+                        if (count === 0) {
+                            el.classList.remove('show-count');
+                        } else {
+                            el.classList.add('show-count')
+                        }
+                    }
+
+                    // get new message count
+                    $.ajax({
+                        url: '/countUnreadMessage',
+                        type: 'POST',
+                        success: (data) => {
+                            update(parseInt(data))
+                        },
+                    }).fail(function ($xhr) {
+                        var data = $xhr.responseJSON;
+                    });
+
+
+                })();
             }
         }
     });
