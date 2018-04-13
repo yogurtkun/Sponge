@@ -139,18 +139,19 @@ body {
   bottom: 70px;
   right: 20px;
   z-index: 99;
-  font-size: 18px;
+  font-size: 27px;
   border: none;
   outline: none;
   background-color: black;
   color: white;
   cursor: pointer;
-  padding: 20px;
-  border-radius: 80%;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 0.25rem;
 }
 
 .goTop:hover {
-  background-color: red;
+  background-color: #f10215;
 }
 
 .isVisible {
@@ -262,7 +263,7 @@ ul.product_list {
 }
 
 .product_image2:hover .product_buttons {
-  bottom: 0;
+  bottom: 10px;
 }
 
 .product_image2:hover .product_buttons_favorite {
@@ -271,7 +272,7 @@ ul.product_list {
 
 .product_buttons {
   position: absolute;
-  bottom: -40%;
+  bottom: -50%;
   left: 0;
   width: 100%;
   text-align: center;

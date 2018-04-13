@@ -123,13 +123,16 @@ var postlist = new Vue({
       this.filter_loc = "0"
       this.filter_post_time = 0
       this.filter_search = ""
-      this.filter_category_index = "ALL"
       this.filter_post_type = "0"
     },
 
     filter_posts: function(filter_items, filter_search){
       return filter_items.filter((item) => {
-        var matched = item.title.match(filter_search)
+        var matched = ""
+
+        //var matched = item.title.match(/filter_search/i)
+        matched = item.title.match(new RegExp(filter_search, "i"));
+
         items = filter_items
         for (var i = 0; i < items.length; i++){
           if(matched !== null){

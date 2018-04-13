@@ -542,7 +542,8 @@ def orderDetail():
     if address is not None:
         address = json.loads(address)
     orderDetail["receiverAddress"] = address
-    return render_template("orderdetail.html", order=orderDetail, username=session['username'])
+    reviewedBySeller = review.checkReviewByOrderAndUser(orderId, orderDetail['sellerName'])
+    return render_template("orderdetail.html", order=orderDetail, username=session['username'], reviewedBySeller=reviewedBySeller)
 
 
 @app.route('/updateOrderStatus', methods=['POST'])

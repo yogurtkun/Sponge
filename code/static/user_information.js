@@ -10,8 +10,13 @@ var userinfo = new Vue({
         all_selling_items : "null",
         all_buying_items : "null",
         check_username : "null",
+
+        blank_content_color : "#8590a6",
+        normal_content_color : "#1a1a1a",
+        blank_content_fontsize: '20px',
+        normal_content_fontsize: '20px',
         
-        DEFAULT_REVIEW_CONTENT : "<This review is blank>"
+        DEFAULT_REVIEW_CONTENT : "Reviewer didn't write any content."
     },
     created(){
 
@@ -104,6 +109,11 @@ var userinfo = new Vue({
                     if(this.all_reviews[i].content === null)
                     {
                       this.all_reviews[i].content = this.DEFAULT_REVIEW_CONTENT
+                      this.all_reviews[i].content_is_blank = true
+                    }
+                    else
+                    {
+                      this.all_reviews[i].content_is_blank = false
                     }
                   }
                 }
@@ -215,4 +225,57 @@ var userinfo = new Vue({
         },
     }
 });
+
+$(document).ready(function () {
+    $("#order-table").bootstrapTable({
+        url: "/orderlist",
+        method: "POST",
+        sidePagination: "client",
+        pagination: true,
+        search: true,
+        pageSize: 10,
+        strictSearch: false,
+        sortName: "time",
+        sortOrder: "desc",
+        columns: [
+            {
+                title: 'Type',
+                field: 'type',
+                align: 'center',
+                valign: 'middle',
+                width: '5%',
+                formatter: function (value, row, index) {
+                    if (value == 'selling') {
+                        return '<span class="badge badge-pill badge-primary">selling</span>'
+                    }
+                    else if (value == 'buying') {
+                        return '<span class="badge badge-pill badge-secondary">buying</span>'
+                    }
+                }
+            },
+            {
+                title: 'Product',
+                field: 'product',
+                align: 'center',
+                valign: 'middle',
+                width: '20%'
+            },
+            {
+                title: 'Price',
+                field: 'price',
+                align: 'center',
+                valign: 'middle',
+                width: '20%'
+            },
+            {
+                title: 'Time',
+                field: 'time',
+                align: 'center',
+                valign: 'middle',
+                width: '20%',
+                sortable: true
+            }
+        ]
+    });
+})
 
