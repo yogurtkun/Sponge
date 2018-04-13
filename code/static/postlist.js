@@ -1,13 +1,9 @@
 var postlist = new Vue({
   el: '#postlist',
   data: {
-    items: [
-    {"postid": "1111", "category": "category1", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
-    {"postid": "2222", "category": "category2", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NJ", "imageDir":"http://placehold.it/500x300"},
-    {"postid": "3333", "category": "category3", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
-    ],
-    filter_items: 'null',
-    filter_result: 'null',
+    items: null,
+    filter_items: null,
+    filter_result: null,
     filter_result_len: 0,
     filter_buyer_items: 0,
     filter_seller_items: 0,
@@ -24,6 +20,7 @@ var postlist = new Vue({
     filter_offset : 0,
     currentPage: 1,
     go_page: null,
+    limit_number : 10,
     ITEMS_PER_PAGE : 10,
   },
   mounted(){
