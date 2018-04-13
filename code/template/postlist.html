@@ -42,7 +42,7 @@
     <div class="col-lg-10 my-3" style="z-index:9">
       <div id="filter-bar" class="table sticky-top  bg-light mt-2 rounded" style="border: 1px solid #e1e2e5;">
         <div class="row row-bordered">
-          <div class="col-sm-8">
+          <div class="col-sm-7">
             <form class="form-inline my-2">
               <span class="label label-info mx-2" style="width: 50px;">Price</span>
               <select v-model="filter_price_sorting" id="filter-price-sort" class="form-control" id="state" name="price_sort" style="width: 150px;">
@@ -108,19 +108,24 @@
                   <option value="West Virginia">West Virginia</option>
                   <option value="Wyoming">Wyoming</option>
                 </select>
-
+              </form>
           </div>
 
-          <div class="col-sm-4">
-            <form class="form-inline">
-              <span class="badge badge-pill badge-info float-right my-3 mx-3"> {{filter_len}} items </span>
-              <input v-model="filter_search" id="filter-search" class="form-control  float-right  my-2" type="search" placeholder="Search" aria-label="Search" style="width: 180px;">
-            </form>
+          <div class="col-sm-5">
+              <div class="row">
+                <div class="col-sm-8">
+                  <input v-model="filter_search" id="filter-search" class="form-control  float-left  my-2" type="search" placeholder="Search" aria-label="Search" style="width:250px" >
+                </div>
+                
+                <div class="col-sm-4">
+                  <span class="badge badge-pill badge-info float-right my-3" style="margin-right:12px;"> {{filter_result_len}} items </span>
+                </div>
+              </div>
           </div>
         </div>
         <div class="row row-bordered">
 
-          <div class="col-sm-8">
+          <div class="col-sm-8   my-2">
             <form class="form-inline">
               <label class="control-label mx-2  my-2"  style="width: 50px;">Posted</label>
                 <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 150px;">
