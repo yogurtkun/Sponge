@@ -7,6 +7,8 @@ var postlist = new Vue({
     {"postid": "3333", "category": "category3", "title": "1", "description": "2", "price": 3, "time": "2018-03-15", "like": true, "user":"user123", "location":"NY", "imageDir":"http://placehold.it/500x300"},
     ],
     filter_items: 'null',
+    filter_result: 'null',
+    filter_result_len: 0,
     filter_buyer_items: 0,
     filter_seller_items: 0,
     filter_len : 0,
@@ -20,11 +22,14 @@ var postlist = new Vue({
     filter_category_index: "ALL",
     filter_post_type : "0",
     filter_offset : 0,
-    _ITEMS_PER_PAGE : 10,
+    currentPage: 1,
+    go_page: null,
+    ITEMS_PER_PAGE : 10,
   },
   mounted(){
     this.query_buyer_seller_post()
     this.check_init_filter()
+    this.filter_center()
   },
   watch: {
     filter_price_sorting: function(){
@@ -47,6 +52,9 @@ var postlist = new Vue({
     },
     filter_post_type: function(){
       this.filter_center()
+    },
+    currentPage: function(){
+      this.filter_paging()
     }
   },
   methods:{
@@ -91,6 +99,7 @@ var postlist = new Vue({
           filter_items = this.sortWithTime(filter_items, filter_items.length)
           this.items = filter_items
           this.filter_items = filter_items
+          this.filter_result = filter_items
           this.filter_len = filter_items.length
 
       },
@@ -427,6 +436,45 @@ var postlist = new Vue({
       return filter_items
     },
 
+    filter_paging: function(){
+      var filter_items = []
+      var filter_len = 0
+      var start_idx = (this.currentPage - 1)* this.ITEMS_PER_PAGE
+      var end_idx = (this.currentPage) * this.ITEMS_PER_PAGE
+      var total_length = this.filter_result.length
+
+      for(var i = start_idx; i < end_idx; i++)
+      {
+        if((total_length - i - 1) < 0)
+        {
+          break
+        }
+        filter_items.push(this.filter_result[i])
+        filter_len ++;
+      }
+
+      this.filter_items = filter_items
+      this.filter_len = filter_len
+
+      this.jump_to_top()
+    },
+
+    jump_to_page:function(){
+      console.log(this.go_page)
+      console.log(parseInt(this.go_page))
+      console.log(typeof(parseInt(this.go_page)))
+      if(this.go_page !== null)
+      {
+        this.currentPage = parseInt(this.go_page)
+      }
+    },
+
+    jump_to_top: function() {
+      $('html,body').stop().animate({
+        scrollTop: 0
+      }, 'slow', 'swing');
+    },
+
     filter_center: function(){
       var filter_items = this.items
       var filter_price_sorting = this.filter_price_sorting
@@ -452,9 +500,12 @@ var postlist = new Vue({
       }
 
       filter_search_items.push(this.filter_posts(filter_items, filter_search))
-
-      this.filter_items = filter_search_items[0]
-      this.filter_len = filter_search_items[0].length
+      
+      //this.filter_items = filter_search_items[0]
+      //this.filter_len = filter_search_items[0].length
+      this.filter_result = filter_search_items[0]
+      this.filter_result_len = filter_search_items[0].length
+      this.filter_paging()
     },
   }
 });
