@@ -151,11 +151,11 @@
         <h2 class="text-center">Loading, please wait...</h2>
         </div>
         <div v-else-if="filter_result_len === 0">
-          <p style="padding-top:.33em"> No items your choice</p>
+          <h5 style="padding-top:.33em"> No items match your choice</h5>
           <p style="margin-top:1em">Suggestions:</p>
           <ul style="margin-left:1.3em;margin-bottom:2em">
+            <li>Try to use different filter.</li>
             <li>Make sure all words are spelled correctly.</li>
-            <li>Try different filter.</li>
           </ul>
         </div>
         <div v-else v-for="item in filter_items">
@@ -243,16 +243,15 @@
               </p>
             </div>
           </div>
-         </div>
+        </div>
          
-         <div class="my-2 text-center" style="margin-bottom:52px !important">
-           <b-pagination size="md" :total-rows="filter_result_len" v-model="currentPage" :per-page="ITEMS_PER_PAGE" :hide-ellipsis="true" align="center" :limit="limit_number">
-           </b-pagination>
-           <!-- <input size="2" placeholder="#" v-model="go_page"><button v-on:click="jump_to_page()" class="btn btn-primary btn-xs">Go</button> -->
-         </div>
+        <div v-if="filter_result_len !== 0" class="my-2" style="margin-bottom:52px !important">
+         <b-pagination size="md" :total-rows="filter_result_len" v-model="currentPage" :per-page="ITEMS_PER_PAGE" :hide-ellipsis="true" align="center" :limit="limit_number">
+         </b-pagination>
+         <!-- <input size="2" placeholder="#" v-model="go_page"><button v-on:click="jump_to_page()" class="btn btn-primary btn-xs">Go</button> -->
         </div>
       </div>
-
+     </div>
     </div>
   </div>
 </div>
