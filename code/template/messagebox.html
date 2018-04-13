@@ -9,11 +9,25 @@
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
-                <p id="myUserName"><strong style="font-size:x-large" id="myname">{{username}}</strong></p>
+                <p id="myUserName">
+                    <strong style="font-size:x-large" id="myname">{{username}}</strong>
+                </p>
             </div>
         </div>
         <div id="contacts">
             <ul>
+                {% raw %}
+                <li class="contact" v-on:click="moveUserTop('system')" v-if="system.time!==''">
+                    <div class="wrap">
+                        <div class="meta">
+                            <p class="name">
+                                <i class="fas fa-user-secret" style="margin-right:1vh"></i>{{system.username}}</p>
+                            <p class="preview">{{system.time}}</p>
+                        </div>
+                    </div>
+                </li>
+                {% endraw %}
+
                 <listuser v-for="item in users" v-bind:user="item" @move-top="moveUserTop"></listuser>
             </ul>
         </div>

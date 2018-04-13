@@ -95,8 +95,13 @@ $(document).ready(function () {
             chatMessage: [],
             users: [],
             addErrorMessage: null,
-            tabList: ['info', 'buy', 'sell', 'order', 'message','favorite'],
+            tabList: ['info', 'buy', 'sell', 'order', 'message', 'favorite'],
             myname: '',
+            system: {
+                'username': "system",
+                'time': ""
+            },
+            update: true,
         },
         created() {
             var self = this;
@@ -113,12 +118,17 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (data) {
                     self.$nextTick(function () {
+                        let systemIndex = data.findIndex(function (x) { return x['username'] === 'system' });
+                        if (systemIndex > -1) {
+                            self.system.time = data[systemIndex]['time'];
+                            self.currentTime = self.system.time;
+                            self.currentUser = "system";
+                            data.splice(systemIndex, 1)
+                        }
+
                         self.users = data;
                         if (startContact === null || startContact === self.myname) {
-                            if (data.length !== 0) {
-                                self.currentUser = data[0]['username'];
-                                self.loadMessge();
-                            }
+                            self.loadMessge();
                         } else {
                             self.currentUser = startContact;
                             self.parentNewUser(startContact);
@@ -157,20 +167,26 @@ $(document).ready(function () {
                 var time = this.currentTime;
                 var self = this;
 
+                if(!self.update){
+                    return;
+                }
+
                 $.ajax({
                     url: 'messageTable',
                     type: 'POST',
                     dataType: 'json',
                     success: function (data) {
                         self.$nextTick(function () {
-                            self.users = [];
-                            for(d of data){
-                                if(d['username']!== person){
-                                    self.users.push(d);
-                                }else{
-                                    self.users.unshift(d);
+                            let systemIndex = data.findIndex(function (x) { return x['username'] === 'system' });
+                            if (systemIndex > -1) {
+                                self.system.time = data[systemIndex]['time'];
+                                if (self.currentUser === 'system') {
+                                    self.currentTime = self.system.time;
                                 }
+                                data.splice(systemIndex, 1);
                             }
+
+                            self.users = data;
                         });
                     }
                 });
@@ -195,9 +211,10 @@ $(document).ready(function () {
                 });
             },
             loadMessge: function () {
-
                 var person = this.currentUser;
                 var self = this;
+                self.update = false;
+
                 $.ajax({
                     url: 'getAllMessage',
                     type: 'POST',
@@ -212,6 +229,7 @@ $(document).ready(function () {
                                 addNewrReplies(subMessage["content"]);
                             }
                         });
+                        self.update = true;
                     }
                 });
             },
@@ -233,10 +251,6 @@ $(document).ready(function () {
                             self.$nextTick(function () {
                                 self.addErrorMessage = null;
                                 if (!self.moveUserTop(contactName)) {
-                                    self.users.unshift({
-                                        'username': contactName,
-                                        'time': null
-                                    });
                                     self.currentUser = contactName;
                                     self.loadMessge();
                                 }
@@ -256,27 +270,11 @@ $(document).ready(function () {
             },
             moveUserTop: function (user) {
                 emptyMessage();
-                var temp_user = null;
-                var temp_index = -1;
-                this.users.forEach(function (v, index) {
-                    if (v['username'] == user) {
-                        temp_user = v;
-                        temp_index = index;
-                    }
-                });
-
-                if (temp_index !== -1) {
-                    var self = this;
-                    this.$nextTick(function () {
-                        self.users.splice(temp_index, 1);
-                        self.users.unshift(temp_user);
-                    })
+                var self = this;
+                self.$nextTick(() => {
                     self.currentUser = user;
                     self.loadMessge();
-                    return true;
-                } else {
-                    return false;
-                }
+                });
             }
         }
     });
