@@ -142,10 +142,8 @@
 
 
 
-
-
-        {% if ( (order.transactionType == 'Online' and order.status == 'Shipped') or (order.transactionType == 'Face to Face' and order.status == 'Confirmed') ) and username == order.buyerName %}
-        {%raw%}
+        {% if ( (order.transactionType == 'Online' and order.status == 'Shipped') or (order.transactionType == 'Face to Face' and order.status == 'Confirmed') and username == order.buyerName) or (order.status == 'Completed' and username == order.sellerName and (not reviewedBySeller)) %}
+        
 
         <div class="modal fade" id="review_window" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -213,10 +211,16 @@
             </div>
           </div>
         </div>
+        {% if username == order.buyerName %}
         <div>
           <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
         </div>
-        {%endraw%}
+        {% endif %}
+        {% if username == order.sellerName and (not reviewedBySeller) %}
+        <div>
+          <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Review</button>
+        </div>
+        {% endif %}
         {% endif %}
       </div>
     </div>
