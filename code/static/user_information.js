@@ -10,8 +10,13 @@ var userinfo = new Vue({
         all_selling_items : "null",
         all_buying_items : "null",
         check_username : "null",
+
+        blank_content_color : "#8590a6",
+        normal_content_color : "#1a1a1a",
+        blank_content_fontsize: '20px',
+        normal_content_fontsize: '20px',
         
-        DEFAULT_REVIEW_CONTENT : "<This review is blank>"
+        DEFAULT_REVIEW_CONTENT : "Reviewer didn't write any content."
     },
     created(){
 
@@ -104,6 +109,11 @@ var userinfo = new Vue({
                     if(this.all_reviews[i].content === null)
                     {
                       this.all_reviews[i].content = this.DEFAULT_REVIEW_CONTENT
+                      this.all_reviews[i].content_is_blank = true
+                    }
+                    else
+                    {
+                      this.all_reviews[i].content_is_blank = false
                     }
                   }
                 }

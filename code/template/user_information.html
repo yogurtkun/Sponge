@@ -569,7 +569,7 @@
                           </div>
                         </div>
                         <div class="col-sm-6 my-3">
-                          <div class="review-block-description">{{review.content}}</div>
+                          <div class="review-block-description" v-bind:style="{color:review.content_is_blank?blank_content_color:normal_content_color, fontSize:review.content_is_blank?blank_content_fontsize:normal_content_fontsize}">{{review.content}}</div>
                         </div>
                       </div>
                     </div>
