@@ -251,7 +251,7 @@
         </div>
          
         <div v-if="filter_result_len !== 0" class="my-2" style="margin-bottom:52px !important">
-         <b-pagination size="md" :total-rows="filter_result_len" v-model="currentPage" :per-page="ITEMS_PER_PAGE" :hide-ellipsis="true" align="center" :limit="limit_number">
+         <b-pagination size="lg" :total-rows="filter_result_len" v-model="currentPage" :per-page="ITEMS_PER_PAGE" :hide-ellipsis="true" align="center" :limit="limit_number">
          </b-pagination>
          <!-- <input size="2" placeholder="#" v-model="go_page"><button v-on:click="jump_to_page()" class="btn btn-primary btn-xs">Go</button> -->
         </div>
