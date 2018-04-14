@@ -54,7 +54,6 @@ var userinfo = new Vue({
             }).fail(function($xhr) {
               var data = $xhr.responseJSON;
             });
-            window.location.reload()
         },
 
         ShipOrder:function(){

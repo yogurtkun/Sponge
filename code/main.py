@@ -485,7 +485,6 @@ Add review on users
 def addReview():
     if not loggedIn():
         return "Please log in first!"
-    print request.form
     reviewer = session['username']
     reviewee = str(request.form['reviewee'])
     rating = int(request.form['rating'])
