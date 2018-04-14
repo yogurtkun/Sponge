@@ -542,7 +542,7 @@ def orderDetail():
         return render_template('login.html', error='Please login first')
     orderId = int(request.args['orderId'])
     if not order.checkUser(orderId, session['username']):
-        return "No permission"
+        return redirect("/portal?section=order")
     orderDetail = order.getDetail(orderId)
     if orderDetail is None:
         return redirect('/')
