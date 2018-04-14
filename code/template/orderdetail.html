@@ -66,7 +66,7 @@
       {%  endif %}
 
       <hr>
-      <strong>Status : </strong>{{order.status}}
+      <p><strong>Status : </strong>{{order.status}}</p>
       {% if order.status == 'Shipped' %}
       <p>Shipping Carrier: {{order.carrier}}</p>
       <p>Track Number: {{order.trackNo}}</p>

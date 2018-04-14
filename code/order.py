@@ -35,6 +35,8 @@ def cancelOrder(orderId):
         postId = order['postId']
         if not validSellerPost(postId):
             return False
+        if not order['status'] == "In progress":
+            return False
         Order.query.filter_by(orderId=orderId).delete()
         db.session.commit()
         return True
@@ -85,6 +87,7 @@ def getOrderByUser(username):
 
 
 def updateStatus(orderId, status):
+    print "update order status"
     states = ['In progress', 'Confirmed', 'Shipped', 'Completed']
     order = Order.query.get(orderId)
     if order.transactionType != 'Online':

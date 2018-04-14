@@ -495,6 +495,8 @@ def addReview():
     print reviewId
     if reviewId == None:
         return json.dumps("Review failed!")
+    if not order.updateStatus(orderId, "Completed"):
+        return json.dumps("Review failed!")
     return json.dumps("Review succeeded!")
 
 
@@ -551,13 +553,16 @@ def orderDetail():
 
 @app.route('/updateOrderStatus', methods=['POST'])
 def updateOrderStatus():
+    print "update status"
     if not loggedIn():
         return json.dumps('fail')
     orderId = str(request.form['orderId'])
     status = str(request.form['status'])
     if order.updateStatus(orderId, status):
         message.orderStatusNotification(orderId, status)
+        print "update succeeded"
         return json.dumps('success')
+    print "update failed"
     return json.dumps('fail')
 
 

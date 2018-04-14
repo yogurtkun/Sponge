@@ -49,7 +49,7 @@ var userinfo = new Vue({
             data: tdata,
             dataType : 'json',
             success: (data) => {
-                this.updateOrderStatus('Completed')
+                window.location.reload(true);
             },
             }).fail(function($xhr) {
               var data = $xhr.responseJSON;
