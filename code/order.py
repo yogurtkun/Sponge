@@ -117,7 +117,11 @@ def ship(orderId, carrier, trackNo):
         return False
 
 
-
+def checkUser(orderId, username):
+    order = Order.query.get(orderId)
+    if username == order.buyerName or username == order.sellerName:
+        return True
+    return False
 
 
 

@@ -490,6 +490,8 @@ def addReview():
     rating = int(request.form['rating'])
     content = str(request.form['content']) if 'content' in request.form.keys() else None
     orderId = int(request.form['orderId'])
+    if not order.checkUser(orderId, session['username']):
+        return "No permission"
     reviewId = review.addReview(reviewer, reviewee, rating, content, orderId)
     print reviewId
     if reviewId == None:
@@ -539,6 +541,8 @@ def orderDetail():
     if not loggedIn():
         return render_template('login.html', error='Please login first')
     orderId = int(request.args['orderId'])
+    if not order.checkUser(orderId, session['username']):
+        return "No permission"
     orderDetail = order.getDetail(orderId)
     if orderDetail is None:
         return redirect('/')
@@ -556,6 +560,8 @@ def updateOrderStatus():
     if not loggedIn():
         return json.dumps('fail')
     orderId = str(request.form['orderId'])
+    if not order.checkUser(orderId, session['username']):
+        return "No permission"
     status = str(request.form['status'])
     if order.updateStatus(orderId, status):
         message.orderStatusNotification(orderId, status)
@@ -573,6 +579,8 @@ def shipOrder():
     if not loggedIn():
         return json.dumps('failed')
     orderId = str(request.form['orderId'])
+    if not order.checkUser(orderId, session['username']):
+        return "No permission"
     carrier = str(request.form['carrier'])
     trackNo = str(request.form['trackNo'])
     if order.ship(orderId, carrier, trackNo):
@@ -589,6 +597,8 @@ def cancelOrder():
     if not loggedIn():
         return json.dumps('Failed!')
     orderId = int(request.form['orderId'])
+    if not order.checkUser(orderId, session['username']):
+        return "No permission"
     if order.cancelOrder(orderId):
         return json.dumps("Succeeded!")
     return json.dumps("Failed!")
