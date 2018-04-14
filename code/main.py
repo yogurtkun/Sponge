@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 import schema
 import json
-import account, post, order, review, post_review, message
+import account, post, order, review, post_comment, message
 
 app = Flask(__name__, template_folder="template")
 app.config.from_object(config)
@@ -494,9 +494,9 @@ def addReview():
     reviewId = review.addReview(reviewer, reviewee, rating, content, orderId)
     print reviewId
     if reviewId == None:
-        return json.dumps("Review failed!")
+        return json.dumps("Add Review failed!")
     if not order.updateStatus(orderId, "Completed"):
-        return json.dumps("Review failed!")
+        return json.dumps("Update status failed!")
     return json.dumps("Review succeeded!")
 
 

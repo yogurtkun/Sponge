@@ -78,13 +78,14 @@ class SellerPost(db.Model):
         return '<SellPost %r>' % self.postId
 
 
-class SellerPostReview(db.Model):
-    reviewId = db.Column(db.Integer, primary_key=True)
+class SellerPostComment(db.Model):
+    commentId = db.Column(db.Integer, primary_key=True)
     postId = db.Column(db.Integer, db.ForeignKey('seller_post.postId', ondelete='CASCADE'))
-    sellerPost = db.relationship("SellerPost", lazy=True)
+    sellerPost = db.relationship("SellerPost", foreign_keys=[postId], lazy=True)
     author = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
-    user = db.relationship("User", lazy=True, cascade="all,delete")
-    title = db.Column(db.String(64), nullable=False)
+    authorusername = db.relationship("User", foreign_keys=[author], lazy=True, cascade="all,delete")
+    replyTo = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
+    replyTousername = db.relationship("User", foreign_keys=[replyTo], lazy=True, cascade="all,delete")
     content = db.Column(db.Text, nullable=False)
     time = db.Column(db.DateTime)
 
@@ -92,13 +93,14 @@ class SellerPostReview(db.Model):
         return '<Review %r>' % self.reviewId
 
 
-class BuyerPostReview(db.Model):
-    reviewId = db.Column(db.Integer, primary_key=True)
+class BuyerPostComment(db.Model):
+    commentId = db.Column(db.Integer, primary_key=True)
     postId = db.Column(db.Integer, db.ForeignKey('buyer_post.postId', ondelete='CASCADE'))
-    buyerPost = db.relationship("BuyerPost", lazy=True)
+    sellerPost = db.relationship("BuyerPost", foreign_keys=[postId], lazy=True)
     author = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
-    user = db.relationship("User", lazy=True, cascade="all,delete")
-    title = db.Column(db.String(64), nullable=False)
+    authorusername = db.relationship("User", foreign_keys=[author], lazy=True, cascade="all,delete")
+    replyTo = db.Column(db.String(32), db.ForeignKey('user.username', ondelete='CASCADE'))
+    replyTousername = db.relationship("User", foreign_keys=[replyTo], lazy=True, cascade="all,delete")
     content = db.Column(db.Text, nullable=False)
     time = db.Column(db.DateTime)
 
@@ -168,6 +170,7 @@ def _create_database():
     app.config.from_pyfile('./config.py')
     init_app(app)
     with app.app_context():
+        db.session.commit()
         db.drop_all()
         db.create_all()
     print("All tables created")  

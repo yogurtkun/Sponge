@@ -87,7 +87,6 @@ def getOrderByUser(username):
 
 
 def updateStatus(orderId, status):
-    print "update order status"
     states = ['In progress', 'Confirmed', 'Shipped', 'Completed']
     order = Order.query.get(orderId)
     if order.transactionType != 'Online':
