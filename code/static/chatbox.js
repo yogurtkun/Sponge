@@ -1,3 +1,4 @@
+var TIME_TO_FETCH_MESSAGE = 10000;
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 function addNewrReplies(info) {
@@ -68,7 +69,7 @@ function newMessage(person) {
 $(document).ready(function () {
     Vue.component('listuser', {
         props: ['user'],
-        template: '<li class="contact" v-on:click="userTop"><div class="wrap"><div class="meta"><p class="name"><i class="fas fa-user"style="margin-right:1vh"></i>{{user.username}}</p><p class="preview">{{user.time}}</p></div></div></li>',
+        template: '<li class="contact" v-on:click="userTop"><div class="wrap"><div class="meta"><p class="name"><i class="fas fa-user"style="margin-right:1vh"></i>{{user.username}}<i class="badge badge-pill badge-primary" style="float: right;" v-if="user.unseen !== 0">{{user.unseen}}</i></p><p class="preview">{{user.time}}</p></div></div></li>',
         methods: {
             userTop: function () {
                 this.$emit("move-top", this.user.username);
@@ -99,7 +100,8 @@ $(document).ready(function () {
             myname: '',
             system: {
                 'username': "system",
-                'time': ""
+                'time': "",
+                'unseen':0,
             },
             update: true,
         },
@@ -121,6 +123,7 @@ $(document).ready(function () {
                         let systemIndex = data.findIndex(function (x) { return x['username'] === 'system' });
                         if (systemIndex > -1) {
                             self.system.time = data[systemIndex]['time'];
+                            self.system.unseen = data[systemIndex]['unseen']
                             self.currentTime = self.system.time;
                             self.currentUser = "system";
                             data.splice(systemIndex, 1)
@@ -136,7 +139,7 @@ $(document).ready(function () {
 
                     setTimeout(function () {
                         self.loadNewMessage();
-                    }, 1000);
+                    }, TIME_TO_FETCH_MESSAGE);
 
                 }
             });
@@ -180,6 +183,7 @@ $(document).ready(function () {
                             let systemIndex = data.findIndex(function (x) { return x['username'] === 'system' });
                             if (systemIndex > -1) {
                                 self.system.time = data[systemIndex]['time'];
+                                self.system.unseen = data[systemIndex]['unseen'];
                                 if (self.currentUser === 'system') {
                                     self.currentTime = self.system.time;
                                 }

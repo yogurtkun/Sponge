@@ -21,7 +21,9 @@
                     <div class="wrap">
                         <div class="meta">
                             <p class="name">
-                                <i class="fas fa-user-secret" style="margin-right:1vh"></i>{{system.username}}</p>
+                                <i class="fas fa-user-secret" style="margin-right:1vh"></i>{{system.username}}
+                                <i class="badge badge-pill badge-primary" style="float: right;" v-if="system.unseen !== 0">{{system.unseen}}</i>
+                            </p>
                             <p class="preview">{{system.time}}</p>
                         </div>
                     </div>

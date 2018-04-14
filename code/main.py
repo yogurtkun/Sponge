@@ -431,13 +431,16 @@ def messageTable():
     for mess in messages:
         another = mess['senderUsername'] if mess['senderUsername'] != session['username'] else mess['receiverUsername']
         if another not in ret_dict:
-            ret_dict[another] = []
-        ret_dict[another].append(mess['time'])
+            ret_dict[another] = {'time':[],'unseen':0}
+        ret_dict[another]['time'].append(mess['time'])
+        if mess['seen'] == False:
+            ret_dict[another]['unseen'] += 1
     res = []
-    for user,times in ret_dict.items():
+    for user,info in ret_dict.items():
         temp_dict = {}
         temp_dict['username'] = user
-        temp_dict['time'] = max(times)
+        temp_dict['time'] = max(info['time'])
+        temp_dict['unseen'] = info['unseen']
         res.append(temp_dict)
 
     res.sort(key=lambda x:x['time'],reverse=True)
