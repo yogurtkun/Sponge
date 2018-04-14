@@ -25,8 +25,6 @@ var postlist = new Vue({
   },
   mounted(){
     this.query_buyer_seller_post()
-    this.check_init_filter()
-    this.filter_center()
   },
   watch: {
     filter_price_sorting: function(){
@@ -62,14 +60,11 @@ var postlist = new Vue({
       type: "POST",
 
       success: (json)=>{
-          console.log(json);
-
           this.filter_buyer_items = json;
           this.filter_buyer_len = json.length
       },
       }).fail(function($xhr) {
           var data = $xhr.responseJSON;
-          console.log(data);
       });
     $.ajax({
       url: '/postlist/seller',
@@ -77,8 +72,6 @@ var postlist = new Vue({
       type: "POST",
 
       success: (json)=>{
-          console.log(json);
-
           this.filter_seller_items = json;
           this.filter_seller_len = json.length
 
@@ -99,10 +92,11 @@ var postlist = new Vue({
           this.filter_result = filter_items
           this.filter_len = filter_items.length
 
+          this.check_init_filter()
+          this.filter_center()
       },
       }).fail(function($xhr) {
           var data = $xhr.responseJSON;
-          console.log(data);
       });
     },
 
@@ -119,9 +113,6 @@ var postlist = new Vue({
       {
         this.filter_category_index = String(urlParams.substring(category_index + "category=".length, urlParams.length).replace(/%20/g, " "))
       }
-
-      console.log(this.filter_loc)
-      console.log(this.filter_category_index)
     },
 
     reset_filter: function(){
@@ -457,9 +448,6 @@ var postlist = new Vue({
     },
 
     jump_to_page:function(){
-      console.log(this.go_page)
-      console.log(parseInt(this.go_page))
-      console.log(typeof(parseInt(this.go_page)))
       if(this.go_page !== null)
       {
         this.currentPage = parseInt(this.go_page)
