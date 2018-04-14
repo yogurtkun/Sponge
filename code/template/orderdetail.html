@@ -67,6 +67,10 @@
 
       <hr>
       <strong>Status : </strong>{{order.status}}
+      {% if order.status == 'Shipped' %}
+      <p>Shipping Carrier: {{order.carrier}}</p>
+      <p>Track Number: {{order.trackNo}}</p>
+      {%  endif %}
       
       <div id="buttons">
         {% if order.status == 'In progress'%}
