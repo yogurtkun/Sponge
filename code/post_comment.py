@@ -5,69 +5,72 @@ import datetime
 db = schema.db
 
 
-def addPostComment(postType, postId, author, title, content):
+def addPostComment(postType, postId, author, replyTo, content):
 	if postType == "Seller":
-		return addSellerPostComment(postId, author, title, content)
+		return addSellerPostComment(postId, author, replyTo, content)
 	if postType == "Buyer":
-		return addBuyerPostComment(postId, author, title, content)
+		return addBuyerPostComment(postId, author, replyTo, content)
 
 
-def addSellerPostComment(postId, author, title, content):
+def addSellerPostComment(postId, author, replyTo, content):
 	time = datetime.datetime.now()
-	review = SellerPostComment(postId=postId, author=author, title=title, content=content, time=time)
+	comment = SellerPostComment(postId=postId, author=author, replyTo=replyTo, content=content, time=time)
 	try:
-		db.session.add(review)
+		db.session.add(comment)
 		db.session.commit()
-		return review.reviewId
+		return comment.commentId
 	except Exception as e:
 		print e
 		db.session.rollback()
 		return None
 
 
-def addBuyerPostComment(postId, author, title, content):
+def addBuyerPostComment(postId, author, replyTo, content):
 	time = datetime.datetime.now()
-	review = BuyerPostComment(postId=postId, author=author, title=title, content=content, time=time)
+	comment = BuyerPostComment(postId=postId, author=author, replyTo=replyTo, content=content, time=time)
 	try:
-		db.session.add(review)
+		db.session.add(comment)
 		db.session.commit()
-		return review.reviewId
+		return comment.commentId
 	except Exception as e:
 		print e
 		db.session.rollback()
 		return None
 
 
-def delPostComment(postType, reviewId, username):
+def delPostComment(postType, commentId, username):
 	if postType == "Seller":
-		return delSellerPostComment(reviewId, username)
+		return delSellerPostComment(commentId, username)
 	if postType == "Buyer":
-		return delBuyerPostComment(reviewId, username)
+		return delBuyerPostComment(commentId, username)
 
 
-def delSellerPostComment(reviewId, username):
-	review = SellerPostComment.query.get(reviewId)
-	if review.author != username:
+def delSellerPostComment(commentId, username):
+	comment = SellerPostComment.query.get(commentId)
+	if comment.author != username:
 		return False
 	try:
-		SellerPostComment.query.filter_by(reviewId=reviewId).delete()
+		SellerPostComment.query.filter_by(commentId=commentId).delete()
 		db.session.commit()
 		return True
 	except Exception as e:
 		print e
 		db.session.rollback()
-		return None
+		return False
 
 
-def delBuyerPostComment(reviewId, username):
-	review = BuyerPostComment.query.get(reviewId)
-	if review.author != username:
+def delBuyerPostComment(commentId, username):
+	comment = BuyerPostComment.query.get(commentId)
+	if comment.author != username:
 		return False
 	try:
-		BuyerPostComment.query.filter_by(reviewId=reviewId).delete()
+		BuyerPostComment.query.filter_by(commentId=commentId).delete()
 		db.session.commit()
 		return True
 	except Exception as e:
 		print e
 		db.session.rollback()
-		return None
+		return False
+
+
+

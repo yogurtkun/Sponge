@@ -671,7 +671,6 @@ def updatePost():
     return json.dumps("Updating post failed!")
 
 
-
 '''
 Count unread message for user
 '''
@@ -681,6 +680,36 @@ def countUnreadMessage():
         return json.dumps("0")
     messages = message.getMessages(receiver=session['username'], read=False)
     return json.dumps(len(messages))
+
+
+'''
+Comment on posts
+'''
+@app.route('/addPostComment', methods=['POST'])
+def addPostComment():
+    if not loggedIn():
+        return json.dumps('Please login first')
+    postType = str(request.form['postType'])
+    postId = str(request.form['postId'])
+    author = session['username']
+    replyTo = str(request.form['replyTo']) if 'replyTo' in request.form.keys() else None
+    content = str(request.form['content'])
+    commentId = post_comment.addPostComment(postType, postId, author, replyTo, content)
+    if not commentId:
+        return json.dumps("add comment failed")
+    return json.dumps("add comment succeeded")
+
+
+@app.route('/delPostComment', methods=['POST'])
+def delPostComment():
+    if not loggedIn():
+        return json.dumps('Please login first')
+    postType = str(request.form['postType'])
+    postId = str(request.form['postId'])
+    if not post_comment.delPostComment(postType, postId, session['username']):
+        return json.dumps("del comment failed")
+    return json.dumps("del comment succeeded")
+
 
 
 if __name__ == '__main__':
