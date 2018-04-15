@@ -164,7 +164,7 @@ class MainTest(unittest.TestCase):
             assert "message_content" in json.dumps(message.getMessagesByUser("testReceiver"))
             account.deleteUser("testSender")
             account.deleteUser("testReceiver")
-            print "message test pass" 
+            print "message test pass"
 
 
     def test_post(self):
@@ -194,8 +194,9 @@ class MainTest(unittest.TestCase):
             assert "Updating post succeeded!" in rv.data
             postdata = {"postType":"Buyer", "postId":postId, "content":"I have one to sell."}
             rv = self.app.post("/addPostComment", data=postdata, follow_redirects=True)
-            print rv.data
             assert "add comment succeeded" in rv.data
+            postdata = {"postType":"Buyer", "postId":postId}
+            rv = self.app.post("/getPostComments", data=postdata, follow_redirects=True)
             postdata = {"postType":"Buyer", "postId":postId}
             rv = self.app.post("/deletepost", data=postdata, follow_redirects=True)
             assert "Deleting post succeeded!" in rv.data

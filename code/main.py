@@ -711,6 +711,13 @@ def delPostComment():
     return json.dumps("del comment succeeded")
 
 
+@app.route('/getPostComments', methods=['POST'])
+def getPostComments():
+    postType = str(request.form['postType'])
+    postId = str(request.form['postId'])
+    commentList = post_comment.getPostComments(postType, postId)
+    return json.dumps(commentList)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

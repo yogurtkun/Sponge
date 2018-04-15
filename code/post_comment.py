@@ -73,4 +73,31 @@ def delBuyerPostComment(commentId, username):
 		return False
 
 
+def getPostComments(postType, postId):
+	if postType == "Seller":
+		return getSellerPostComments(postId)
+	if postType == "Buyer":
+		return getBuyerPostComments(postId)
+
+
+def getSellerPostComments(postId):
+	res = SellerPostComment.query.filter_by(postId=postId).all()
+	commentList = []
+	for c in res:
+		commentList.append(from_sql(c))
+	return commentList
+
+
+def getBuyerPostComments(postId):
+	res = BuyerPostComment.query.filter_by(postId=postId).all()
+	commentList = []
+	for c in res:
+		commentList.append(from_sql(c))
+	return commentList
+
+
+
+
+
+
 
