@@ -166,15 +166,16 @@ var comment_info = new Vue({
     data: {
         newComment: "",
         messages: [],
-        sendTo: null
+        sendTo: null,
+        sessionUser:$('#sessionUser').html(),
     },
     created() {
         var self = this;
         $.ajax({
-            url: 'comments',
+            url: 'getPostComments',
             type: 'POST',
             dataType: 'json',
-            data: { "type": postType, "postId": postId },
+            data: { "postType": postType, "postId": postId },
             success: function (data) {
                 self.messages = data;
                 console.log(data);
@@ -235,20 +236,21 @@ Vue.component('comment', {
     props: [
         'message',
         'i',
-        'am'
+        'am',
+        'cu'
     ],
     template: `
         <div class="comment-card card-body">
             <div class="mt-0 comment-div">
-                <a href="/UserInfo?username=message.author">{{message.author}}</a>
+                <a :href="'/UserInfo?username='+message.author">{{message.author}}</a>
                 <span v-if="message.replyTo!==null" class="comment-span">reply to </span>
-                <a v-if="message.replyTo!==null" href="/UserInfo?username=message.replyTo">{{message.replyTo}}</a>
+                <a v-if="message.replyTo!==null" :href="'/UserInfo?username='+message.replyTo">{{message.replyTo}}</a>
                 <div  style="float: right">
                 <span class="comment-span">{{message.time}}</span>
                 <a v-on:click="reply" >
                 <i class="fas fa-reply"></i>
                 </a>
-                <a v-on:click="deleteM">
+                <a v-if="message.author===cu" v-on:click="deleteM">
                 <i class="far fa-trash-alt"></i>
                 </a>
                 </div>

@@ -670,7 +670,6 @@ def updatePost():
         return json.dumps("Updating post succeeded!")
     return json.dumps("Updating post failed!")
 
-
 '''
 Count unread message for user
 '''

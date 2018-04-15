@@ -146,7 +146,7 @@
 
     <div class="card my-4" id="comment-list">
 
-      <comment v-for="(item,index) in messages" v-bind:message="item" v-bind:i="index" v-bind:am="messages" @reply-message="replyParent" @delete-message="deleteParent"></comment>
+      <comment v-for="(item,index) in messages" v-bind:message="item" v-bind:i="index" v-bind:am="messages" v-bind:cu="sessionUser" @reply-message="replyParent" @delete-message="deleteParent"></comment>
     </div>
 
   </div>
