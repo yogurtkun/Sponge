@@ -697,7 +697,7 @@ def addPostComment():
     commentId = post_comment.addPostComment(postType, postId, author, replyTo, content)
     if not commentId:
         return json.dumps("add comment failed")
-    return json.dumps("add comment succeeded")
+    return json.dumps("add comment succeeded, commentId=" + str(commentId))
 
 
 @app.route('/delPostComment', methods=['POST'])
@@ -705,8 +705,8 @@ def delPostComment():
     if not loggedIn():
         return json.dumps('Please login first')
     postType = str(request.form['postType'])
-    postId = str(request.form['postId'])
-    if not post_comment.delPostComment(postType, postId, session['username']):
+    commentId = str(request.form['commentId'])
+    if not post_comment.delPostComment(postType, commentId, session['username']):
         return json.dumps("del comment failed")
     return json.dumps("del comment succeeded")
 
