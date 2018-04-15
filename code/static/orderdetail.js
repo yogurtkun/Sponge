@@ -138,4 +138,3 @@ var userinfo = new Vue({
         },
     },
 });
-

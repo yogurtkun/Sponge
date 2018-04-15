@@ -3,9 +3,8 @@
 <div class="row">
   <div class="col-sm-8">
     {% if buyer %}
-    <h1 class="mt-4">Buyer Post Details</h1>      
-    {% endif %}
-    {% if seller %}
+    <h1 class="mt-4">Buyer Post Details</h1>
+    {% endif %} {% if seller %}
     <h1 class="mt-4">Seller Post Details</h1>
     {% endif %}
   </div>
@@ -15,24 +14,21 @@
       {% if post.buyerName and post.buyerName == username%}
       <button class="btn btn-light text-center" onClick="location.href='/editpost?postType=Buyer&postId={{post.postId}}'" style="border: 1px solid #e1e2e5;width: 100px">
         <i class="fas fa-pencil-alt mx-1" style="color:blue;"></i>Edit</button>
-      {% endif %}
-      {% if post.sellerName and post.sellerName == username%}
+      {% endif %} {% if post.sellerName and post.sellerName == username%}
       <button class="btn btn-light text-center" onClick="location.href='/editpost?postType=Seller&postId={{post.postId}}'" style="border: 1px solid #e1e2e5;width: 100px">
         <i class="fas fa-pencil-alt mx-1" style="color:blue;"></i>Edit</button>
-      {% endif %}
-      {% if post.buyerName  and post.buyerName == username %}
-      <button class="btn btn-light text-center"   data-toggle="modal" data-target="#delete_window" href="#" style="border: 1px solid #e1e2e5;width: 100px">
+      {% endif %} {% if post.buyerName and post.buyerName == username %}
+      <button class="btn btn-light text-center" data-toggle="modal" data-target="#delete_window" href="#" style="border: 1px solid #e1e2e5;width: 100px">
         <i class="fas fa-trash-alt mx-1" style="color:red;"></i>Delete</button>
-      {% endif %}
-      {% if post.sellerName and post.sellerName == username%}
-      <button class="btn btn-light text-center"   data-toggle="modal" data-target="#delete_window" href="#" style="border: 1px solid #e1e2e5;width: 100px">
+      {% endif %} {% if post.sellerName and post.sellerName == username%}
+      <button class="btn btn-light text-center" data-toggle="modal" data-target="#delete_window" href="#" style="border: 1px solid #e1e2e5;width: 100px">
         <i class="fas fa-trash-alt mx-1" style="color:red;"></i>Delete</button>
       {% endif %}
 
       <button id="favoriteBtn" class="btn btn-light text-center" v-on:click="favorite_decider()" style="border: 1px solid #e1e2e5;width: 100px">
-        <span v-bind:style="{color:is_favorite?color_favorite:color_not_favorite}"> 
-          <i class="fa fa-heart" ></i>
-      </span>
+        <span v-bind:style="{color:is_favorite?color_favorite:color_not_favorite}">
+          <i class="fa fa-heart"></i>
+        </span>
         Favorite
       </button>
     </div>
@@ -40,20 +36,19 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-             <h3>Delete Post</h3>
+            <h3>Delete Post</h3>
           </div>
           <div class="modal-body">
             <p>You are about to delete the post.</p>
             <p>Do you want to proceed?</p>
           </div>
           <div class="modal-footer">
-          {% if post.buyerName %}
-          <button v-on:click="delete_post('Buyer', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
-          {% endif %}
-          {% if post.sellerName %}
-          <button v-on:click="delete_post('Seller', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
-          {% endif %}
-          <button data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</button>
+            {% if post.buyerName %}
+            <button v-on:click="delete_post('Buyer', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
+            {% endif %} {% if post.sellerName %}
+            <button v-on:click="delete_post('Seller', {{post.postId}})" id="btnYes" class="btn btn-danger">Yes</button>
+            {% endif %}
+            <button data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</button>
           </div>
         </div>
       </div>
@@ -66,19 +61,17 @@
 <div class="container mt-5" style="margin-bottom: 100px">
   <div class="row">
     <div class="col-sm-6 text-left" style="width:500px; height:500px; max-height: 100%;padding-left: 0px">
-        <!-- Preview Image -->
-        {% if post.image %}
-        <img src="data:;base64,{{ post.image }}"  style="width:100%;max-height:100%"/>
-        {% else %}
-        <img src="http://via.placeholder.com/500"  style="width:100%;max-height:100%"/>
-        {% endif %}
+      <!-- Preview Image -->
+      {% if post.image %}
+      <img src="data:;base64,{{ post.image }}" style="width:100%;max-height:100%" /> {% else %}
+      <img src="http://via.placeholder.com/500" style="width:100%;max-height:100%" /> {% endif %}
     </div>
-      
+
     <div class="col-sm-6 padding-right: 0px">
       <div class="row">
         <p hidden>postId={{post.postId}}#</p>
         <div class="col-sm-12">
-          <h2 id="post-title" style="display:inline-block;" >{{post.title}}</h2>
+          <h2 id="post-title" style="display:inline-block;">{{post.title}}</h2>
         </div>
       </div>
 
@@ -98,17 +91,15 @@
           <p id="post-date">
             {% if buyer %}
             <i class="fas fa-user"></i>
-            <a id="poster" href="{{'UserInfo?username=%s' %post.buyerName}}"> 
-            {{post.buyerName}}
+            <a id="poster" href="{{'UserInfo?username=%s' %post.buyerName}}">
+              {{post.buyerName}}
             </a>
-            {% endif %} 
-            {% if seller %}
+            {% endif %} {% if seller %}
             <i class="fas fa-user"></i>
-            <a id="poster" href="{{'UserInfo?username=%s' %post.sellerName}}"> 
-            {{post.sellerName}} 
+            <a id="poster" href="{{'UserInfo?username=%s' %post.sellerName}}">
+              {{post.sellerName}}
             </a>
-            {% endif %}
-            - {{post.time}}
+            {% endif %} - {{post.time}}
           </p>
         </div>
 
@@ -127,24 +118,43 @@
       </div>
       <hr>
       <strong>Description : </strong>
-      <label class="form-control-plaintext text-left" >{{post.description}}</label>
-      
-      {% if seller %}
-      {% if username != post.sellerName %}
+      <label class="form-control-plaintext text-left">{{post.description}}</label>
+
+      {% if seller %} {% if username != post.sellerName %}
       <div id="checkbutton" class="btn btn-primary btn-lg float-center my-5" v-on:click="checkout" role="button" style="width: 40%; margin-left: 30%;margin-right: 30%;">Buy
       </div>
-      {% endif %} 
+      {% endif %}
       <div id="checkbutton"></div>
-      {% endif %} 
+      {% endif %}
 
     </div>
+  </div>
+  <hr>
+  <div id="comment-tab">
+
+    <div class="card my-4">
+      <h5 class="card-header">Leave a Comment:</h5>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <textarea v-model="newComment" class="form-control" rows="3"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" v-on:click="sendComment">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card my-4" id="comment-list">
+
+      <comment v-for="(item,index) in messages" v-bind:message="item" v-bind:i="index" v-bind:am="messages" @reply-message="replyParent" @delete-message="deleteParent"></comment>
+    </div>
+
   </div>
 </div>
 
 
-<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
-<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
 <script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
 <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-<script src="static/postdetail.js"></script>
-{% endblock %} {# [END form] #}
+<script src="static/postdetail.js"></script> {% endblock %} {# [END form] #}

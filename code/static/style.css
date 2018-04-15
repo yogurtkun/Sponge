@@ -917,3 +917,23 @@ input[type=checkbox] + svg {
     transform: translate(0, 0) scale(1);
     pointer-events: auto;
 }
+
+.comment-card{
+  padding-bottom: 0em !important;
+  padding-top: 0.5em !important
+}
+
+.comment-div {
+  color: #8590a6;
+  font-size: 25px
+}
+
+.comment-hr {
+  margin-top: 1em;
+  margin-bottom: 0.2em
+}
+
+.comment-span {
+  font-weight: lighter;
+  font-size: 1.5vh;
+}

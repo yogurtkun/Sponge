@@ -1,138 +1,126 @@
 
 Vue.use(bootstrapVue);
 var checkVue = new Vue({
-  el:"#checkbutton",
-  methods: {
-    checkout: function(){
-      var urlParams = new URLSearchParams(window.location.search);
-      var postId = urlParams.get("postId");
-      window.location.href = "/buyorder?postId="+postId;
+    el: "#checkbutton",
+    methods: {
+        checkout: function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var postId = urlParams.get("postId");
+            window.location.href = "/buyorder?postId=" + postId;
+        }
     }
-  }
 });
 
 
 var favoriteBtn = new Vue({
-el: "#favoriteBtn",
-data: {
-  post_item : undefined,
-  is_favorite : undefined,
-  postType: undefined,
-  postId:undefined,
-  color_favorite: '#f10215',
-  color_not_favorite: 'black',
-},
-mounted(){
-  var href = window.location.href;
-  var pathname = window.location.pathname;
-  var post_type = pathname.substring( 1, pathname.length)
-  var postid = href.substring(href.indexOf("postId") + 7, href.length)
+    el: "#favoriteBtn",
+    data: {
+        post_item: undefined,
+        is_favorite: undefined,
+        postType: undefined,
+        postId: undefined,
+        color_favorite: '#f10215',
+        color_not_favorite: 'black',
+    },
+    mounted() {
+        var href = window.location.href;
+        var pathname = window.location.pathname;
+        var post_type = pathname.substring(1, pathname.length)
+        var postid = href.substring(href.indexOf("postId") + 7, href.length)
 
-  this.postId = postid
-  if(post_type === "SellerPost")
-  {
-      this.postType = "Seller"
-  }
-  else if(post_type ==="BuyerPost")
-  {
-      this.postType = "Buyer"
-  }
+        this.postId = postid
+        if (post_type === "SellerPost") {
+            this.postType = "Seller"
+        }
+        else if (post_type === "BuyerPost") {
+            this.postType = "Buyer"
+        }
 
 
 
-  if(post_type === "SellerPost")
-  {
-    $.ajax({
-        url: '/postlist/seller',
-        dataType: 'json',
-        type: "POST",
+        if (post_type === "SellerPost") {
+            $.ajax({
+                url: '/postlist/seller',
+                dataType: 'json',
+                type: "POST",
 
-        success: (json)=>{
-            this.post_item = json;
-            if(this.post_item !== undefined)
-            {
-              for(var i = 0; i < this.post_item.length; i++)
-              {
-                if(this.post_item[i].postId === parseInt(postid))
-                {
-                  this.post_item = this.post_item[i]
-                  this.is_favorite = this.post_item.favorite
+                success: (json) => {
+                    this.post_item = json;
+                    if (this.post_item !== undefined) {
+                        for (var i = 0; i < this.post_item.length; i++) {
+                            if (this.post_item[i].postId === parseInt(postid)) {
+                                this.post_item = this.post_item[i]
+                                this.is_favorite = this.post_item.favorite
+                            }
+                        }
+                    }
+                },
+            }).fail(function ($xhr) {
+                var data = $xhr.responseJSON;
+                console.log(data);
+            });
+        }
+        else if (post_type === "BuyerPost") {
+            $.ajax({
+                url: '/postlist/buyer',
+                dataType: 'json',
+                type: "POST",
+
+                success: (json) => {
+                    this.post_item = json;
+                    if (this.post_item !== undefined) {
+                        for (var i = 0; i < this.post_item.length; i++) {
+                            if (this.post_item[i].postId === parseInt(postid)) {
+                                this.post_item = this.post_item[i]
+                                this.is_favorite = this.post_item.favorite
+                            }
+                        }
+                    }
+                },
+            }).fail(function ($xhr) {
+                var data = $xhr.responseJSON;
+                console.log(data);
+            });
+        }
+    },
+    methods: {
+        favorite_decider: function () {
+            if (this.is_favorite === false) {
+                this.addFavorite(this.postType, this.postId)
+            }
+            else {
+                this.deleteFavorite(this.postType, this.postId)
+            }
+        },
+
+        deleteFavorite: function (postType, postId) {
+            this.is_favorite = false
+
+            tdata = { "postType": postType, 'postId': postId }
+            $.ajax({
+                url: '/deleteFavorite',
+                type: 'POST',
+                data: tdata,
+                success: (data) => {
+                    console.log("success!")
                 }
-              }
-            }
+            })
         },
-        }).fail(function($xhr) {
-            var data = $xhr.responseJSON;
-            console.log(data);
-    });
-  }
-  else if(post_type === "BuyerPost")
-  {
-    $.ajax({
-        url: '/postlist/buyer',
-        dataType: 'json',
-        type: "POST",
 
-        success: (json)=>{
-          this.post_item = json;
-          if(this.post_item !== undefined)
-          {
-            for(var i = 0; i < this.post_item.length; i++)
-            {
-              if(this.post_item[i].postId === parseInt(postid))
-              {
-                this.post_item = this.post_item[i]
-                this.is_favorite = this.post_item.favorite
-              }
-            }
-          }
-        },
-        }).fail(function($xhr) {
-            var data = $xhr.responseJSON;
-            console.log(data);
-    });
-  }
-},
-methods:{
-  favorite_decider: function(){
-      if(this.is_favorite === false)
-      {
-          this.addFavorite(this.postType, this.postId)
-      }
-      else
-      { 
-          this.deleteFavorite(this.postType, this.postId)
-      }
-  },
+        addFavorite: function (postType, postId) {
+            this.is_favorite = true
 
-  deleteFavorite : function(postType, postId){
-    this.is_favorite = false
-
-    tdata = {"postType": postType, 'postId': postId}
-    $.ajax({
-        url: '/deleteFavorite',
-        type: 'POST',
-        data: tdata,
-        success: (data) => {
-            console.log("success!")
+            tdata = { "postType": postType, 'postId': postId }
+            $.ajax({
+                url: '/favorite',
+                type: 'POST',
+                data: tdata,
+                success: (data) => {
+                    console.log("success!")
+                }
+            })
         }
-    })
-  },
-
-  addFavorite : function(postType, postId){
-    this.is_favorite = true
-
-    tdata = {"postType": postType, 'postId': postId}
-    $.ajax({
-        url: '/favorite',
-        type: 'POST',
-        data: tdata,
-        success: (data) => {
-            console.log("success!")
-        }
-      })
-    } 
-  }
+    }
 });
 
 
@@ -141,11 +129,11 @@ var delete_post = new Vue({
     data: {
 
     },
-    methods:{
-        delete_post: function(postType, postId){
+    methods: {
+        delete_post: function (postType, postId) {
             console.log("delete_post")
-            
-            tdata = {"postType": postType, 'postId': postId}
+
+            tdata = { "postType": postType, 'postId': postId }
             $.ajax({
                 url: '/deletepost',
                 type: 'POST',
@@ -162,4 +150,123 @@ var delete_post = new Vue({
             })
         },
     },
+});
+
+var urlParams = new URLSearchParams(window.location.search);
+var postId = urlParams.get("postId");
+var postType = "";
+if (window.location.href.includes("Seller")) {
+    postType = "Seller";
+} else {
+    postType = "Buyer";
+}
+
+var comment_info = new Vue({
+    el: "#comment-tab",
+    data: {
+        newComment: "",
+        messages: [],
+        sendTo: null
+    },
+    created() {
+        var self = this;
+        $.ajax({
+            url: 'comments',
+            type: 'POST',
+            dataType: 'json',
+            data: { "type": postType, "postId": postId },
+            success: function (data) {
+                self.messages = data;
+                console.log(data);
+            }
+        })
+    },
+    methods: {
+        sendComment: function () {
+            if(this.newComment === ""){
+                $('textarea').attr("placeholder","Please Input Comment!");
+                return;
+            }
+
+            data = {
+                "postType":postType,
+                "postId" : postId,
+                "content": this.newComment
+            };
+            if(this.sendTo !== null){
+                data['replyTo'] = this.sendTo;
+            }
+
+            $.ajax({
+                url:'addPostComment',
+                type:'POST',
+                dataType: 'json',
+                data: data,
+                success: function(data){
+                    alert(data);
+                    window.location.reload(false);
+                }
+            })
+            this.sendTo = null;
+        },
+        replyParent: function(replyUser){
+            this.sendTo = replyUser;
+            $('textarea').attr("placeholder","Reply to "+replyUser);
+        },
+        deleteParent: function(commentId){
+            $.ajax({
+                url:"delPostComment",
+                type:"POST",
+                dataType: 'json',
+                data: {'postType':postType,'commentId':commentId},
+                success: function(data){
+                    if(data === "del comment failed" ){
+                        alert("Delete failed");
+                    }else{
+                        window.location.reload(false);
+                    }
+                }
+            })
+        }
+    }
+});
+
+Vue.component('comment', {
+    props: [
+        'message',
+        'i',
+        'am'
+    ],
+    template: `
+        <div class="comment-card card-body">
+            <div class="mt-0 comment-div">
+                <a href="/UserInfo?username=message.author">{{message.author}}</a>
+                <span v-if="message.replyTo!==null" class="comment-span">reply to </span>
+                <a v-if="message.replyTo!==null" href="/UserInfo?username=message.replyTo">{{message.replyTo}}</a>
+                <div  style="float: right">
+                <span class="comment-span">{{message.time}}</span>
+                <a v-on:click="reply" >
+                <i class="fas fa-reply"></i>
+                </a>
+                <a v-on:click="deleteM">
+                <i class="far fa-trash-alt"></i>
+                </a>
+                </div>
+            </div>
+            <p style="margin-top: 0.5vh">{{message.content}}</p>
+            <hr v-if="i !== am.length-1" class="comment-hr">
+        </div>
+    `,
+    methods: {
+        reply: function(){
+            this.$emit("reply-message",this.message['author']);
+            $('html, body').animate({
+                scrollTop: $("textarea").offset().top
+            }, 200);
+            $("textarea").focus();
+        },
+        deleteM: function(){
+            this.$emit("delete-message",this.message['commentId'])
+        }
+    }
 });
