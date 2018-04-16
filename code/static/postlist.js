@@ -21,7 +21,7 @@ var postlist = new Vue({
     currentPage: 1,
     go_page: null,
     limit_number : 10,
-    ITEMS_PER_PAGE : 10,
+    ITEMS_PER_PAGE : 5,
   },
   mounted(){
     this.query_buyer_seller_post()
