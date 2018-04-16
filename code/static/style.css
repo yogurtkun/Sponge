@@ -267,7 +267,7 @@ ul.product_list {
 }
 
 .product_image2:hover .product_buttons_favorite {
-  bottom: 0;
+  bottom: 10px;
 }
 
 .product_buttons {
