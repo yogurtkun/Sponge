@@ -227,8 +227,9 @@ var userinfo = new Vue({
 });
 
 $(document).ready(function () {
+    var username = $("#user-name").text().replace(/ /g,'');
     $("#order-table").bootstrapTable({
-        url: "/orderlist",
+        url: "/orderlist/" + username,
         method: "POST",
         sidePagination: "client",
         pagination: true,
@@ -245,10 +246,10 @@ $(document).ready(function () {
                 valign: 'middle',
                 width: '5%',
                 formatter: function (value, row, index) {
-                    if (value == 'selling') {
+                    if (value == 'buying') {
                         return '<span class="badge badge-pill badge-primary">selling</span>'
                     }
-                    else if (value == 'buying') {
+                    else if (value == 'selling') {
                         return '<span class="badge badge-pill badge-secondary">buying</span>'
                     }
                 }

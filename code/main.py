@@ -492,7 +492,7 @@ def getReviewsToUser():
 
 
 '''
-Get order given user
+Get order for user in current session
 '''
 @app.route('/orderlist', methods=['POST'])
 def getOrderList():
@@ -500,6 +500,16 @@ def getOrderList():
         return json.dumps('')
     orders = order.getOrderByUser(session['username'])
     return json.dumps(orders)
+
+
+
+'''
+Get order for given user
+'''
+@app.route('/orderlist/<username>', methods=['POST'])
+def getOrderListByUser():
+	orders = order.getOrderByUser(username)
+	return json.dumps(orders)
 
 
 '''
