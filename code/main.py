@@ -603,7 +603,7 @@ def cancelOrder():
     if not order.checkUser(orderId, session['username']):
         return "No permission"
     if order.cancelOrder(orderId):
-        #message.orderCancelNotification(orderId)
+        message.orderCancelNotification(orderId)
         return json.dumps("Succeeded!")
     return json.dumps("Failed!")
 

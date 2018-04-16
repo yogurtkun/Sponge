@@ -31,13 +31,13 @@ def createOrder(postId, buyerName, transactionType, rcvAddress):
 
 def cancelOrder(orderId):
     try:
-        order = from_sql(Order.query.get(orderId))
-        postId = order['postId']
+        order = Order.query.get(orderId)
+        postId = order.postId
         if not validSellerPost(postId):
             return False
-        if not order['status'] == "In progress":
+        if not order.status == "In progress":
             return False
-        Order.query.filter_by(orderId=orderId).delete()
+        order.status = "Canceled"
         db.session.commit()
         return True
     except Exception as e:

@@ -117,7 +117,7 @@ class Order(db.Model):
     sellerName = db.Column(db.String(32), db.ForeignKey("user.username", ondelete='CASCADE'))
     seller = db.relationship("User", foreign_keys=[sellerName], lazy=True, cascade="all,delete")
     time = db.Column(db.DateTime)
-    status = db.Column(db.Enum("In progress", "Confirmed", "Shipped", "Completed"))
+    status = db.Column(db.Enum("In progress", "Confirmed", "Shipped", "Completed", "Canceled"))
     transactionType = db.Column(db.String(32))
     senderAddress = db.Column(db.Text)
     receiverAddress = db.Column(db.Text)
