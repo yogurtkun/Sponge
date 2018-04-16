@@ -24,6 +24,8 @@ def createPost(title, description, category, price, location, image, username, p
 
 def invalidSellerPost(postId):
     post = SellerPost.query.get(postId)
+    if post.valid == False:
+        return False
     try:
         post.valid = False
         db.session.commit()
@@ -35,6 +37,8 @@ def invalidSellerPost(postId):
 
 def validSellerPost(postId):
     post = SellerPost.query.get(postId)
+    if post.valid == True:
+        return False
     try:
         post.valid = True
         db.session.commit()

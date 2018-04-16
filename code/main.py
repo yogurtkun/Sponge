@@ -295,6 +295,8 @@ def getPost(postId, flag):
     isSeller = flag == "Seller"
     isBuyer = flag == "Buyer"
     postData = post.getPost(postId, flag)
+    if isSeller and not postData["valid"]:
+        return redirect('/')
     postData["favorite"] = account.searchFavorite(session['username'], postId, flag)
     if postData == None:
         if isSeller:
@@ -344,6 +346,7 @@ def checkout():
     orderId = order.createOrder(postId, buyerName, transactionType, rcvAddress)
     if orderId == None:
         return "Placing order failed!"
+    message.orderPlaceNotification(postId, orderId)
     return "Placing order succeeded! orderId=" + str(orderId)
 
 
@@ -600,6 +603,7 @@ def cancelOrder():
     if not order.checkUser(orderId, session['username']):
         return "No permission"
     if order.cancelOrder(orderId):
+        #message.orderCancelNotification(orderId)
         return json.dumps("Succeeded!")
     return json.dumps("Failed!")
 

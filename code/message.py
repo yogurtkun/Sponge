@@ -63,7 +63,7 @@ def getMessagesByUser(username):
 
 def orderStatusNotification(orderId, status):
     order = Order.query.get(orderId)
-    msg = "Status of order " + str(orderId) + " has changed to " + status
+    msg = "Status of order " + str(orderId) + " has changed to " + status + "."
     sendMessage(sender="system", receiver=order.buyerName, content=msg)
     sendMessage(sender="system", receiver=order.sellerName, content=msg)
 
@@ -74,9 +74,24 @@ def userFavoriteNotification(username, postId, postType):
         poster = post.getPost(postId, postType)['sellerName']
     if postType == 'Buyer':
         poster = post.getPost(postId, postType)['buyerName']
-    msg = username + " has add your post with Id " + str(postId) + " to favorite list"
+    msg = username + " has add your post with Id " + str(postId) + " to favorite list."
     sendMessage(sender="system", receiver=poster, content=msg)
 
 
+def orderPlaceNotification(postId, orderId):
+    order = Order.query.get(orderId)
+    sellerName = order.sellerName
+    buyerName = order.buyerName
+    msg = buyerName + " has placed on order(" + str(orderId) + ") on your post(" + str(postId) + ")."
+    sendMessage(sender="system", receiver=sellerName, content=msg)
+    msg = "You have placed an order(" + str(orderId) + ") on post(" + str(postId) + ")."
+    sendMessage(sender="system", receiver=buyerName, content=msg)
+
+
+def orderCancelNotification(orderId):
+    msg = "Order " + str(orderId) + " is canceled."
+    order = Order.query.get(orderId)
+    sendMessage(sender="system", receiver=order.buyerName, content=msg)
+    sendMessage(sender="system", receiver=order.sellerName, content=msg)
 
 
