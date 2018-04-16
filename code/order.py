@@ -3,11 +3,12 @@ from schema import Order, from_sql
 from post import searchSellerPosts, getPost, invalidSellerPost, validSellerPost
 import account
 import datetime
+import pytz
 
 db = schema.db
 
 def createOrder(postId, buyerName, transactionType, rcvAddress):
-    time = datetime.datetime.now()
+    time = datetime.datetime.now(pytz.timezone('US/Eastern'))
     post = searchSellerPosts(postId)
     if post == None:
         return None

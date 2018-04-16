@@ -1,6 +1,7 @@
 from main import schema
 from schema import SellerPostComment, BuyerPostComment, from_sql
 import datetime
+import pytz
 
 db = schema.db
 
@@ -13,7 +14,7 @@ def addPostComment(postType, postId, author, replyTo, content):
 
 
 def addSellerPostComment(postId, author, replyTo, content):
-	time = datetime.datetime.now()
+	time = datetime.datetime.now(pytz.timezone('US/Eastern'))
 	comment = SellerPostComment(postId=postId, author=author, replyTo=replyTo, content=content, time=time)
 	try:
 		db.session.add(comment)
@@ -26,7 +27,7 @@ def addSellerPostComment(postId, author, replyTo, content):
 
 
 def addBuyerPostComment(postId, author, replyTo, content):
-	time = datetime.datetime.now()
+	time = datetime.datetime.now(pytz.timezone('US/Eastern'))
 	comment = BuyerPostComment(postId=postId, author=author, replyTo=replyTo, content=content, time=time)
 	try:
 		db.session.add(comment)

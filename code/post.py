@@ -1,13 +1,13 @@
 from main import schema
 from schema import SellerPost, BuyerPost, from_sql
 import datetime
-
+import pytz
 
 db = schema.db
 
 
 def createPost(title, description, category, price, location, image, username, postType):
-    time = datetime.datetime.now()
+    time = datetime.datetime.now(pytz.timezone('US/Eastern'))
     if postType == "Seller":
         post = SellerPost(title=title, description=description, category=category, price=price, location=location, image=image, sellerName=username, time=time)
     if postType == "Buyer":

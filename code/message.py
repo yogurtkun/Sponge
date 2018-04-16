@@ -2,6 +2,7 @@ from main import schema
 from schema import Message, Order, from_sql, db
 import account, post
 import datetime
+import pytz
 from sqlalchemy import or_
     
 
@@ -10,7 +11,7 @@ def sendMessage(receiver, content, sender='system', title=''):
     if sender == 'system' and account.searchUser('system') is None:
         account.registerUser('system', 'system@domain.com', 'system-pwd', 10000)
 
-    time = datetime.datetime.now()
+    time = datetime.datetime.now(pytz.timezone('US/Eastern'))
     message = Message(senderUsername=sender, receiverUsername=receiver, title=title, content=content, time=time)
     try:
         db.session.add(message)
