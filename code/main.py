@@ -381,40 +381,6 @@ def deleteFavorite():
     return "Deleting a favorite item failed!"
 
 
-'''
-Add review on posts
-'''
-@app.route('/addPostReview', methods=['POST'])
-def addPostReview():
-    if not loggedIn():
-        return render_template('login.html', error='Please login first')
-    postType = str(request.form['postType'])
-    postId = int(request.form['postId'])
-    author = session['username']
-    title = str(request.form['title'])
-    content = str(request.form['content'])
-    reviewId = post_review.addPostReview(postType, postId, author, title, content)
-    if reviewId == None:
-        return "Review failed!"
-    return "Review succeeded! reviewId=" + str(reviewId)
-
-
-'''
-Delete review on posts
-'''
-@app.route('/delPostReview', methods=['POST'])
-def delPostReview():
-    if not loggedIn():
-        return render_template('login.html', error='Please login first')
-    postType = str(request.form['postType'])
-    reviewId = int(request.form['reviewId'])
-    username = session['username']
-    res = post_review.delPostReview(postType, reviewId, username)
-    if res :
-        return "Deleting review succeeded!"
-    return "Deleting review failed!"
-
-
 @app.route('/userExist',methods=['POST'])
 def userExist():
     username = request.form['username']
