@@ -74,7 +74,7 @@ def userFavoriteNotification(username, postId, postType):
         poster = post.getPost(postId, postType)['sellerName']
     if postType == 'Buyer':
         poster = post.getPost(postId, postType)['buyerName']
-    msg = username + "has add your post with Id " + str(postId) + " to favorite list"
+    msg = username + " has add your post with Id " + str(postId) + " to favorite list"
     sendMessage(sender="system", receiver=poster, content=msg)
 
 
