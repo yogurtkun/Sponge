@@ -19,12 +19,6 @@ var userinfo = new Vue({
         }
     },
     methods: {
-        get_reviewee: function(){
-            var reviewee_text = $("#seller").text().replace(/ /g,'');
-            var reviewee = reviewee_text.substring(reviewee_text.indexOf(':')+1, reviewee_text.length-1)
-            
-            return reviewee
-        },
 
         get_order_id: function(){
             var href = window.location.href;
@@ -33,9 +27,19 @@ var userinfo = new Vue({
             return orderId  
         },
 
-        AddReview:function(){
-            console.log('AddReview')
-            this.reviewee = this.get_reviewee()
+        AddSellerReview: function() {
+            var reviewee_text = $("#buyer").text().replace(/ /g,'');
+            var reviewee = reviewee_text.substring(reviewee_text.indexOf(':')+1, reviewee_text.length-1)
+            this.AddReview(reviewee)
+        },
+
+        AddBuyerReview: function() {
+            var reviewee_text = $("#seller").text().replace(/ /g,'');
+            var reviewee = reviewee_text.substring(reviewee_text.indexOf(':')+1, reviewee_text.length-1)
+            this.AddReview(reviewee)
+        },
+
+        AddReview:function(reviewee){
             this.orderId = this.get_order_id()
 
             var tdata = {'reviewee':this.reviewee, 'rating':this.rating,

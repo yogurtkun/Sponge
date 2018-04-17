@@ -184,7 +184,12 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" v-on:click="AddReview" class="btn btn-primary">Submit</button>
+                {% if username == order.buyerName %}
+                <button type="button" v-on:click="AddBuyerReview" class="btn btn-primary">Submit</button>
+                {% endif %}
+                {% if username == order.sellerName %}
+                <button type="button" v-on:click="AddSellerReview" class="btn btn-primary">Submit</button>
+                {% endif %}
               </div>
             </div>
 
