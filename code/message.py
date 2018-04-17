@@ -72,10 +72,14 @@ def orderStatusNotification(orderId, status):
 
 def userFavoriteNotification(username, postId, postType):
     if postType == "Seller":
-        poster = post.getPost(postId, postType)['sellerName']
+        postItem = post.getPost(postId, postType)
+        poster = postItem['sellerName']
+        title = postItem['title']
     if postType == 'Buyer':
-        poster = post.getPost(postId, postType)['buyerName']
-    msg = username + " has add your post with Id " + str(postId) + " to favorite list."
+        postItem = post.getPost(postId, postType)
+        poster = postItem['buyerName']
+        title = postItem['title']
+    msg = username + " has added your post " + title + " with Id " + str(postId) + " to favorite list."
     sendMessage(sender="system", receiver=poster, content=msg)
 
 
@@ -94,5 +98,18 @@ def orderCancelNotification(orderId):
     order = Order.query.get(orderId)
     sendMessage(sender="system", receiver=order.buyerName, content=msg)
     sendMessage(sender="system", receiver=order.sellerName, content=msg)
+
+
+def newCommentNotification(postId, postType):
+    if postType == "Seller":
+        postItem = post.getPost(postId, postType)
+        poster = postItem['sellerName']
+        title = postItem['title']
+    if postType == 'Buyer':
+        postItem = post.getPost(postId, postType)
+        poster = postItem['buyerName']
+        title = postItem['title']
+    msg = "Your " + postType + " post " + title + " with Id " + str(postId) + " has a new comment."
+    sendMessage(sender="system", receiver=poster, content=msg)
 
 
