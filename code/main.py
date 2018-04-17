@@ -676,7 +676,8 @@ def addPostComment():
     commentId = post_comment.addPostComment(postType, postId, author, replyTo, content)
     if not commentId:
         return json.dumps("add comment failed")
-    messsage.newCommentNotification(postId, postType)
+    print postId, postType
+    message.newCommentNotification(postId, postType)
     return json.dumps("add comment succeeded, commentId=" + str(commentId))
 
 
