@@ -507,7 +507,7 @@ def getOrderList():
 Get order for given user
 '''
 @app.route('/orderlist/<username>', methods=['POST'])
-def getOrderListByUser():
+def getOrderListByUser(username):
 	orders = order.getOrderByUser(username)
 	return json.dumps(orders)
 
