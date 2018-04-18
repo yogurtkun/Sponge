@@ -354,17 +354,8 @@ var postlist = new Vue({
       for(var i = 0; i < filter_len; i++){
         time_with_index.push(new Date(items[i].time))
       }
-      
-      var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-      
-      if (isSafari)
-      {
-        time_with_index = this.sortWithIndeces(time_with_index, "ASE")
-      }
-      else
-      {
-        time_with_index = this.sortWithIndeces(time_with_index, "DESC")
-      }
+
+      time_with_index = this.sortWithIndeces(time_with_index, "DESC")
 
       new_index = time_with_index.sortIndices
 
