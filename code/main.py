@@ -404,7 +404,7 @@ def messageTable():
         if another not in ret_dict:
             ret_dict[another] = {'time':[],'unseen':0}
         ret_dict[another]['time'].append(mess['time'])
-        if mess['seen'] == False:
+        if mess['seen'] == False and mess['receiverUsername'] != another:
             ret_dict[another]['unseen'] += 1
     res = []
     for user,info in ret_dict.items():

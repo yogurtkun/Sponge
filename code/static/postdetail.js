@@ -168,6 +168,14 @@ var comment_info = new Vue({
         messages: [],
         sendTo: null,
         sessionUser:$('#sessionUser').html(),
+        deleteId: null,
+        text_max: 300,
+        text_length: 0
+    },
+    watch:{
+        newComment: function(){
+            this.text_length = this.newComment.length;
+        }
     },
     created() {
         var self = this;
@@ -204,8 +212,12 @@ var comment_info = new Vue({
                 dataType: 'json',
                 data: data,
                 success: function(data){
-                    alert(data);
-                    window.location.reload(false);
+                    if(data.indexOf("succeeded") >=0 ){
+                        $("#success_comment").modal('show');
+                        setTimeout(function(){ window.location.reload(false)},500);
+                    }else{
+                        alert("Add Comment failed");
+                    }
                 }
             })
             this.sendTo = null;
@@ -215,11 +227,16 @@ var comment_info = new Vue({
             $('textarea').attr("placeholder","Reply to "+replyUser);
         },
         deleteParent: function(commentId){
+            $("#delete_comment").modal('show');
+            this.deleteId = commentId;
+        },
+        deleteConfirm: function(){
+            var self = this;
             $.ajax({
                 url:"delPostComment",
                 type:"POST",
                 dataType: 'json',
-                data: {'postType':postType,'commentId':commentId},
+                data: {'postType':postType,'commentId':self.deleteId},
                 success: function(data){
                     if(data === "del comment failed" ){
                         alert("Delete failed");
@@ -227,8 +244,9 @@ var comment_info = new Vue({
                         window.location.reload(false);
                     }
                 }
-            })
+            });
         }
+
     }
 });
 
@@ -247,12 +265,12 @@ Vue.component('comment', {
                 <a v-if="message.replyTo!==null" :href="'/UserInfo?username='+message.replyTo">{{message.replyTo}}</a>
                 <div  style="float: right">
                 <span class="comment-span">{{message.time}}</span>
-                <a v-on:click="reply" >
+                <button v-on:click="reply" class="btn">
                 <i class="fas fa-reply"></i>
-                </a>
-                <a v-if="message.author===cu" v-on:click="deleteM">
+                </button>
+                <button v-if="message.author===cu" v-on:click="deleteM" class="btn">
                 <i class="far fa-trash-alt"></i>
-                </a>
+                </button>
                 </div>
             </div>
             <p style="margin-top: 0.5vh">{{message.content}}</p>

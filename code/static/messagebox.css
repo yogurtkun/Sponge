@@ -676,3 +676,18 @@
   #frame .content .message-input .wrap button:focus {
     outline: none;
   }
+
+  .numberCircle {
+    border-radius: 50%;
+    behavior: url(PIE.htc);
+    /* remove if you don't care about IE8 */
+    width: 18px;
+    height: 18px;
+    padding: 4px;
+    background: rgb(231, 87, 87);
+    /* border: 0.4px solid rgb(252, 251, 251); */
+    text-align: center;
+    color: #ffffff;
+    font: 10px Arial, sans-serif;
+    float: right
+  }
