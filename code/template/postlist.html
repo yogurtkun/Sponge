@@ -204,11 +204,11 @@
                   </p>
                 </h4>
                 <div v-if="item.buyerName" class="text-right mx-3">
-                  <i class="fas fa-user mx-1"></i>
+                  <i class="fas fa-user mx-1" style="font-size: 12px;"></i>
                   <a v-bind:href="'UserInfo\?username=' + item.buyerName"> {{item.buyerName}}</a>
                 </div>
                 <div v-else-if="item.sellerName" class="text-right mx-3">
-                  <i class="fas fa-user mx-1"></i>
+                  <i class="fas fa-user mx-1" style="font-size: 12px;"></i>
                   <a v-bind:href="'UserInfo\?username=' + item.sellerName"> {{item.sellerName}}</a>
                 </div>
 
