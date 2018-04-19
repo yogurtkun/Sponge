@@ -21,6 +21,7 @@
                     if (retUser.address !== null) {
                         newAddress = JSON.parse(retUser.address);
                         this.rcvAddress = newAddress;
+                        this.rcvAddress.state = newAddress['country']
                     }
                     this.transactionType="Online";
                 }
