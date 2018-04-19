@@ -170,6 +170,9 @@ $(document).ready(function () {
                 var self = this;
 
                 if (!self.update) {
+                    setTimeout(function () {
+                        self.loadNewMessage();
+                    }, 1000);
                     return;
                 }
 
@@ -192,6 +195,7 @@ $(document).ready(function () {
                             }
 
                             self.users = data;
+                            console.log(data);
                             self.update = true;
                         });
                     }
