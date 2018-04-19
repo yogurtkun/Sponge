@@ -24,6 +24,7 @@ users.append({"username": "IreneNash", "email": "in2333@sponge.com", "password":
 users.append({"username": "CarlLyman", "email": "cl2333@sponge.com", "password": "1234", "zipcode":" 10003"})
 users.append({"username": "Jessica", "email": "jessica@sponge.com", "password": "1234", "zipcode":" 10025"})
 users.append({"username": "Johnson", "email": "johnson@sponge.com", "password": "1234", "zipcode":" 10025"})
+users.append({"username": "yjc", "email": "yjc@123.com", "password": "1234", "zipcode":" 10025"})
 users.append({"username": "system", "email": "system@sponge.com", "password": "1234", "zipcode":" 10000"})
 
 sellerPosts.append({"title": "A brand new handbag", "category":"Beauty", "price":800, "location": "New York", "image": "bag.jpg", "description": "I just bought a handbag. But its color is different from what I expected. So I want to sell it to someone else. This bag is brand new and never used outside. its original price is $1000. I can give a discount. PM me if you want:)"})
@@ -31,6 +32,8 @@ sellerPosts.append({"title": "Macbook pro 15 inch 2016", "category": "Electronic
 sellerPosts.append({"title": "Yamaha digial piano", "category": "Music", "price" : 750, "location": "Arizona", "image": "piano.jpg", "description": "I bought this piano 4 years ago, and I am considering to buy a grand piano. Though this piano has used for 4 years, it still in good condition. The official price is $1500."})
 sellerPosts.append({"title": "Ducal Chest of Drawer", "category": "Furniture", "price" : 99, "location": "Texas", "image": "drawer.jpg", "description": "I am about to leave this city, and the drawer is not easy to move. The drawer has been used for 3 years, but still in good condition. The price is negotiable because I prefer buyer come and pick it up. Please let me know if you are interested."})
 sellerPosts.append({"title": "Air conditioner", "category": "Furniture", "price" : 139, "location": "Texas", "image": "air.jpg", "description": "I am about to leave this city and want to sell this air conditioner. It has been used for 1 years, but still in good condition. I clean it every month, so you don't need to worry about cleanliness.Please let me know if you are interested."})
+sellerPosts.append({"title": "Drone", "category": "Electronics", "price" : 500, "location": "Texas", "image": "dji.jpg", "description": "I buy the dji drone for my son. However, it seems like that he is not old enough to play it. The drone is in well condition. It can continuous fly for nearly 4 hour. Prefer face to face."})
+sellerPosts.append({"title": "Camera", "category": "Electronics", "price" : 200, "location": "Ohio", "image": "camera.jpg", "description": "A well preserved camera which has been used for 2 years. The brand is XXX."})
 
 sellerPosts.append({"title":"A beagle puppy", "category":"Outdoor", "price":1, "location":"Massachusetts", "image":"beagle.jpg", "description":"Hi I'm gonna work overseas and cannot take care of him any more. Please adopt this puppy!"})
 sellerPosts.append({"title":"PS4 White", "category":"Electronics", "price":210, "location":"Massachusetts", "image":"ps4.jpg", "description":"PS4 White 500GB. Used for less than 1 year. I can give you some games for free if you choose face-to-face transaction."})
@@ -43,6 +46,9 @@ buyerPosts.append({"title": "Need a cheap ipad air", "category": "Electronics", 
 buyerPosts.append({"title": "Want a mountain bike", "category": "Outdoor", "price": 250, "location": "New Jersey", "image": "bike.jpg", "description": "My previous mountain bike has some unfixable damage, such that I want to buy a new mountain bike. I don't need a really new bike, but please make sure your bike is safe to ride. Your bike should be the same style as the image attached."})
 buyerPosts.append({"title": "Want a limited edition shoes", "category": "Clothing", "price": 1000, "location": "Iowa", "image": "shoes.jpg", "description": "I forgot the date of release. And when I remember, it is out of stock in all the stores. If anyone has this shoes, I would like to provide a competitive price."})
 buyerPosts.append({"title": "Want a second-hand book", "category": "Books", "price": 10, "location": "New York", "image": "book.jpg", "description": "A course I recently take asks me to buy a book about spark. I prefer the book in better condition without any draft on it. BTW, prefer to deal face to face."})
+buyerPosts.append({"title": "Want a second-hand GPU", "category": "Electronics", "price": 1000, "location": "New York", "description": "I want a XXX' GPU to play games. It will be better if it has been used less than 1 year."})
+buyerPosts.append({"title": "A confortable sofa is needed", "category": "Furniture", "price": 80, "location": "Florida", "description": "I will move the Florida next month, and I need a sofa in my new place. Please make sure your second-hand sofa is in good condition and I prefer the seller who can ship the sofa to my place."})
+buyerPosts.append({"title": "Need a Defender Tennis Racquet", "category": "Outdoor", "price": 30, "location": "Kansas", "description": "I start to play tennis recently, and I need a defender tennis racquet. I don't have specific brand requirement, but make sure the tennis is in good condition. The price is negotiable"})
 
 with main.app.app_context():
     # add users

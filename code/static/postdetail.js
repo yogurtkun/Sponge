@@ -263,7 +263,7 @@ Vue.component('comment', {
                 <a :href="'/UserInfo?username='+message.author">{{message.author}}</a>
                 <span v-if="message.replyTo!==null" class="comment-span">reply to </span>
                 <a v-if="message.replyTo!==null" :href="'/UserInfo?username='+message.replyTo">{{message.replyTo}}</a>
-                <div  style="float: right">
+                <div  style="float: right;max-height:25px">
                 <span class="comment-span">{{message.time}}</span>
                 <button v-on:click="reply" class="btn">
                 <i class="fas fa-reply"></i>
