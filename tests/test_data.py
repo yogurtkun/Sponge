@@ -49,7 +49,7 @@ buyerPosts.append({"title": "Want a limited edition shoes", "category": "Clothin
 buyerPosts.append({"title": "Want a second-hand book", "category": "Books", "price": 10, "location": "New York", "image": "book.jpg", "description": "A course I recently take asks me to buy a book about spark. I prefer the book in better condition without any draft on it. BTW, prefer to deal face to face."})
 buyerPosts.append({"title": "Want a second-hand GPU", "category": "Electronics","image":"gpu.jpg", "price": 1000, "location": "New York", "description": "I want a XXX' GPU to play games. It will be better if it has been used less than 1 year."})
 buyerPosts.append({"title": "A comfortable sofa is needed", "category": "Furniture", "price": 80,"image":"sofa.jpg",  "location": "Florida", "description": "I will move the Florida next month, and I need a sofa in my new place. Please make sure your second-hand sofa is in good condition and I prefer the seller who can ship the sofa to my place."})
-buyerPosts.append({"title": "Defender Tennis Racquet", "category": "Outdoor", "price": 30,"image":"tennis.jpg",  "location": "Kansas", "description": "I start to play tennis recently, and I need a defender tennis racquet. I don't have specific brand requirement, but make sure the tennis is in good condition. The price is negotiable"})
+buyerPosts.append({"title": "Need a Tennis Racquet", "category": "Outdoor", "price": 30,"image":"tennis.jpg",  "location": "Kansas", "description": "I start to play tennis recently, and I need a defender tennis racquet. I don't have specific brand requirement, but make sure the tennis is in good condition. The price is negotiable"})
 
 with main.app.app_context():
     # add users
