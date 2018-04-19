@@ -120,7 +120,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <span class="label label-info my-3" style="margin-left:8px; margin-right:2.84px; width: 50px;">Sort by</span>
-                <select v-model="sorting_ways" id="filter-price-sort" class="form-control my-2" id="price" name="price_sort" style="width: 175px; display: inline;">
+                <select v-model="filter_sorting_ways" id="filter-price-sort" class="form-control my-2" id="price" name="price_sort" style="width: 175px; display: inline;">
                   <option value="0">N/A</option>
                   <option value="1">Price: low &nbsp;to high</option>
                   <option value="2">Price: high to low</option>
@@ -204,23 +204,23 @@
                   </p>
                 </h4>
                 <div v-if="item.buyerName" class="text-right mx-3">
-                  <i class="fas fa-user mx-1"></i>
+                  <i class="fas fa-user mx-1" style="font-size: 12px;"></i>
                   <a v-bind:href="'UserInfo\?username=' + item.buyerName"> {{item.buyerName}}</a>
                 </div>
                 <div v-else-if="item.sellerName" class="text-right mx-3">
-                  <i class="fas fa-user mx-1"></i>
+                  <i class="fas fa-user mx-1" style="font-size: 12px;"></i>
                   <a v-bind:href="'UserInfo\?username=' + item.sellerName"> {{item.sellerName}}</a>
                 </div>
 
                 <div v-if="item.rating== null" class="text-right mx-3" style="margin-top:11px">
                   <i class="fas fa-tags" style="font-size: 10px;"></i>
-                  <p style="display:inline;">Rating : </p>
-                  <p style="display:inline;">No Review</p>
+                  <p style="display:inline;">User Rating:</p>
+                  <p style="display:inline;">None</p>
                 </div>
                 <div v-else class="text-right mx-3" style="margin-top:11px">
                   <i class="fas fa-tags" style="font-size: 10px;"></i>
-                  <p style="display:inline;">Rating : </p>
-                  <i style="display:inline;">{{item.rating }} / 5
+                  <p style="display:inline;">User Rating:</p>
+                  <i style="display:inline;">{{item.rating}} / 5
                   </i>
                 </div>
               </div>
