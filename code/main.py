@@ -232,6 +232,7 @@ def postListContent(role):
         posts = post.searchSellerPosts()
         favorite, _ = account.getFavorite(session['username'])
         for item in posts:
+            item['rating'] = post.getRatingOfUser("Seller", item['postId'])
             if str(item['postId']) in favorite:
                 item['favorite'] = True
             else:
@@ -240,6 +241,7 @@ def postListContent(role):
         posts = post.searchBuyerPosts()
         _, favorite = account.getFavorite(session['username'])
         for item in posts:
+            item['rating'] = post.getRatingOfUser("Buyer", item['postId'])
             if str(item['postId']) in favorite:
                 item['favorite'] = True
             else:

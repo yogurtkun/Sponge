@@ -11,6 +11,8 @@ var postlist = new Vue({
     filter_buyer_len : 0,
     filter_seller_len : 0,
     filter_price_sorting: 0,
+    filter_rate_sorting: 0,
+    sorting_ways : 0,
     filter_loc: "0",
     filter_post_time: 0,
     filter_search: "",
@@ -27,7 +29,43 @@ var postlist = new Vue({
     this.query_buyer_seller_post()
   },
   watch: {
+    sorting_ways: function(){
+      if(this.sorting_ways == 0)
+      {
+        this.filter_price_sorting = 0;
+        this.filter_rate_sorting = 0;
+      }
+      else if(this.sorting_ways == 1)
+      {
+        this.filter_price_sorting = 1;
+        this.filter_rate_sorting = 0;
+      }
+      else if(this.sorting_ways == 2)
+      {
+        this.filter_price_sorting = 2;
+        this.filter_rate_sorting = 0;
+      }
+      else if(this.sorting_ways == 3)
+      {
+        this.filter_price_sorting = 0;
+        this.filter_rate_sorting = 1;
+      }
+      else if(this.sorting_ways == 4)
+      {
+        this.filter_price_sorting = 0;
+        this.filter_rate_sorting = 2;
+      }
+      else
+      {
+        this.filter_price_sorting = 0;
+        this.filter_rate_sorting = 0;
+      }
+    },
     filter_price_sorting: function(){
+      this.filter_center()
+    },
+    filter_rate_sorting: function()
+    {
       this.filter_center()
     },
     filter_loc: function(){
@@ -87,6 +125,14 @@ var postlist = new Vue({
 
           // Default sort the items with latest post.
           filter_items = this.sortWithTime(filter_items, filter_items.length)
+
+          for(var i = 0; i < filter_items.length; i++){
+            if(filter_items[i].rating !== null)
+            {
+              filter_items[i].rating = (filter_items[i].rating).toFixed(1)
+            }
+          }
+
           this.items = filter_items
           this.filter_items = filter_items
           this.filter_result = filter_items
@@ -117,10 +163,11 @@ var postlist = new Vue({
 
     reset_filter: function(){
       this.filter_price_sorting = 0
+      this.filter_rate_sorting = 0
+      this.sorting_ways = 0
       this.filter_loc = "0"
       this.filter_post_time = 0
       this.filter_search = ""
-      this.filter_post_type = "0"
     },
 
     filter_posts: function(filter_items, filter_search){
@@ -156,10 +203,7 @@ var postlist = new Vue({
         price_with_index.push((items[i].price))
       }
 
-      if(filter_price_sorting == 0){
-        return items
-      }
-      else if(filter_price_sorting == 1){
+      if(filter_price_sorting == 1){
         price_with_index = this.sortWithIndeces(price_with_index, "ASC")
       }
       else if(filter_price_sorting == 2){
@@ -170,6 +214,47 @@ var postlist = new Vue({
       }
 
       new_index = price_with_index.sortIndices
+
+      for (var i = 0; i < new_index.length; i++){
+        filter_items.push((items[new_index[i]]))
+      }
+
+      return filter_items
+    },
+
+    filter_rate: function(filter_items, filter_rate_sorting){
+      var items = filter_items
+      var filter_items = []
+      var new_index = []
+      var rate = []
+      var rate_with_index = []
+
+      if(items === null || items === undefined){
+        return items
+      }
+
+      for (var i = 0; i < items.length; i++){
+        if(items[i].rating == null)
+        {
+          items[i] == 0
+        }
+      }
+
+      for (var i = 0; i < items.length; i++){
+        rate_with_index.push((items[i].rating))
+      }
+
+      if(filter_rate_sorting == 1){
+        rate_with_index = this.sortWithIndeces(rate_with_index, "ASC")
+      }
+      else if(filter_rate_sorting == 2){
+        rate_with_index = this.sortWithIndeces(rate_with_index, "DESC")
+      }
+      else{
+        return items
+      }
+
+      new_index = rate_with_index.sortIndices
 
       for (var i = 0; i < new_index.length; i++){
         filter_items.push((items[new_index[i]]))
@@ -354,8 +439,17 @@ var postlist = new Vue({
       for(var i = 0; i < filter_len; i++){
         time_with_index.push(new Date(items[i].time))
       }
-
-      time_with_index = this.sortWithIndeces(time_with_index, "DESC")
+      
+      var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+      
+      if (isSafari)
+      {
+        time_with_index = this.sortWithIndeces(time_with_index, "ASE")
+      }
+      else
+      {
+        time_with_index = this.sortWithIndeces(time_with_index, "DESC")
+      }
 
       new_index = time_with_index.sortIndices
 
@@ -447,6 +541,17 @@ var postlist = new Vue({
       this.jump_to_top()
     },
 
+    set_post_type:function(post_type){
+      if(post_type == "Seller")
+      {
+        this.filter_post_type = "0"
+      }
+      else
+      {
+        this.filter_post_type = "1"
+      }
+    },
+
     jump_to_page:function(){
       if(this.go_page !== null)
       {
@@ -463,6 +568,7 @@ var postlist = new Vue({
     filter_center: function(){
       var filter_items = this.items
       var filter_price_sorting = this.filter_price_sorting
+      var filter_rate_sorting = this.filter_rate_sorting
       var filter_loc = this.filter_loc
       var filter_post_time = this.filter_post_time
       var filter_search = this.filter_search
@@ -470,13 +576,15 @@ var postlist = new Vue({
       var filter_type = this.filter_post_type
       var filter_category = this.filter_category_index
 
-      if(filter_price_sorting == 0 && filter_loc == "0" &&
-        filter_post_time == 0 && filter_category == "all"){
+      if(filter_price_sorting == 0 && filter_rate_sorting == 0 &&
+        filter_loc == "0" && filter_post_time == 0 &&
+        filter_category == "all"){
         filter_items = this.sortWithTime(filter_items, filter_items.length)
         //filter_items = this._remove_ordered_item(filter_items)
       }
       else{
         filter_items = this.filter_price(filter_items, filter_price_sorting)
+        filter_items = this.filter_rate(filter_items, filter_rate_sorting)
         filter_items = this.filter_location(filter_items, filter_loc)
         filter_items = this.filter_time(filter_items, filter_post_time)
         filter_items = this.filter_category(filter_items, filter_category)

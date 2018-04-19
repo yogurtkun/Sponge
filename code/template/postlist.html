@@ -42,111 +42,103 @@
     <div class="col-lg-10 my-3" style="z-index:9">
       <div id="filter-bar" class="table sticky-top  bg-light mt-2 rounded" style="border: 1px solid #e1e2e5;">
         <div class="row row-bordered">
-          <div class="col-sm-7">
-            <form class="form-inline my-2">
-              <span class="label label-info mx-2" style="width: 50px;">Price</span>
-              <select v-model="filter_price_sorting" id="filter-price-sort" class="form-control" id="state" name="price_sort" style="width: 150px;">
+          <div class="col-sm-12">
+            <form class="form-inline">
+              <label class="control-label my-2  mx-2"  style="width: 50px;">Posted</label>
+              <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 175px;">
                 <option value="0">N/A</option>
-                <option value="1">low &nbsp;to high</option>
-                <option value="2">high to low</option>
+                <option value="1">6 hours</option>
+                <option value="2">24 hours</option>
+                <option value="3">7 days</option>
+                <option value="4">1 month</option>
+                <option value="5">3 months</option>
               </select>
-              <span class="mx-3"></span>
-              <label class="control-label" style="width: 50px;">State</label>
-                <div style="padding-left: 30px;"></div>
-                <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 170px;">
-                  <option value="0">N/A</option>
-                  <option value="Alaska">Alaska</option>
-                  <option value="Alabama">Alabama</option>
-                  <option value="Arkansas">Arkansas</option>
-                  <option value="Arizona">Arizona</option>
-                  <option value="California">California</option>
-                  <option value="Colorado">Colorado</option>
-                  <option value="Connecticut">Connecticut</option>
-                  <option value="District of Columbia">District of Columbia</option>
-                  <option value="Delaware">Delaware</option>
-                  <option value="Florida">Florida</option>
-                  <option value="Georgia">Georgia</option>
-                  <option value="Hawaii">Hawaii</option>
-                  <option value="Iowa">Iowa</option>
-                  <option value="Idaho">Idaho</option>
-                  <option value="Illinois">Illinois</option>
-                  <option value="Indiana">Indiana</option>
-                  <option value="Kansas">Kansas</option>
-                  <option value="Kentucky">Kentucky</option>
-                  <option value="Louisiana">Louisiana</option>
-                  <option value="Massachusetts">Massachusetts</option>
-                  <option value="Maryland">Maryland</option>
-                  <option value="Maine">Maine</option>
-                  <option value="Michigan">Michigan</option>
-                  <option value="Minnesota">Minnesota</option>
-                  <option value="Missouri">Missouri</option>
-                  <option value="Mississippi">Mississippi</option>
-                  <option value="Montana">Montana</option>
-                  <option value="North Carolina">North Carolina</option>
-                  <option value="North Dakota">North Dakota</option>
-                  <option value="Nebraska">Nebraska</option>
-                  <option value="New Hampshire">New Hampshire</option>
-                  <option value="New Jersey">New Jersey</option>
-                  <option value="New Mexico">New Mexico</option>
-                  <option value="Nevada">Nevada</option>
-                  <option value="New York">New York</option>
-                  <option value="Ohio">Ohio</option>
-                  <option value="Oklahoma">Oklahoma</option>
-                  <option value="Oregon">Oregon</option>
-                  <option value="Pennsylvania">Pennsylvania</option>
-                  <option value="Puerto Rico">Puerto Rico</option>
-                  <option value="Rhode Island">Rhode Island</option>
-                  <option value="South Carolina">South Carolina</option>
-                  <option value="South Dakota">South Dakota</option>
-                  <option value="Tennessee">Tennessee</option>
-                  <option value="Texas">Texas</option>
-                  <option value="Utah">Utah</option>
-                  <option value="Virginia">Virginia</option>
-                  <option value="Vermont">Vermont</option>
-                  <option value="Washington">Washington</option>
-                  <option value="Wisconsin">Wisconsin</option>
-                  <option value="West Virginia">West Virginia</option>
-                  <option value="Wyoming">Wyoming</option>
-                </select>
-              </form>
-          </div>
-
-          <div class="col-sm-5">
-              <div class="row">
-                <div class="col-sm-8">
-                  <input v-model="filter_search" id="filter-search" class="form-control  float-left  my-2" type="search" placeholder="Search" aria-label="Search" style="width:250px" >
-                </div>
-                
-                <div class="col-sm-4">
-                  <span class="badge badge-pill badge-info float-right my-3" style="margin-right:12px;"> {{filter_result_len}} items </span>
-                </div>
-              </div>
+              <label class="control-label" style="width: 50px;margin-left: 30px;margin-right: 36px">State</label>
+              <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 175px;">
+                <option value="0">N/A</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Arkansas">Arkansas</option>
+                <option value="Arizona">Arizona</option>
+                <option value="California">California</option>
+                <option value="Colorado">Colorado</option>
+                <option value="Connecticut">Connecticut</option>
+                <option value="District of Columbia">District of Columbia</option>
+                <option value="Delaware">Delaware</option>
+                <option value="Florida">Florida</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Hawaii">Hawaii</option>
+                <option value="Iowa">Iowa</option>
+                <option value="Idaho">Idaho</option>
+                <option value="Illinois">Illinois</option>
+                <option value="Indiana">Indiana</option>
+                <option value="Kansas">Kansas</option>
+                <option value="Kentucky">Kentucky</option>
+                <option value="Louisiana">Louisiana</option>
+                <option value="Massachusetts">Massachusetts</option>
+                <option value="Maryland">Maryland</option>
+                <option value="Maine">Maine</option>
+                <option value="Michigan">Michigan</option>
+                <option value="Minnesota">Minnesota</option>
+                <option value="Missouri">Missouri</option>
+                <option value="Mississippi">Mississippi</option>
+                <option value="Montana">Montana</option>
+                <option value="North Carolina">North Carolina</option>
+                <option value="North Dakota">North Dakota</option>
+                <option value="Nebraska">Nebraska</option>
+                <option value="New Hampshire">New Hampshire</option>
+                <option value="New Jersey">New Jersey</option>
+                <option value="New Mexico">New Mexico</option>
+                <option value="Nevada">Nevada</option>
+                <option value="New York">New York</option>
+                <option value="Ohio">Ohio</option>
+                <option value="Oklahoma">Oklahoma</option>
+                <option value="Oregon">Oregon</option>
+                <option value="Pennsylvania">Pennsylvania</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="Rhode Island">Rhode Island</option>
+                <option value="South Carolina">South Carolina</option>
+                <option value="South Dakota">South Dakota</option>
+                <option value="Tennessee">Tennessee</option>
+                <option value="Texas">Texas</option>
+                <option value="Utah">Utah</option>
+                <option value="Virginia">Virginia</option>
+                <option value="Vermont">Vermont</option>
+                <option value="Washington">Washington</option>
+                <option value="Wisconsin">Wisconsin</option>
+                <option value="West Virginia">West Virginia</option>
+                <option value="Wyoming">Wyoming</option>
+              </select>
+              <input v-model="filter_search" id="filter-search" class="form-control  float-left  my-2" type="search" placeholder="Search" aria-label="Search" style="width:220px;margin-left: 30px;" >
+              <span class="badge badge-pill badge-info float-right my-3" style="margin-right:12px;margin-left: 24px"> {{filter_result_len}} items </span>
+          </form>
+          
           </div>
         </div>
         <div class="row row-bordered">
-
-          <div class="col-sm-8   my-2">
-            <form class="form-inline">
-              <label class="control-label mx-2  my-2"  style="width: 50px;">Posted</label>
-                <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 150px;">
+          <div class="col-sm-11">
+            <div class="row">
+              <div class="col-sm-12">
+                <span class="label label-info my-3" style="margin-left:8px; margin-right:2.84px; width: 50px;">Sort by</span>
+                <select v-model="sorting_ways" id="filter-price-sort" class="form-control my-2" id="price" name="price_sort" style="width: 175px; display: inline;">
                   <option value="0">N/A</option>
-                  <option value="1">6 hours</option>
-                  <option value="2">24 hours</option>
-                  <option value="3">7 days</option>
-                  <option value="4">1 month</option>
-                  <option value="5">3 months</option>
+                  <option value="1">Price: low &nbsp;to high</option>
+                  <option value="2">Price: high to low</option>
+                  <option value="3">Rate: low &nbsp;to high</option>
+                  <option value="4">Rate: high to low</option>
                 </select>
-            <span class="mx-3  my-2"></span>
-              <label class="control-label"  style="width: 80px;">Post Type</label>
-                <select v-model="filter_post_type" id="filter-post-type" class="form-control" id="type" style="width: 170px;">
+
+                <label class="control-label my-3"  style="margin-left:34px;margin-right: 6px; width:68px;">Post Type</label>
+                <select v-model="filter_post_type" id="filter-post-type" class="form-control" id="type" style="width: 175px; display: inline;">
                   <option value="0">Seller</option>
                   <option value="1">Buyer</option>
                 </select>
-            </form>
+              </div>
+            </div>
           </div>
 
-          <div class="col-sm-4  my-2">
-            <button v-on:click="reset_filter"  class="btn btn-primary float-right mx-2">Reset</button>
+          <div class="col-sm-1">
+            <button v-on:click="reset_filter"  class="btn btn-primary float-right mx-2" style="width:93px; margin-top:8.5px">Reset</button>
           </div>
         </div>
       </div>
@@ -211,14 +203,26 @@
                     Not Specify
                   </p>
                 </h4>
-                <p v-if="item.buyerName" class="text-right mx-3">
+                <div v-if="item.buyerName" class="text-right mx-3">
                   <i class="fas fa-user mx-1"></i>
                   <a v-bind:href="'UserInfo\?username=' + item.buyerName"> {{item.buyerName}}</a>
-                </p>
-                <p v-else-if="item.sellerName" class="text-right mx-3">
+                </div>
+                <div v-else-if="item.sellerName" class="text-right mx-3">
                   <i class="fas fa-user mx-1"></i>
                   <a v-bind:href="'UserInfo\?username=' + item.sellerName"> {{item.sellerName}}</a>
-                </p>
+                </div>
+
+                <div v-if="item.rating== null" class="text-right mx-3" style="margin-top:11px">
+                  <i class="fas fa-tags" style="font-size: 10px;"></i>
+                  <p style="display:inline;">Rating : </p>
+                  <p style="display:inline;">No Review</p>
+                </div>
+                <div v-else class="text-right mx-3" style="margin-top:11px">
+                  <i class="fas fa-tags" style="font-size: 10px;"></i>
+                  <p style="display:inline;">Rating : </p>
+                  <i style="display:inline;">{{item.rating }} / 5
+                  </i>
+                </div>
               </div>
             </div>
           <div class="row">
