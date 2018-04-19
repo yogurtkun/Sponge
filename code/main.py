@@ -265,7 +265,7 @@ def favoriteList():
                 break
             tempf['type'] = "Seller"
             retList.append(tempf)
-    
+
     if buyerFavorite != [""]:
         for f in buyerFavorite:
             tempf = post.searchBuyerPosts(postId=int(f))
@@ -274,7 +274,7 @@ def favoriteList():
             tempf['type'] = "Buyer"
             retList.append(tempf)
 
-    return json.dumps(retList) 
+    return json.dumps(retList)
 
 '''
 Post Detail Page
@@ -509,10 +509,11 @@ def getOrderList():
 '''
 Get order for given user
 '''
-@app.route('/orderlist/<username>', methods=['POST'])
-def getOrderListByUser(username):
-	orders = order.getOrderByUser(username)
-	return json.dumps(orders)
+@app.route('/transactionlist/<username>', methods=['POST'])
+def getTransactionListByUser(username):
+    orders = order.getOrderByUser(username)
+    orders = filter(lambda item: item["status"]=="Completed", orders)
+    return json.dumps(orders)
 
 
 '''

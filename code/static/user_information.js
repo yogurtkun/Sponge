@@ -229,7 +229,7 @@ var userinfo = new Vue({
 $(document).ready(function () {
     var username = $("#user-name").text().replace(/ /g,'');
     $("#order-table").bootstrapTable({
-        url: "/orderlist/" + username,
+        url: "/transactionlist/" + username,
         method: "POST",
         sidePagination: "client",
         pagination: true,
