@@ -225,7 +225,7 @@
           <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Complete</button>
         </div>
         {% endif %}
-        {% if username == order.sellerName and (not reviewedBySeller) %}
+        {% if username == order.sellerName and (not reviewedBySeller) and order.status == 'Completed'%}
         <div>
           <button type="button" id="complete" class="btn btn-primary my-2" data-toggle="modal" data-target="#review_window">Review</button>
         </div>

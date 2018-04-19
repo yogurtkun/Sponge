@@ -87,7 +87,7 @@ def orderPlaceNotification(postId, orderId):
     order = Order.query.get(orderId)
     sellerName = order.sellerName
     buyerName = order.buyerName
-    msg = buyerName + " has placed on order(" + str(orderId) + ") on your post(" + str(postId) + ")."
+    msg = buyerName + " has placed an order(" + str(orderId) + ") on your post(" + str(postId) + ")."
     sendMessage(sender="system", receiver=sellerName, content=msg)
     msg = "You have placed an order(" + str(orderId) + ") on post(" + str(postId) + ")."
     sendMessage(sender="system", receiver=buyerName, content=msg)

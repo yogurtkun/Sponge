@@ -59,6 +59,11 @@ def getDetail(orderId):
     return orderDetail
 
 
+def checkBuyer(orderId, user):
+    order = Order.query.get(orderId)
+    return order.buyerName == user
+
+
 def checkOrderByPost(postId):
     try:
         count = Order.query.filter_by(postId=postId).count()
