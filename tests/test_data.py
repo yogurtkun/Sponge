@@ -24,7 +24,6 @@ users.append({"username": "IreneNash", "email": "in2333@sponge.com", "password":
 users.append({"username": "CarlLyman", "email": "cl2333@sponge.com", "password": "1234", "zipcode":" 10003"})
 users.append({"username": "Jessica", "email": "jessica@sponge.com", "password": "1234", "zipcode":" 10025"})
 users.append({"username": "Johnson", "email": "johnson@sponge.com", "password": "1234", "zipcode":" 10025"})
-users.append({"username": "yjc", "email": "yjc@123.com", "password": "1234", "zipcode":" 10025"})
 users.append({"username": "system", "email": "system@sponge.com", "password": "1234", "zipcode":" 10000"})
 
 sellerPosts.append({"title": "A brand new handbag", "category":"Beauty", "price":800, "location": "New York", "image": "bag.jpg", "description": "I just bought a handbag. But its color is different from what I expected. So I want to sell it to someone else. This bag is brand new and never used outside. its original price is $1000. I can give a discount. PM me if you want:)"})
@@ -48,8 +47,8 @@ buyerPosts.append({"title": "Want a mountain bike", "category": "Outdoor", "pric
 buyerPosts.append({"title": "Want a limited edition shoes", "category": "Clothing", "price": 1000, "location": "Iowa", "image": "shoes.jpg", "description": "I forgot the date of release. And when I remember, it is out of stock in all the stores. If anyone has this shoes, I would like to provide a competitive price."})
 buyerPosts.append({"title": "Want a second-hand book", "category": "Books", "price": 10, "location": "New York", "image": "book.jpg", "description": "A course I recently take asks me to buy a book about spark. I prefer the book in better condition without any draft on it. BTW, prefer to deal face to face."})
 buyerPosts.append({"title": "Want a second-hand GPU", "category": "Electronics","image":"gpu.jpg", "price": 1000, "location": "New York", "description": "I want a XXX' GPU to play games. It will be better if it has been used less than 1 year."})
-buyerPosts.append({"title": "A confortable sofa is needed", "category": "Furniture", "price": 80,"image":None,  "location": "Florida", "description": "I will move the Florida next month, and I need a sofa in my new place. Please make sure your second-hand sofa is in good condition and I prefer the seller who can ship the sofa to my place."})
-buyerPosts.append({"title": "Need a Defender Tennis Racquet", "category": "Outdoor", "price": 30,"image":None,  "location": "Kansas", "description": "I start to play tennis recently, and I need a defender tennis racquet. I don't have specific brand requirement, but make sure the tennis is in good condition. The price is negotiable"})
+buyerPosts.append({"title": "A comfortable sofa is needed", "category": "Furniture", "price": 80,"image":"sofa.jpg",  "location": "Florida", "description": "I will move the Florida next month, and I need a sofa in my new place. Please make sure your second-hand sofa is in good condition and I prefer the seller who can ship the sofa to my place."})
+buyerPosts.append({"title": "Need a Defender Tennis Racquet", "category": "Outdoor", "price": 30,"image":"tennis.jpg",  "location": "Kansas", "description": "I start to play tennis recently, and I need a defender tennis racquet. I don't have specific brand requirement, but make sure the tennis is in good condition. The price is negotiable"})
 
 with main.app.app_context():
     # add users
