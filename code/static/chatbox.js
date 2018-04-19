@@ -1,18 +1,27 @@
+function getMessageHeight(){
+    var h = 0;
+    for(p of $('.sent')){
+        h += (p.offsetHeight+5);
+    }
+    for(p of $('.replies')){
+        h += (p.offsetHeight+5);
+    }
+    return h;
+}
+
 var TIME_TO_FETCH_MESSAGE = 1000;
-$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+$(".messages").animate({ scrollTop: getMessageHeight() }, "fast");
 
 function addNewrReplies(info) {
     $('<li class="replies"><p>' + info + '</p></li>').appendTo($('.messages ul'));
     $('.message-input input').val(null);
     $('.contact.active .preview').html('<span>You: </span>' + info);
-    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 }
 
 function addNewSent(info) {
     $('<li class="sent"><p>' + info + '</p></li>').appendTo($('.messages ul'));
     $('.message-input input').val(null);
     $('.contact.active .preview').html('<span>You: </span>' + info);
-    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 }
 
 function addNewUser(user, time) {
@@ -195,7 +204,6 @@ $(document).ready(function () {
                             }
 
                             self.users = data;
-                            console.log(data);
                             self.update = true;
                         });
                     }
@@ -213,6 +221,8 @@ $(document).ready(function () {
                                 addNewSent(subMessage["content"]);
                             }
                         });
+
+                        $(".messages").animate({ scrollTop: getMessageHeight() }, "fast");
 
                         setTimeout(function () {
                             self.loadNewMessage();
@@ -239,6 +249,7 @@ $(document).ready(function () {
                                 addNewrReplies(subMessage["content"]);
                             }
                         });
+                        $(".messages").animate({ scrollTop: getMessageHeight() }, "fast");
                         self.update = true;
                     }
                 });
