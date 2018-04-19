@@ -925,7 +925,7 @@ input[type=checkbox] + svg {
 
 .comment-div {
   color: #8590a6;
-  font-size: 25px
+  font-size: 1rem
 }
 
 .comment-hr {
@@ -935,5 +935,4 @@ input[type=checkbox] + svg {
 
 .comment-span {
   font-weight: lighter;
-  font-size: 1.5vh;
 }

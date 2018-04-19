@@ -26,6 +26,13 @@
                 }
             });
         },
+        watch:{
+            transactionType: function(){
+                if(this.transactionType === "Face to Face"){
+                    this.errors = [];
+                }
+            }
+        },
         methods: {
             checkform: function () {
                 if(this.transactionType === "Face to Face"){

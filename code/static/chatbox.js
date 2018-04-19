@@ -1,4 +1,4 @@
-var TIME_TO_FETCH_MESSAGE = 10000;
+var TIME_TO_FETCH_MESSAGE = 1000;
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 function addNewrReplies(info) {
@@ -69,7 +69,7 @@ function newMessage(person) {
 $(document).ready(function () {
     Vue.component('listuser', {
         props: ['user'],
-        template: '<li class="contact" v-on:click="userTop"><div class="wrap"><div class="meta"><p class="name"><i class="fas fa-user"style="margin-right:1vh"></i>{{user.username}}<i class="badge badge-pill badge-primary" style="float: right;" v-if="user.unseen !== 0">{{user.unseen}}</i></p><p class="preview">{{user.time}}</p></div></div></li>',
+        template: '<li class="contact" v-on:click="userTop"><div class="wrap"><div class="meta"><p class="name"><i class="fas fa-user"style="margin-right:1vh"></i>{{user.username}}<div v-if="user.unseen !== 0" class="numberCircle">{{user.unseen}}</div></p><p class="preview">{{user.time}}</p></div></div></li>',
         methods: {
             userTop: function () {
                 this.$emit("move-top", this.user.username);
@@ -173,6 +173,7 @@ $(document).ready(function () {
                     return;
                 }
 
+                self.update = false;
 
                 $.ajax({
                     url: 'messageTable',
@@ -191,6 +192,7 @@ $(document).ready(function () {
                             }
 
                             self.users = data;
+                            self.update = true;
                         });
                     }
                 });

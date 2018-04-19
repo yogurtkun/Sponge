@@ -130,6 +130,7 @@
     </div>
   </div>
   <hr>
+  {% raw %}
   <div id="comment-tab">
 
     <div class="card my-4">
@@ -137,20 +138,51 @@
       <div class="card-body">
         <form>
           <div class="form-group">
-            <textarea v-model="newComment" class="form-control" rows="3"></textarea>
+            <textarea v-model="newComment" class="form-control" rows="3" maxlength="300"></textarea>
+            <span class="pull-right badge badge-secondary float-right" id="count_message">{{text_length}} / {{text_max}}</span>
           </div>
-          <button type="button" class="btn btn-primary" v-on:click="sendComment">Submit</button>
+          <button type="button" class="btn btn-primary" v-on:click="sendComment" style="float: right;">Submit</button>
         </form>
       </div>
     </div>
 
     <div class="card my-4" id="comment-list">
 
-      <comment v-for="(item,index) in messages" v-bind:message="item" v-bind:i="index" v-bind:am="messages" v-bind:cu="sessionUser" @reply-message="replyParent" @delete-message="deleteParent"></comment>
+      <comment v-for="(item,index) in messages" v-bind:message="item" v-bind:i="index" v-bind:am="messages" v-bind:cu="sessionUser"
+        @reply-message="replyParent" @delete-message="deleteParent"></comment>
+    </div>
+
+    <div id="delete_comment" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Delete Comment</h3>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this comment?</p>
+          </div>
+          <div class="modal-footer">
+            <button v-on:click="deleteConfirm" id="btnYes" class="btn btn-danger">Yes</button>
+            <button data-dismiss="modal" aria-hidden="true" class="btn btn-secondary">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="success_comment" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="vertical-align: middle">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Successful add comment!</p>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
+  {% endraw %}
 </div>
+
 
 
 <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
