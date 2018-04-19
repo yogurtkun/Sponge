@@ -129,7 +129,8 @@ var postlist = new Vue({
           for(var i = 0; i < filter_items.length; i++){
             if(filter_items[i].rating !== null)
             {
-              filter_items[i].rating = (filter_items[i].rating).toFixed(1)
+              //filter_items[i].rating = (filter_items[i].rating).toFixed(1)
+              filter_items[i].rating = (filter_items[i].rating)
             }
           }
 
