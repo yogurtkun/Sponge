@@ -42,8 +42,9 @@ var userinfo = new Vue({
         AddReview:function(reviewee){
             this.orderId = this.get_order_id()
 
-            var tdata = {'reviewee':this.reviewee, 'rating':this.rating,
+            var tdata = {'reviewee':reviewee, 'rating':this.rating,
                          'content':this.review, 'orderId':this.orderId}
+            console.log(tdata)
 
             this.review_submit = true
 

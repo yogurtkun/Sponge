@@ -457,6 +457,7 @@ def addReview():
     if not loggedIn():
         return "Please log in first!"
     reviewer = session['username']
+    print request.form
     reviewee = str(request.form['reviewee'])
     rating = int(request.form['rating'])
     content = str(request.form['content']) if 'content' in request.form.keys() else None
