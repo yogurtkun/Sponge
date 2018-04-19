@@ -41,6 +41,7 @@ sellerPosts.append({"title":"PS4 White", "category":"Electronics", "price":210, 
 sellerPosts.append({"title":"Laptop bag", "category":"Accessories", "price":15, "location":"Massachusetts", "image":"anello.jpg", "description":"I bought this anello bag at the price of $30. I don't like its color. It's a great bag and fits 15'' laptop."})
 sellerPosts.append({"title":"Girls' sneakers", "category":"Clothing", "price":30, "location":"Massachusetts", "image":"sneakers.jpg", "description":"I bought the sneakers for my daughter. She grows too fast and cannot fit in these size 4 shoes. So they are brand new."})
 sellerPosts.append({"title":"Fish photobook", "category":"Books", "price":60, "location":"Massachusetts", "image":"fishbook.jpg", "description":"A good fish photobook for students. Original price is $98."})
+sellerPosts.append({"title": "Dining Table with 6 chairs", "category": "Furniture", "price" : 200, "location": "South Dakota", "image": "diningtable.jpg", "description": "I plan to update the furniture. So I want to sell a dining table and 6 chairs. I bought this 6 years ago, but all are kept in good condition. Please let me know if you are interested."})
 
 
 buyerPosts.append({"title": "Need a cheap ipad air", "category": "Electronics", "price": 100, "location": "California", "image": "ipad.jpg", "description": "I need a used ipad for studying. I don't want to bring laptop to school every day cuz it's too heavy. It's ok if your ipad is not in good condition as long as it can function well. PM me for detail if you are interested."})
