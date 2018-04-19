@@ -184,6 +184,7 @@ def updateRating(username, rating):
             c = 1
         else:
             tmp = (tmp * c + rating) / (c + 1.0)
+            tmp = round(tmp, 2)
             c = c + 1
         try:
             user.rating = tmp

@@ -545,7 +545,6 @@ def updateOrderStatus():
         return "No permission"
     status = str(request.form['status'])
     if order.updateStatus(orderId, status):
-        message.orderStatusNotification(orderId, status)
         print "update succeeded"
         return json.dumps('success')
     print "update failed"

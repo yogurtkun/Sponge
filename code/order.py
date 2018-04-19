@@ -2,6 +2,7 @@ from main import schema
 from schema import Order, from_sql
 from post import searchSellerPosts, getPost, invalidSellerPost, validSellerPost
 import account
+import message
 import datetime
 import pytz
 
@@ -103,6 +104,7 @@ def updateStatus(orderId, status):
         return False
     try:
         db.session.commit()
+        message.orderStatusNotification(orderId, status)
         return True
     except Exception as e:
         print e
