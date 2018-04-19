@@ -12,7 +12,7 @@ var postlist = new Vue({
     filter_seller_len : 0,
     filter_price_sorting: 0,
     filter_rate_sorting: 0,
-    sorting_ways : 0,
+    filter_sorting_ways : 0,
     filter_loc: "0",
     filter_post_time: 0,
     filter_search: "",
@@ -29,28 +29,28 @@ var postlist = new Vue({
     this.query_buyer_seller_post()
   },
   watch: {
-    sorting_ways: function(){
-      if(this.sorting_ways == 0)
+    filter_sorting_ways: function(){
+      if(this.filter_sorting_ways == 0)
       {
         this.filter_price_sorting = 0;
         this.filter_rate_sorting = 0;
       }
-      else if(this.sorting_ways == 1)
+      else if(this.filter_sorting_ways == 1)
       {
         this.filter_price_sorting = 1;
         this.filter_rate_sorting = 0;
       }
-      else if(this.sorting_ways == 2)
+      else if(this.filter_sorting_ways == 2)
       {
         this.filter_price_sorting = 2;
         this.filter_rate_sorting = 0;
       }
-      else if(this.sorting_ways == 3)
+      else if(this.filter_sorting_ways == 3)
       {
         this.filter_price_sorting = 0;
         this.filter_rate_sorting = 1;
       }
-      else if(this.sorting_ways == 4)
+      else if(this.filter_sorting_ways == 4)
       {
         this.filter_price_sorting = 0;
         this.filter_rate_sorting = 2;
@@ -165,7 +165,7 @@ var postlist = new Vue({
     reset_filter: function(){
       this.filter_price_sorting = 0
       this.filter_rate_sorting = 0
-      this.sorting_ways = 0
+      this.filter_sorting_ways = 0
       this.filter_loc = "0"
       this.filter_post_time = 0
       this.filter_search = ""
