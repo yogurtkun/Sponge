@@ -1,5 +1,5 @@
 from main import schema
-from schema import SellerPost, BuyerPost, from_sql
+from schema import SellerPost, BuyerPost, User, from_sql
 import datetime
 import pytz
 
@@ -155,4 +155,21 @@ def updatePost(postType, postId, updateData):
         print e
         db.session.rollback()
         return False
+
+
+def getRatingOfUser(postType, postId):
+    if postType == "Seller":
+        postData = SellerPost.query.get(postId)
+        username = postData.sellerName
+        user = User.query.get(username)
+        return user.rating
+    if postType == "Buyer":
+        postData = BuyerPost.query.get(postId)
+        username = postData.buyerName
+        user = User.query.get(username)
+        return user.rating
+
+
+
+
 
