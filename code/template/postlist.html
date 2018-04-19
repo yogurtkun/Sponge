@@ -44,7 +44,7 @@
         <div class="row row-bordered">
           <div class="col-sm-12">
             <form class="form-inline">
-              <label class="control-label my-2  mx-2"  style="width: 50px;">Posted</label>
+              <label class="control-label my-2"  style="margin-left:8px; margin-right:11.84px; width: 50px;">Posted</label>
               <select v-model="filter_post_time" id="filter-post-time" class="form-control" id="time" style="width: 175px;">
                 <option value="0">N/A</option>
                 <option value="1">6 hours</option>
@@ -53,7 +53,7 @@
                 <option value="4">1 month</option>
                 <option value="5">3 months</option>
               </select>
-              <label class="control-label" style="width: 50px;margin-left: 30px;margin-right: 36px">State</label>
+              <label class="control-label" style="width: 50px;margin-left: 30px;margin-right: 40px">State</label>
               <select v-model="filter_loc" id="filter-location" class="form-control" id="state" name="state" style="width: 175px;">
                 <option value="0">N/A</option>
                 <option value="Alaska">Alaska</option>
@@ -110,7 +110,7 @@
                 <option value="Wyoming">Wyoming</option>
               </select>
               <input v-model="filter_search" id="filter-search" class="form-control  float-left  my-2" type="search" placeholder="Search" aria-label="Search" style="width:220px;margin-left: 30px;" >
-              <span class="badge badge-pill badge-info float-right my-3" style="margin-right:12px;margin-left: 24px"> {{filter_result_len}} items </span>
+              <span class="badge badge-pill badge-info float-right my-3" style="margin-right:12px;margin-left: 20px"> {{filter_result_len}} items </span>
           </form>
           
           </div>
@@ -119,7 +119,7 @@
           <div class="col-sm-11">
             <div class="row">
               <div class="col-sm-12">
-                <span class="label label-info my-3" style="margin-left:8px; margin-right:2.84px; width: 50px;">Sort by</span>
+                <span class="label label-info my-3" style="margin-left:8px; margin-right:6.84px; width: 50px;">Sort by</span>
                 <select v-model="filter_sorting_ways" id="filter-price-sort" class="form-control my-2" id="price" name="price_sort" style="width: 175px; display: inline;">
                   <option value="0">N/A</option>
                   <option value="1">Price: low &nbsp;to high</option>
@@ -128,7 +128,7 @@
                   <option value="4">Rate: high to low</option>
                 </select>
 
-                <label class="control-label my-3"  style="margin-left:34px;margin-right: 6px; width:68px;">Post Type</label>
+                <label class="control-label my-3"  style="margin-left:34px;margin-right: 6px; width:72px;">Post Type</label>
                 <select v-model="filter_post_type" id="filter-post-type" class="form-control" id="type" style="width: 175px; display: inline;">
                   <option value="0">Seller</option>
                   <option value="1">Buyer</option>
