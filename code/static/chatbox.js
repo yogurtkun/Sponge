@@ -133,8 +133,8 @@ $(document).ready(function () {
                         if (systemIndex > -1) {
                             self.system.time = data[systemIndex]['time'];
                             self.system.unseen = data[systemIndex]['unseen']
-                            self.currentTime = self.system.time;
-                            self.currentUser = "system";
+                            // self.currentTime = self.system.time;
+                            // self.currentUser = "system";
                             data.splice(systemIndex, 1)
                         }
 

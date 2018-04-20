@@ -1,3 +1,8 @@
+function tobottom(){
+    console.log("hello")
+    $(".messages").animate({ scrollTop: getMessageHeight() }, "fast");
+}
+
 $(document).ready(() => {
     var userinfo = new Vue({
         el: '#user-info',
