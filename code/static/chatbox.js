@@ -156,6 +156,8 @@ $(document).ready(function () {
             $(window).on('keydown', function (e) {
                 if (e.which == 13) {
                     newMessage(self.currentUser);
+
+                    $(".messages").animate({ scrollTop: getMessageHeight() }, "fast");
                     return false;
                 }
             });
@@ -222,8 +224,6 @@ $(document).ready(function () {
                             }
                         });
 
-                        $(".messages").animate({ scrollTop: getMessageHeight() }, "fast");
-
                         setTimeout(function () {
                             self.loadNewMessage();
                         }, 1000);
@@ -256,6 +256,8 @@ $(document).ready(function () {
             },
             sendMessage: function () {
                 newMessage(this.currentUser);
+
+                $(".messages").animate({ scrollTop: getMessageHeight() }, "fast");
             },
             addNewContact: function () {
                 $('#user_modal').modal('show');
