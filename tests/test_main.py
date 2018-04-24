@@ -42,12 +42,6 @@ class MainTest(unittest.TestCase):
     #    print(rv.data)
     #    assert("hello" in rv.data.lower())
 
-    def test_database_connection(self):
-        with main.app.app_context():
-            db = main.schema.db
-            res = str(db.session.execute("select * from test").first())
-            assert(res == '(1, 1)')
-            print "database connection pass\n"
 
     def test_registerUser(self):
         with main.app.app_context():
